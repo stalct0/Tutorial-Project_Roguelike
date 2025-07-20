@@ -26,8 +26,7 @@ public static class PathFinder // start에서 end로 가는 경로 생성
             int dir = isAtLeftEdge ? 1 : isAtRightEdge ? -1 : (Random.value < 0.5f ? -1 : 1);
             current = new Vector2Int(current.x + dir, current.y); //무조건 한번 가로 이동
             path.Add(current);
-            Debug.Log($"{i}: fchecked {isAtLeftEdge} {isAtRightEdge}");
-            Debug.Log($"{i}: fmove {dir}");
+            Debug.Log($"current pos: {current.x},{current.y}");
             
             isAtLeftEdge = current.x == 0;
             isAtRightEdge = current.x == width - 1;
@@ -37,7 +36,6 @@ public static class PathFinder // start에서 end로 가는 경로 생성
                 isAtLeftEdge = current.x == 0;
                 isAtRightEdge = current.x == width - 1;
                 float rv = Random.value;
-                Debug.Log($"{i}: {rv}");
                 if (rv > 0.85f)
                 {
                     break;
@@ -47,22 +45,23 @@ public static class PathFinder // start에서 end로 가는 경로 생성
                 {
                     current = new Vector2Int(newX, current.y); //옆으로 이동
                     path.Add(current);
-                    Debug.Log($"{i}: move {dir}");
+                    Debug.Log($"current pos: {current.x},{current.y}");
                 }
                 else
                 {
                     Debug.Log("error");
                 }
                 
-                Debug.Log($"{i}:checked {isAtLeftEdge} {isAtRightEdge}");
             }
             current = new Vector2Int(current.x, current.y + 1); //위로 이동
             path.Add(current);
-            Debug.Log($"{i}: Move up");
+            Debug.Log($"current pos: {current.x},{current.y}");
         }
 
         // 맨 윗줄 도달 → 오른쪽 or 왼쪽 방향 결정
-        int lastDirection = Random.value < 0.5f ? 1 : -1;
+        bool LastisAtLeftEdge = current.x == 0;
+        bool LastisAtRightEdge = current.x == width - 1;
+        int lastDirection = LastisAtLeftEdge ? 1 : LastisAtRightEdge ? -1 : (Random.value < 0.5f ? -1 : 1);
         List<Vector2Int> finalRow = new();
         Vector2Int lastRowStart = current;
         
@@ -92,7 +91,7 @@ public static class PathFinder // start에서 end로 가는 경로 생성
                 if (current.x >= 0 && current.x < width && current.y >= 0 && current.y < height)
                 {
                     path.Add(current);
-                    Debug.Log($"last move {lastDirection}");
+                    Debug.Log($"current pos: {current.x},{current.y}");
                 }
             }
 
