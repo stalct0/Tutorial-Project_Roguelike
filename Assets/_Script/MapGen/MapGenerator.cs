@@ -1,22 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-
+using Unity.Cinemachine;
+    
 public class MapGenerator : MonoBehaviour
 {
     public Tilemap mainTilemap;
     public RoomPrefabLibrary roomLibrary;
+    public GameObject playerPrefab;
 
     private MapConfig config;
     private RoomNode[,] roomGrid;
-
+    
     void Start()
     {
         config = new MapConfig();
         config.GenerateRandomSize();
 
         roomGrid = new RoomNode[config.Width, config.Height];
-
+    
         InitRooms();
         Vector2Int start = PickStartRoom();
         
@@ -24,7 +26,28 @@ public class MapGenerator : MonoBehaviour
         List<Vector2Int> path = result.path;
         Vector2Int end = result.end;
         RoomTypeAssigner.AssignTypes(roomGrid, path, start, end);
-        RoomTilePainter.PaintRooms(mainTilemap, roomGrid, roomLibrary);
+
+        var roomResult = RoomTilePainter.PaintRooms(mainTilemap, roomGrid, roomLibrary);
+        if (roomResult.HasValue)
+        {
+            var (startRoomPrefab, startOffset) = roomResult.Value;
+
+            Transform spawnPoint = startRoomPrefab.transform.Find("SpawnPoint");
+            if (spawnPoint != null)
+            {
+                Vector3 spawnPos = spawnPoint.position + startOffset;
+                GameObject player = Instantiate(playerPrefab, spawnPos, Quaternion.identity);
+
+                var vcam = FindObjectOfType<Unity.Cinemachine.CinemachineCamera>();
+                if (vcam != null)
+                {
+                    vcam.Follow = player.transform;
+                }
+            }
+            
+            GameObject.Destroy(startRoomPrefab); 
+        }
+        
     }
 
     void InitRooms()
