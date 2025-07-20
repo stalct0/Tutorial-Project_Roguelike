@@ -197,18 +197,21 @@ MonoBehaviour:
   - type: 1
     prefabs:
     - {fileID: 388145940727604920, guid: 2bd749bf3d8d7314a82d144bb236230f, type: 3}
-  - type: 4
-    prefabs:
-    - {fileID: 388145940727604920, guid: 2bd749bf3d8d7314a82d144bb236230f, type: 3}
-  - type: 3
-    prefabs:
-    - {fileID: 388145940727604920, guid: 2bd749bf3d8d7314a82d144bb236230f, type: 3}
-  - type: 2
-    prefabs:
-    - {fileID: 388145940727604920, guid: 2bd749bf3d8d7314a82d144bb236230f, type: 3}
   - type: 5
     prefabs:
-    - {fileID: 388145940727604920, guid: 2bd749bf3d8d7314a82d144bb236230f, type: 3}
+    - {fileID: 388145940727604920, guid: 903d997c852487444b9d5200acf0f7b5, type: 3}
+  - type: 6
+    prefabs:
+    - {fileID: 388145940727604920, guid: ee113ace17beb5a4693f37a9ed9ac4d2, type: 3}
+  - type: 3
+    prefabs:
+    - {fileID: 388145940727604920, guid: 442cfc5fece7c894fb136f3c9956b28e, type: 3}
+  - type: 4
+    prefabs:
+    - {fileID: 388145940727604920, guid: 6a0dcd7b7df5a304589b3eb11d3d77fe, type: 3}
+  - type: 2
+    prefabs:
+    - {fileID: 388145940727604920, guid: e6ecb94913b448a45937d618f24e2a0a, type: 3}
 --- !u!4 &349732708
 Transform:
   m_ObjectHideFlags: 0
