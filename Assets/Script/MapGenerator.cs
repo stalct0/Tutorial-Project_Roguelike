@@ -19,10 +19,11 @@ public class MapGenerator : MonoBehaviour
 
         InitRooms();
         Vector2Int start = PickStartRoom();
-        Vector2Int end = PickEndRoom();
-
-        List<Vector2Int> path = PathFinder.FindPath(start, end, config.Width, config.Height);
-        RoomTypeAssigner.AssignTypes(roomGrid, path);
+        
+        var result = PathFinder.FindPath(start, config.Width, config.Height);
+        List<Vector2Int> path = result.path;
+        Vector2Int end = result.end;
+        RoomTypeAssigner.AssignTypes(roomGrid, path, start, end);
         RoomTilePainter.PaintRooms(mainTilemap, roomGrid, roomLibrary);
     }
 
@@ -39,9 +40,5 @@ public class MapGenerator : MonoBehaviour
         return new Vector2Int(x, 0); // bottom row
     }
 
-    Vector2Int PickEndRoom()
-    {
-        int x = Random.Range(0, config.Width);
-        return new Vector2Int(x, config.Height - 1); // top row
-    }
+
 }
