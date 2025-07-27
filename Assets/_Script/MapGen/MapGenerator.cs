@@ -11,7 +11,12 @@ public class MapGenerator : MonoBehaviour
 
     private MapConfig config;
     private RoomNode[,] roomGrid;
-    
+    private Grid gridLayout;
+
+    void Awake()
+    {
+        gridLayout = mainTilemap.GetComponentInParent<Grid>();
+    }
     void Start()
     {
         config = new MapConfig();
@@ -27,7 +32,9 @@ public class MapGenerator : MonoBehaviour
         Vector2Int end = result.end;
         RoomTypeAssigner.AssignTypes(roomGrid, path, start, end);
 
-        var roomResult = RoomTilePainter.PaintRooms(mainTilemap, roomGrid, roomLibrary);
+        Vector3 cellSize = gridLayout.cellSize;
+        
+        var roomResult = RoomTilePainter.PaintRooms(mainTilemap, roomGrid, roomLibrary, gridLayout.cellSize);
         if (roomResult.HasValue)
         {
             var (startRoomPrefab, startOffset) = roomResult.Value;
@@ -38,7 +45,7 @@ public class MapGenerator : MonoBehaviour
                 Vector3 spawnPos = spawnPoint.position + startOffset;
                 GameObject player = Instantiate(playerPrefab, spawnPos, Quaternion.identity);
 
-                var vcam = FindObjectOfType<Unity.Cinemachine.CinemachineCamera>();
+                var vcam = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>();
                 if (vcam != null)
                 {
                     vcam.Follow = player.transform;

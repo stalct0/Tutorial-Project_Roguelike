@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 public static class RoomTilePainter
 {
     public static (GameObject startRoomPrefab, Vector3 startWorldPosition)?
-        PaintRooms(Tilemap target, RoomNode[,] grid, RoomPrefabLibrary library)
+        PaintRooms(Tilemap target, RoomNode[,] grid, RoomPrefabLibrary library, Vector3 cellSize)
     {
         // 방 크기 지정
         int roomWidth = 12; 
@@ -29,10 +29,12 @@ public static class RoomTilePainter
                 Tilemap source = temp.GetComponentInChildren<Tilemap>();
 
                 Vector3Int offset = new Vector3Int(x * roomWidth, y * roomHeight, 0);
-                
+                Vector3 roomWorldPosition = new Vector3(x * roomWidth * cellSize.x, y * roomHeight * cellSize.y, 0);
                 CopyTiles(source, target, offset); //타일맵에 타일 생성
 
-                CopyObjects(temp.transform, offset);
+
+                
+                CopyObjects(temp.transform, roomWorldPosition, cellSize);
                 
                 if (node.Type == RoomType.Start)
                 {
@@ -64,16 +66,17 @@ public static class RoomTilePainter
             }
         }
     }
-    static void CopyObjects(Transform parent, Vector3 offset)
+    static void CopyObjects(Transform parent, Vector3 offset, Vector3 cellSize)
     {
         foreach (Transform child in parent)
         {
-            // 타일맵은 무시
             if (child.GetComponent<Tilemap>() != null)
                 continue;
 
             GameObject clone = Object.Instantiate(child.gameObject);
-            clone.transform.position = child.position + offset;
+            clone.transform.position = offset + Vector3.Scale(child.localPosition, cellSize); 
+            
+            clone.transform.rotation = child.localRotation;          
         }
     }
 }
