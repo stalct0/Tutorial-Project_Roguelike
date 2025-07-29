@@ -21,9 +21,15 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private bool jumpRequested;
 
+    private PlayerStats stats;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        
+        stats = GetComponent<PlayerStats>();
+        stats.onDie.AddListener(OnDeath);
+        
         inputActions = new PlayerInputActions();
 
         inputActions.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
@@ -73,5 +79,10 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(origin.position, Vector2.down * groundCheckDistance, Color.red);
     #endif
         return hit.collider != null;
+    }
+
+    void OnDeath()
+    {
+        Debug.Log("뒤짐");
     }
 }
