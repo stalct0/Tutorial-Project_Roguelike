@@ -1,0 +1,70 @@
+# ==== Line Endings ====
+# Normalize text files to use LF
+*               text=auto
+*.cs            text eol=lf
+*.shader        text eol=lf
+*.cginc         text eol=lf
+*.compute       text eol=lf
+*.txt           text eol=lf
+*.md            text eol=lf
+*.json          text eol=lf
+*.xml           text eol=lf
+*.asmdef        text eol=lf
+*.unity         text eol=lf
+*.prefab        text eol=lf
+*.mat           text eol=lf
+*.meta          text eol=lf
+*.asset         text eol=lf
+*.uxml          text eol=lf
+*.uss           text eol=lf
+
+# Scripts
+*.js            text eol=lf
+*.boo           text eol=lf
+
+# Shell scripts
+*.sh            text eol=lf
+
+# Windows batch files
+*.bat           text eol=crlf
+*.cmd           text eol=crlf
+
+# ==== Binary Files ====
+*.dll           binary
+*.exe           binary
+*.so            binary
+*.dylib         binary
+*.a             binary
+*.lib           binary
+
+# Images
+*.png           binary
+*.jpg           binary
+*.jpeg          binary
+*.tga           binary
+*.psd           binary
+*.tif           binary
+*.tiff          binary
+*.gif           binary
+*.bmp           binary
+
+# 3D Assets
+*.fbx           binary
+*.obj           binary
+*.blend         binary
+
+# Audio
+*.mp3           binary
+*.wav           binary
+*.ogg           binary
+
+# Video
+*.mp4           binary
+*.mov           binary
+*.avi           binary
+
+# Archives
+*.zip           binary
+*.tar           binary
+*.gz            binary
+*.7z            binary
