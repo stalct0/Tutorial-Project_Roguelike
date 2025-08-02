@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 public static class RoomTilePainter
 {
-    public static (GameObject startRoomPrefab, Vector3 startWorldPosition)?
+    public static (GameObject startRoomPrefab, Vector3 startOffsetTile, Vector3 startOffsetObj)?
         PaintRooms(Tilemap target, RoomNode[,] grid, RoomPrefabLibrary library, Vector3 cellSize)
     {
         // 방 크기 지정
@@ -16,7 +16,8 @@ public static class RoomTilePainter
         int height = grid.GetLength(1);
 
         GameObject startRoomPrefab = null;
-        Vector3 startWorldPosition = Vector3.zero;
+        Vector3 startOffsetTile = Vector3.zero;
+        Vector3 startOffsetObj = Vector3.zero;
         
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++) //모든 좌표에 반복
@@ -28,18 +29,19 @@ public static class RoomTilePainter
                 GameObject temp = GameObject.Instantiate(prefab); 
                 Tilemap source = temp.GetComponentInChildren<Tilemap>();
 
-                Vector3Int offset = new Vector3Int(x * roomWidth, y * roomHeight, 0);
-                Vector3 roomWorldPosition = new Vector3(x * roomWidth * cellSize.x, y * roomHeight * cellSize.y, 0);
-                CopyTiles(source, target, offset); //타일맵에 타일 생성
+                Vector3Int offsetTile = new Vector3Int(x * roomWidth, y * roomHeight, 0);
+                Vector3 offsetObj = new Vector3(x * roomWidth * cellSize.x, y * roomHeight * cellSize.y, 0);
+                CopyTiles(source, target, offsetTile); //타일맵에 타일 생성
 
 
                 
-                CopyObjects(temp.transform, roomWorldPosition, cellSize);
+                CopyObjects(temp.transform, offsetObj, cellSize);
                 
-                if (node.Type == RoomType.Start)
+                if (node.Type == RoomType.Start) //start는 남겨두기
                 {
                     startRoomPrefab = temp;
-                    startWorldPosition = offset;
+                    startOffsetTile = offsetTile;
+                    startOffsetObj = offsetObj;
                 }
                 else
                 {
@@ -49,7 +51,7 @@ public static class RoomTilePainter
             }
         
         if (startRoomPrefab != null)
-            return (startRoomPrefab, startWorldPosition);
+            return (startRoomPrefab, startOffsetTile, startOffsetObj); //MapGenerator한테 prefab이랑 offset 넘겨주기
         else
             return null;
     }

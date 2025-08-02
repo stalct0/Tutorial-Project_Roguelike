@@ -20,7 +20,7 @@ public class MapGenerator : MonoBehaviour
     void Start()
     {
         config = new MapConfig();
-        config.GenerateRandomSize();
+        config.GenerateRandomSize(); // 맵 크기 랜덤
 
         roomGrid = new RoomNode[config.Width, config.Height];
     
@@ -37,15 +37,15 @@ public class MapGenerator : MonoBehaviour
         var roomResult = RoomTilePainter.PaintRooms(mainTilemap, roomGrid, roomLibrary, gridLayout.cellSize);
         if (roomResult.HasValue)
         {
-            var (startRoomPrefab, startOffset) = roomResult.Value;
+            var (startRoomPrefab, startOffset, st) = roomResult.Value;
 
             Transform spawnPoint = startRoomPrefab.transform.Find("SpawnPoint");
             if (spawnPoint != null)
             {
-                Vector3 spawnPos = spawnPoint.position + startOffset;
-                GameObject player = Instantiate(playerPrefab, spawnPos, Quaternion.identity);
+                Vector3 spawnPos = st + Vector3.Scale(spawnPoint.position, cellSize) ; 
+                GameObject player = Instantiate(playerPrefab, spawnPos, Quaternion.identity); // 플레이어 생성
 
-                var vcam = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>();
+                var vcam = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>(); //플레이어에 카메라 부착
                 if (vcam != null)
                 {
                     vcam.Follow = player.transform;
