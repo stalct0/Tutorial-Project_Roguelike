@@ -15,6 +15,12 @@ public class PlayerStats : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    void Start()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.RegisterPlayer(this);
+    }
+    
     public void TakeDamage(int amount)
     {
         currentHealth -= amount;
@@ -36,7 +42,6 @@ public class PlayerStats : MonoBehaviour
     {
         if (onDie != null)
             onDie.Invoke();
-
     }
 
     public void ResetStats()

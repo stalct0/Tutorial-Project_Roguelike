@@ -83,6 +83,5 @@ public class PlayerController : MonoBehaviour
 
     void OnDeath()
     {
-        Debug.Log("뒤짐");
     }
 }

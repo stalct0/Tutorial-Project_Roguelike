@@ -7,9 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; } //Singleton
     public GameObject pauseMenuUI;
-
-    private bool isPaused = false;
-
+    public GameObject gameOverUI;
+    
     public enum GameState
     {
         Menu,
@@ -32,6 +31,11 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Start()
+    {
+
+    }
+
     void Update()
     {
         switch (CurrentState)
@@ -49,9 +53,7 @@ public class GameManager : MonoBehaviour
                 {
                     ResumeGame();
                 }
-
                 break;
-
         }
     }
     
@@ -68,10 +70,21 @@ public class GameManager : MonoBehaviour
     {
         if (scene.name == "Level") 
         {
-            CurrentState = GameState.Playing;
+            SetGameState(GameState.Playing);
         }
     }
+    public void RegisterPlayer(PlayerStats stats)
+    {
+        stats.onDie.AddListener(GameOver);
+    }
 
+    void GameOver()
+    {
+        Debug.Log("GameOver");
+        gameOverUI.SetActive(true);
+        SetGameState(GameState.GameOver);
+ //       Time.timeScale = 0f;
+    }
 
     public void SetGameState(GameState newState)
         {
@@ -89,7 +102,6 @@ public class GameManager : MonoBehaviour
             pauseMenuUI.SetActive(true);
             Time.timeScale = 0f;
             SetGameState(GameState.Paused);
-            isPaused = true;
         }
 
         public void ResumeGame()
@@ -97,7 +109,6 @@ public class GameManager : MonoBehaviour
             pauseMenuUI.SetActive(false);
             Time.timeScale = 1f;
             SetGameState(GameState.Playing);
-            isPaused = false;
         }
 
         public void RestartGame()
