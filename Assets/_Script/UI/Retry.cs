@@ -11,7 +11,6 @@ public class Retry : MonoBehaviour
     public void OnRetryClicked()
     {
         Time.timeScale = 1f;
-        Debug.Log("Retry");
         GameManager.Instance.LoadScene("CharSelect");
     }
 }

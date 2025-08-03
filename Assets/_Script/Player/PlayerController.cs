@@ -1,8 +1,10 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public float groundCheckDistance = 0.1f;
 
     private Rigidbody2D rb;
+    Collider2D playerCol;
     
     private PlayerInputActions inputActions;
     private Vector2 moveInput;
@@ -51,11 +54,14 @@ public class PlayerController : MonoBehaviour
     private float footOffset = 0.01f;
     private float headOffset = 0.01f;
     
-    
+    //일방향 발판 관련
+    private float platformDropCooldown = 0.5f;
+    private float lastPlatformDropTime = -10f;
     
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerCol = GetComponent<Collider2D>();
         stats = GetComponent<PlayerStats>();
         stats.onDie.AddListener(OnDeath);
         
@@ -81,6 +87,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        
         if (isOnLadder)
             HandleLadder();
         else
@@ -88,16 +95,29 @@ public class PlayerController : MonoBehaviour
             HandleMovement();
             HandleJump();
             CheckLadderEnter();
+            
+            if (CanDropFromPlatform())
+            {
+                DropFromPlatform();
+                lastPlatformDropTime = Time.time;
+            }
         }
-        
     }
 
+    //좌우 움직임
     void HandleMovement()
     {
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
     }
+    
+    //점프
     void OnJumpStarted()
     {
+        if (IsOnOneWayPlatform() && moveInput.y < -0.1f)
+        {
+            jumpButtonHeld = true;
+            return;
+        }
         if (isOnLadder)
         {
             jumpRequested = true; // 사다리에서는 무조건 jumpRequested
@@ -152,12 +172,15 @@ public class PlayerController : MonoBehaviour
     #endif
         return hit.collider != null;
     }
+    
 
     void OnDeath()
     {
         //죽는 애니
     }
     
+    
+    //사다리
     void CheckLadderEnter()
     {
         if (Time.time < nextLadderGrabTime)
@@ -226,10 +249,8 @@ public class PlayerController : MonoBehaviour
         else{
             velocity.y = 0f;
         }
-
         
-        
-        velocity.x = 0f; // 사다리 중엔 X 이동 강제 0
+        velocity.x = 0f; // 사다리 중엔 좌우 이동 불가
         rb.linearVelocity = velocity;
 
         // 점프 입력시 사다리 탈출
@@ -244,7 +265,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // 위/중앙 + 점프: 탈출 + 점프(홀드 점프 구조와 동일)
+                // 위/중앙 + 점프 탈출
                 ExitLadder();
                 isJumping = true;
                 jumpButtonHeld = true;
@@ -258,7 +279,7 @@ public class PlayerController : MonoBehaviour
         Vector3Int cellCenter = ladderTilemap.WorldToCell(transform.position);
         if (ladderTilemap.GetTile(cellCenter) == null)
         {
-            // 단, 의도적으로 점프를 눌러 탈출한 게 아니면 X
+            // 단, 의도적으로 점프를 눌러 탈출한 게 아니면
             // ExitLadder();
         }
     }
@@ -293,6 +314,71 @@ public class PlayerController : MonoBehaviour
         return
             ladderTilemap.GetTile(cellCenter) != null ||
             ladderTilemap.GetTile(cellHead) != null;
+    }
+    
+    
+    //일방향 발판 
+    void DropFromPlatform()
+    {
+        Vector2 origin = (Vector2)transform.position + Vector2.down * playerHeight/2;
+        foreach (var col in Physics2D.OverlapBoxAll(origin, playerCol.bounds.size * new Vector2(0.9f, 0.1f), 0))
+        {
+            if (col.CompareTag("OneWayPlatform"))
+            {
+                Physics2D.IgnoreCollision(playerCol, col, true);
+                StartCoroutine(RestorePlatformCollision(col, platformDropCooldown));
+            }
+        }
+    }
+
+    IEnumerator RestorePlatformCollision(Collider2D platformCol, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Physics2D.IgnoreCollision(playerCol, platformCol, false);
+    }
+    
+    bool CanDropFromPlatform()
+    {
+        // 쿨타임 중엔 드롭 불가
+        if (Time.time - lastPlatformDropTime < platformDropCooldown)
+        {
+            return false;
+        }
+
+        if (moveInput.y < -0.1f && jumpButtonHeld && IsOnOneWayPlatform())
+        {
+            return true;
+        }
+
+        return false;
+    }
+    bool IsOnOneWayPlatform()
+    {
+        // 아래로 약간 오프셋(플레이어 발 바로 아래)만 체크해도 됨
+        Vector2 origin = (Vector2)transform.position + Vector2.down * playerHeight/2;
+        Collider2D[] hits = Physics2D.OverlapBoxAll(origin, playerCol.bounds.size * new Vector2(0.9f, 0.1f), 0);
+
+        foreach (var col in hits)
+        {
+            if (col != playerCol && col.CompareTag("OneWayPlatform"))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    void OnDrawGizmos()
+    {
+        if (!Application.isPlaying) return; // 에디터에서만 그릴 때는 필요 없음
+
+        // 플레이어 콜라이더 크기와 위치, OverlapBox 파라미터와 동일하게 설정
+        if (playerCol == null) return;
+
+        Vector2 origin = (Vector2)transform.position + Vector2.down * playerHeight/2;
+        Vector2 size = playerCol.bounds.size * new Vector2(0.9f, 0.1f);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(origin, size);
     }
     
 }
