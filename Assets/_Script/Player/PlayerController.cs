@@ -10,14 +10,14 @@ public class PlayerController : MonoBehaviour
     // 점프랑 움직임
     [NonSerialized] public float moveSpeed = 5f;
     
-    public float jumpHoldForce = 8f;   // 누르는 동안 추가 힘
-    public float jumpHoldDuration = 0.15f; // 최대 추가 시간(초)
+    [NonSerialized] public float jumpForce = 5f;         // 기본 점프력(바로 부여)
+    [NonSerialized] public float jumpHoldForce = 15f;     // 누르는 동안 프레임마다 추가 부여할 힘
+    [NonSerialized] public float jumpHoldDuration = 0.2f; // 추가 힘을 줄 수 있는 최대 시간
 
-    private bool isJumping = false;         // 점프 중인지
-    private float jumpTime = 0f;            // 점프 버튼을 누르고 있는 시간
-    private bool jumpButtonHeld = false;    // 버튼이 계속 눌려있는지
+    private bool isJumping = false;      // 점프 중인지
+    private float jumpTime = 0f;         // 점프 버튼 누른 시간
+    private bool jumpButtonHeld = false; // 버튼 누르고 있는지
     
-    [NonSerialized] public float jumpForce = 7f;
     public LayerMask groundLayer;
     
     public Transform groundCheckLeft;
@@ -65,7 +65,8 @@ public class PlayerController : MonoBehaviour
 
         inputActions.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         inputActions.Player.Move.canceled += ctx => moveInput = Vector2.zero;
-        inputActions.Player.Jump.performed += ctx => jumpRequested = true;
+        inputActions.Player.Jump.started += ctx => OnJumpStarted();
+        inputActions.Player.Jump.canceled += ctx => OnJumpReleased();
     }
 
     void OnEnable()
@@ -80,8 +81,6 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(Time.time <  nextLadderGrabTime);
-        
         if (isOnLadder)
             HandleLadder();
         else
@@ -97,14 +96,47 @@ public class PlayerController : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
     }
+    void OnJumpStarted()
+    {
+        if (isOnLadder)
+        {
+            jumpRequested = true; // 사다리에서는 무조건 jumpRequested
+            return;
+        }
+        if (IsGrounded())
+        {
+            isJumping = true;
+            jumpButtonHeld = true;
+            jumpTime = 0f;
 
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); // 바로 점프!
+        }
+    }
+
+    void OnJumpReleased()
+    {
+        jumpButtonHeld = false;
+    }
     void HandleJump()
     {
-        if (jumpRequested && IsGrounded())
+        if (isJumping)
         {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            if (jumpButtonHeld && jumpTime < jumpHoldDuration)
+            {
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y + jumpHoldForce * Time.deltaTime);
+                jumpTime += Time.deltaTime;
+            }
+            else
+            {
+                isJumping = false; // 더이상 추가 힘 안 줌
+            }
+
+            // 혹시 땅에 다시 닿으면 isJumping 해제
+            if (IsGrounded() && rb.linearVelocity.y <= 0)
+            {
+                isJumping = false;
+            }
         }
-        jumpRequested = false;
     }
 
     bool IsGrounded()
@@ -212,8 +244,11 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                // 위/중앙 + 점프: 탈출 + 점프 수행
+                // 위/중앙 + 점프: 탈출 + 점프(홀드 점프 구조와 동일)
                 ExitLadder();
+                isJumping = true;
+                jumpButtonHeld = true;
+                jumpTime = 0f;
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
                 jumpRequested = false;
                 return;
