@@ -14,7 +14,8 @@ public class GameManager : MonoBehaviour
         Menu,
         Playing,
         Paused,
-        GameOver
+        GameOver,
+        Shop
     }
 
     public GameState CurrentState { get; private set; }
@@ -80,10 +81,9 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
-        Debug.Log("GameOver");
         gameOverUI.SetActive(true);
         SetGameState(GameState.GameOver);
- //       Time.timeScale = 0f;
+        Time.timeScale = 0f;
     }
 
     public void SetGameState(GameState newState)

@@ -63,7 +63,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.1285, y: -0.1122, z: 0}
-  m_LocalScale: {x: 0.49243078, y: 0.43007198, z: 0.6571}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7009392066641577884}
@@ -145,6 +145,10 @@ MonoBehaviour:
   groundCheckCenter: {fileID: 7009392066641577884}
   groundCheckRight: {fileID: 7252040978900932445}
   groundCheckDistance: 0.1
+  ladderTilemap: {fileID: 0}
+  ladderSpeed: 4
+  snapToLadderXSpeed: 20
+  ladderSnapOffset: 0
 --- !u!50 &6450627703100026735
 Rigidbody2D:
   serializedVersion: 5

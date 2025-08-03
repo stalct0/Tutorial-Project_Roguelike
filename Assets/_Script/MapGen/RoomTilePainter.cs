@@ -5,12 +5,8 @@ using UnityEngine.Tilemaps;
 public static class RoomTilePainter
 {
     public static (GameObject startRoomPrefab, Vector3 startOffsetTile, Vector3 startOffsetObj)?
-        PaintRooms(Tilemap target, RoomNode[,] grid, RoomPrefabLibrary library, Vector3 cellSize)
+        PaintRooms(Dictionary<string, Tilemap> targetTilemaps, RoomNode[,] grid, RoomPrefabLibrary library, Vector3 cellSize, int roomWidth, int roomHeight)
     {
-        // 방 크기 지정
-        int roomWidth = 12; 
-        int roomHeight = 10; 
-
         // 맵 전체 크기
         int width = grid.GetLength(0);
         int height = grid.GetLength(1);
@@ -29,11 +25,17 @@ public static class RoomTilePainter
                 GameObject temp = GameObject.Instantiate(prefab); 
                 Tilemap source = temp.GetComponentInChildren<Tilemap>();
 
+                var tilemapsInRoom = temp.GetComponentsInChildren<Tilemap>();
                 Vector3Int offsetTile = new Vector3Int(x * roomWidth, y * roomHeight, 0);
                 Vector3 offsetObj = new Vector3(x * roomWidth * cellSize.x, y * roomHeight * cellSize.y, 0);
-                CopyTiles(source, target, offsetTile); //타일맵에 타일 생성
-
-
+                foreach (var tm in tilemapsInRoom)
+                {
+                    if (targetTilemaps.TryGetValue(tm.gameObject.name, out var targetTilemap))
+                    {
+                        CopyTiles(tm, targetTilemap, offsetTile); //타일맵에 타일 생성
+                    }
+                    
+                }
                 
                 CopyObjects(temp.transform, offsetObj, cellSize);
                 
@@ -81,4 +83,29 @@ public static class RoomTilePainter
             clone.transform.rotation = child.localRotation;          
         }
     }
+    
+    public static void PaintBorder(Tilemap borderTilemap, TileBase wallTile, int mapWidth, int mapHeight, int thickness)
+    {
+        // 아래쪽 벽
+        for (int x = -thickness; x < mapWidth + thickness; x++)
+        for (int y = -thickness; y < 0; y++)
+            borderTilemap.SetTile(new Vector3Int(x, y, 0), wallTile);
+
+        // 위쪽 벽
+        for (int x = -thickness; x < mapWidth + thickness; x++)
+        for (int y = mapHeight; y < mapHeight + thickness; y++)
+            borderTilemap.SetTile(new Vector3Int(x, y, 0), wallTile);
+
+        // 왼쪽 벽
+        for (int x = -thickness; x < 0; x++)
+        for (int y = 0; y < mapHeight; y++)
+            borderTilemap.SetTile(new Vector3Int(x, y, 0), wallTile);
+
+        // 오른쪽 벽
+        for (int x = mapWidth; x < mapWidth + thickness; x++)
+        for (int y = 0; y < mapHeight; y++)
+            borderTilemap.SetTile(new Vector3Int(x, y, 0), wallTile);
+    }
+    
 }
+    

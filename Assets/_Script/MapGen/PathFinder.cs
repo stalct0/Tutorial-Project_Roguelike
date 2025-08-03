@@ -56,7 +56,6 @@ public static class PathFinder // start에서 end로 가는 경로 생성
         int lastDirection = LastisAtLeftEdge ? 1 : LastisAtRightEdge ? -1 : (Random.value < 0.5f ? -1 : 1);
         List<Vector2Int> finalRow = new();
         Vector2Int lastRowStart = current;
-        Debug.Log($"{lastDirection}");
         
         while (current.x >= 0 && current.x < width)
         {
@@ -71,10 +70,8 @@ public static class PathFinder // start에서 end로 가는 경로 생성
         {
             finalRow.Add(current); // 최소한 current는 넣어준다
         }
-        Debug.Log($"final row: {finalRow.Count}");
         // end는 마지막 줄 중 하나를 랜덤으로 선택
         Vector2Int end = finalRow[Random.Range(0, finalRow.Count)];
-        Debug.Log($"end pos: {end.x},{end.y}");
         
         current = lastRowStart;
         

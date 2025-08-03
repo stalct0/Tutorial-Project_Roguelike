@@ -1,9 +1,9 @@
     using UnityEngine;
 
-public class Exit : MonoBehaviour
+public class ShopExit : MonoBehaviour
 {
-    public void OnExitClicked()
+    public void OnNextLevelClicked()
     {
-        Debug.Log("�����Ⱑ ���Ƚ��ϴ�");
+        GameManager.Instance.LoadScene("Level");
     }
 }

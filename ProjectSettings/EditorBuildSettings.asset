@@ -26,6 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Main Flow/Level.unity
     guid: ba802c7a35ab015459896c960a1228f2
+  - enabled: 1
+    path: Assets/_Scenes/Main Flow/CharSelect.unity
+    guid: a3f7349517b4b8b4ba88c9ca7be64868
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

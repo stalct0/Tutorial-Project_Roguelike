@@ -6,6 +6,10 @@ using Unity.Cinemachine;
 public class MapGenerator : MonoBehaviour
 {
     public Tilemap mainTilemap;
+    public Tilemap ladderTilemap;
+    public Tilemap borderTilemap;
+    public TileBase wallTile;
+    
     public RoomPrefabLibrary roomLibrary;
     public GameObject playerPrefab;
 
@@ -13,6 +17,10 @@ public class MapGenerator : MonoBehaviour
     private RoomNode[,] roomGrid;
     private Grid gridLayout;
 
+    private int roomWidth = 12;
+    private int roomHeight = 10;
+    private int thickness = 10;
+    
     void Awake()
     {
         gridLayout = mainTilemap.GetComponentInParent<Grid>();
@@ -22,6 +30,12 @@ public class MapGenerator : MonoBehaviour
         config = new MapConfig();
         config.GenerateRandomSize(); // 맵 크기 랜덤
 
+        var targetTilemaps = new Dictionary<string, Tilemap>
+        {
+            { "MainTilemap", mainTilemap },
+            { "LadderTilemap", ladderTilemap }
+        };
+        
         roomGrid = new RoomNode[config.Width, config.Height];
     
         InitRooms();
@@ -34,7 +48,7 @@ public class MapGenerator : MonoBehaviour
 
         Vector3 cellSize = gridLayout.cellSize;
         
-        var roomResult = RoomTilePainter.PaintRooms(mainTilemap, roomGrid, roomLibrary, gridLayout.cellSize);
+        var roomResult = RoomTilePainter.PaintRooms(targetTilemaps, roomGrid, roomLibrary, gridLayout.cellSize, roomWidth, roomHeight);
         if (roomResult.HasValue)
         {
             var (startRoomPrefab, startOffset, st) = roomResult.Value;
@@ -44,8 +58,11 @@ public class MapGenerator : MonoBehaviour
             {
                 Vector3 spawnPos = st + Vector3.Scale(spawnPoint.position, cellSize) ; 
                 GameObject player = Instantiate(playerPrefab, spawnPos, Quaternion.identity); // 플레이어 생성
-
+                
                 var vcam = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>(); //플레이어에 카메라 부착
+                var playerController = player.GetComponent<PlayerController>();
+                var ladderTilemap = GameObject.Find("LadderTilemap").GetComponent<Tilemap>();
+                playerController.ladderTilemap = ladderTilemap;  //플레이어 laddertilemap 할당 
                 if (vcam != null)
                 {
                     vcam.Follow = player.transform;
@@ -54,6 +71,9 @@ public class MapGenerator : MonoBehaviour
             
             GameObject.Destroy(startRoomPrefab); 
         }
+        
+        RoomTilePainter.PaintBorder(borderTilemap, wallTile, config.Width * roomWidth, 
+            config.Height * roomHeight, thickness);
         
     }
 
