@@ -15,10 +15,13 @@ public class SojuProjectile : MonoBehaviour
     // "TakeDamage" 플레이어 AI 스크립트에서 호출해야됨
     // 적이 피격되면 사라짐
     // 플랫폼 피격 시 사라짐
-    // 땅 피격 시 사라짐
+    // 땅 피격 시 사라짐 
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Check if the collided object is an enemy
+        
+        /*
         var enemy = collision.gameObject.GetComponent<SojuThrowerAI>();
         if (enemy != null)
         {
@@ -26,20 +29,25 @@ public class SojuProjectile : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
+        */
+        
         // Destroy on contact with player
+        
         if (collision.gameObject.CompareTag("Player"))
         {
+            var playerStats = collision.gameObject.GetComponent<PlayerStats>();
+            if (playerStats != null)
+                playerStats.TakeDamage(20); // 원하는 데미지
             Destroy(gameObject);
-            return;
         }
-
+        
+        
         // Destroy on contact with platform/ground
         if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Platform"))
         {
             Destroy(gameObject);
-            return;
         }
+        
     }
 
     // 2차함수 꼴로 투사체가 날아감. 

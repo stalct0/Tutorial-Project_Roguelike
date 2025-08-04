@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7009392066641577884}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: groundCheck_Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 450007243946602115}
   - component: {fileID: 631235682193910370}
   - component: {fileID: 1048726489362991629}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b677081a6eb9d904eb0ad7313d6ab8bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
   maxHealth: 100
   onDie:
     m_PersistentCalls:
@@ -277,7 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7252040978900932445}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: groundCheck_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -308,7 +309,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5889226011738354875}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: groundCheck_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}

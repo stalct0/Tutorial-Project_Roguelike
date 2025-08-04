@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; } //Singleton
     public GameObject pauseMenuUI;
     public GameObject gameOverUI;
+    
+    [NonSerialized] public int GameStage = 1;
+    [NonSerialized] public int GameLevel = 1;
     
     public enum GameState
     {
@@ -115,6 +119,16 @@ public class GameManager : MonoBehaviour
         {
 
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+        
+        public void NextStage()
+        {
+            GameLevel++;
+            if (GameLevel > 5)
+            {
+                GameStage++;
+                GameLevel = 1;
+            }
         }
 
 

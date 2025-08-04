@@ -726,7 +726,7 @@ RectTransform:
   m_Father: {fileID: 712757646}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1768,9 +1768,8 @@ GameObject:
   m_Component:
   - component: {fileID: 712757646}
   - component: {fileID: 712757648}
-  - component: {fileID: 712757647}
   m_Layer: 5
-  m_Name: Health Bar
+  m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1798,19 +1797,6 @@ RectTransform:
   m_AnchoredPosition: {x: 278.6962, y: -44.948}
   m_SizeDelta: {x: 518.9572, y: 148.34}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &712757647
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 712757645}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3caed6c1ec655249a84516fce01573b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 712757648}
 --- !u!114 &712757648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2195,8 +2181,9 @@ GameObject:
   - component: {fileID: 850590059}
   - component: {fileID: 850590058}
   - component: {fileID: 850590057}
+  - component: {fileID: 850590061}
   m_Layer: 5
-  m_Name: HUD Canvas
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2291,6 +2278,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &850590061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850590056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b14617a6e089b440bfee36fb8ab8c80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 712757648}
+  statText: {fileID: 808901850}
+  stageText: {fileID: 1645830670}
+  moneyText: {fileID: 1481907015}
 --- !u!1 &868817392
 GameObject:
   m_ObjectHideFlags: 0
@@ -2923,8 +2926,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1354520141}
-  - component: {fileID: 1354520144}
-  - component: {fileID: 1354520143}
   - component: {fileID: 1354520142}
   m_Layer: 5
   m_Name: TopRightUI
@@ -2981,32 +2982,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &1354520143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1354520140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b14617a6e089b440bfee36fb8ab8c80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  statText: {fileID: 808901850}
---- !u!114 &1354520144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1354520140}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d92e5005515bfe41a25d63a30982462, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stageText: {fileID: 1645830670}
 --- !u!1 &1357551114
 GameObject:
   m_ObjectHideFlags: 0
