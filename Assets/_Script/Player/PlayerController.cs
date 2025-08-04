@@ -294,7 +294,7 @@ public class PlayerController : MonoBehaviour
     bool IsOnLadderCanMoveDown()
     {
         Vector3 center = transform.position;
-        Vector3 feet = center + Vector3.down * (playerHeight * 0.4f - footOffset);
+        Vector3 feet = center + Vector3.down * (playerHeight * 0.5f - footOffset);
 
         Vector3Int cellCenter = ladderTilemap.WorldToCell(center);
         Vector3Int cellFeet = ladderTilemap.WorldToCell(feet);
@@ -366,19 +366,6 @@ public class PlayerController : MonoBehaviour
             }
         }
         return false;
-    }
-    void OnDrawGizmos()
-    {
-        if (!Application.isPlaying) return; // 에디터에서만 그릴 때는 필요 없음
-
-        // 플레이어 콜라이더 크기와 위치, OverlapBox 파라미터와 동일하게 설정
-        if (playerCol == null) return;
-
-        Vector2 origin = (Vector2)transform.position + Vector2.down * playerHeight/2;
-        Vector2 size = playerCol.bounds.size * new Vector2(0.9f, 0.1f);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(origin, size);
     }
     
 }

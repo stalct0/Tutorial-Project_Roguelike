@@ -1,2 +1,13 @@
 fileFormatVersion: 2
 guid: 7afaa4b4dea3b5541afbc0f9c427f98a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - player: {fileID: 6498673081748981089, guid: a6f202cbcbe8f3748a7f1dd9e93440d0, type: 3}
+  - sojuPrefab: {fileID: 4367968913552322755, guid: d35ddd8929f3a7e47ad1572bd1c7cb7a, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

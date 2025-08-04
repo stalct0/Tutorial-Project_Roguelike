@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -30,18 +31,19 @@ public class SojuThrowerAI : MonoBehaviour
 
 
     // 패드롤 논리 변수 정의 
-    public float patrolEdgeOffset = 0.5f; // Distance from edge to stop
-    private bool patrolMovingRight = true;
+    private float patrolEdgeOffset = 0.3f; // Distance from edge to stop
     public EnemyState currentState = EnemyState.Patrol;
 
 
     // 플레이어 변수 정의 (사실 unity inspector 에서 할당된 값이 우선 적용됨. )
     public Transform player;
-    public float moveSpeed = 1.5f;
-    public float agroRange = 10f;
-    public float attackRange = 7f;
-    public float prepareTime = 1.0f;
+    
+    private float moveSpeed = 1f;
+    private float agroRange = 4f;
+    private float attackRange = 5f;
+    private float prepareTime = 1.0f;
 
+    private float currentDirection = 1f;
 
     //private Animator animator;
     private Rigidbody2D rb;
@@ -52,10 +54,15 @@ public class SojuThrowerAI : MonoBehaviour
     // 던지는 소주병  불러오기
     public GameObject sojuPrefab; // Assign this in the Unity Inspector
 
-
-
+    
     void Start()
     {
+        if (player == null)
+        {
+            var go = GameObject.FindGameObjectWithTag("Player");
+            if (go != null)
+                player = go.transform;
+        }
         //animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         // Freeze rotation so enemy doesn't rotate
@@ -98,7 +105,6 @@ public class SojuThrowerAI : MonoBehaviour
         if (player == null)
         {
             // No player, never aggro
-            // ...continue patrol logic...
         }
         else
         {
@@ -112,13 +118,13 @@ public class SojuThrowerAI : MonoBehaviour
         }
 
         // 패트롤 움직임 및 엣지 감지
-        float direction = patrolMovingRight ? 1f : -1f;
+        float direction = currentDirection;
         Vector2 edgeCheckOrigin = transform.position + new Vector3(direction * patrolEdgeOffset, 0f, 0f);
-        int platformLayerMask = LayerMask.GetMask("Default", "Ground", "Platform"); // add your platform layers
+        int platformLayerMask = LayerMask.GetMask("Ground"); // add your platform layers
         RaycastHit2D[] hits = new RaycastHit2D[4];
-        int hitCount = Physics2D.RaycastNonAlloc(edgeCheckOrigin, Vector2.down, hits, 5f, platformLayerMask);
+        int hitCount = Physics2D.RaycastNonAlloc(edgeCheckOrigin, Vector2.down, hits, 0.5f, platformLayerMask);
 
-        Debug.DrawRay(edgeCheckOrigin, Vector2.down * 5f, Color.red, 2f);
+        Debug.DrawRay(edgeCheckOrigin, Vector2.down * 0.5f, Color.red, 2f);
         RaycastHit2D validHit = default;
         for (int i = 0; i < hitCount; i++)
         {
@@ -128,24 +134,13 @@ public class SojuThrowerAI : MonoBehaviour
                 break;
             }
         }
-
-        // 디버거임, 없어도 됨. 
-        /*
-        if (validHit.collider != null)
+        if (validHit.collider == null)
         {
-            Debug.Log("Raycast hit: " + validHit.collider.gameObject.name);
-        }
-        else
-        {
-            Debug.Log("Raycast did not hit anything!");
-            // Near edge, turn around
-            patrolMovingRight = !patrolMovingRight;
-            rb.linearVelocity = Vector2.zero;
+            // 엣지에 도달 → 방향 반전
+            currentDirection = -currentDirection; // (+1 ↔ -1)
+            rb.linearVelocity = Vector2.zero;     // (선택) 잠시 멈춤
             return;
         }
-        */
-
-        // Move in current direction
         rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
     }
 
@@ -178,15 +173,16 @@ public class SojuThrowerAI : MonoBehaviour
             rb.linearVelocity = Vector2.zero;
             return;
         }
+        
         float direction = player.position.x - transform.position.x;
         float distanceToPlayer = Mathf.Abs(direction);
         float moveDir = Mathf.Sign(direction);
 
         // 움직이기 전 엣지 감지 (떨어지지 않기 위해)
         Vector2 edgeCheckOrigin = transform.position + new Vector3(moveDir * patrolEdgeOffset, 0f, 0f);
-        int platformLayerMask = LayerMask.GetMask("Default", "Ground", "Platform");
+        int platformLayerMask = LayerMask.GetMask("Ground");
         RaycastHit2D[] hits = new RaycastHit2D[4];
-        int hitCount = Physics2D.RaycastNonAlloc(edgeCheckOrigin, Vector2.down, hits, 5f, platformLayerMask);
+        int hitCount = Physics2D.RaycastNonAlloc(edgeCheckOrigin, Vector2.down, hits, 0.5f, platformLayerMask);
         bool nearEdge = true;
         for (int i = 0; i < hitCount; i++)
         {
@@ -276,6 +272,9 @@ public class SojuThrowerAI : MonoBehaviour
         }
     }
 
+    
+    
+    
     void Attack()
     {
         //animator.SetTrigger("isThrowing");
@@ -301,6 +300,9 @@ public class SojuThrowerAI : MonoBehaviour
         }
     }
 
+    
+    
+    
     public void OnHit()
     {
         // Removed assignment to unused isHit field
