@@ -13,7 +13,7 @@ public class PlayerStats : MonoBehaviour
     public int attackDamage { get; private set; }
     public int abilityPower { get; private set; }
     
-    private bool isInvincible = false;
+    public bool isInvincible = false;
     private float invincibleTimer = 0f;
     
     public int Money { get; private set; }
@@ -50,7 +50,6 @@ public class PlayerStats : MonoBehaviour
     {
         if (isInvincible)
         {
-            Debug.Log("Invincible");   
             invincibleTimer -= Time.deltaTime;
             if (invincibleTimer <= 0f)
                 isInvincible = false;
@@ -70,13 +69,39 @@ public class PlayerStats : MonoBehaviour
         //스턴
         if (controller.shortStunDuration > 0f)
         {
-            if (controller != null)
                 controller.ShortStun(controller.shortStunDuration);
+                SetInvincible(controller.shortStunInvincibleDuration);
         }
         
         if (currentHealth <= 0)
             Die();
     }
+    
+    public void TakeDamageKnockback(int amount,Vector2? sourcePosition, float knockbackForce)
+    {
+        if (isInvincible) return;
+        
+        currentHealth -= amount;
+        if (currentHealth < 0)
+            currentHealth = 0;
+        if (statDisplay != null)
+            statDisplay.SetHealth(currentHealth);
+        
+        // 이 시점에서 넉백 먼저 적용
+        
+        
+        //스턴
+        if (controller.shortStunDuration > 0f)
+        {
+            controller.ShortStun(controller.shortStunDuration);
+            controller.KnockbackFrom(sourcePosition.Value, knockbackForce);
+            SetInvincible(controller.shortStunInvincibleDuration);
+        }
+        
+        if (currentHealth <= 0)
+            Die();
+    }
+    
 
     public void TakeLongStun(int amount)
     {

@@ -149,6 +149,11 @@ MonoBehaviour:
   ladderSpeed: 4
   snapToLadderXSpeed: 20
   ladderSnapOffset: 0
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  shortStunDuration: 0.3
+  longStunDuration: 2
 --- !u!50 &6450627703100026735
 Rigidbody2D:
   serializedVersion: 5
@@ -192,7 +197,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -264,11 +269,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b677081a6eb9d904eb0ad7313d6ab8bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBar: {fileID: 0}
+  statDisplay: {fileID: 0}
   maxHealth: 100
+  startAD: 1
+  startMoney: 0
   onDie:
     m_PersistentCalls:
       m_Calls: []
+  controller: {fileID: 0}
 --- !u!1 &7356647992810592606
 GameObject:
   m_ObjectHideFlags: 0

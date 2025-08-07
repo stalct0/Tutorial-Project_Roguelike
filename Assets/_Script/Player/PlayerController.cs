@@ -54,6 +54,9 @@ public class PlayerController : MonoBehaviour
     private float footOffset = 0.01f;
     private float headOffset = 0.01f;
     
+    //근접데미지 받기 관련
+    public LayerMask enemyLayer; // "Enemy"만 포함
+    
     //일방향 발판 관련
     private float platformDropCooldown = 0.5f;
     private float lastPlatformDropTime = -10f;
@@ -61,7 +64,8 @@ public class PlayerController : MonoBehaviour
     //스턴 관련
     private bool isShortStunned = false;
     private float shortStunTimer = 0f;
-    public float shortStunDuration = 0.3f;
+    [NonSerialized] public float shortStunDuration = 0.3f;
+    [NonSerialized] public float shortStunInvincibleDuration = 0.8f;
 
     private bool isLongStunned = false;
     private float longStunTimer = 0f;
@@ -96,6 +100,10 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        
+        //근접 피격 적용
+        CheckEnemyContactAndTakeDamage(10, 3);
+        
         // 스턴 처리
         if (isLongStunned)
         {
@@ -130,8 +138,10 @@ public class PlayerController : MonoBehaviour
                 lastPlatformDropTime = Time.time;
             }
         }
+        
     }
-
+    
+    
     //좌우 움직임
     void HandleMovement()
     {
@@ -201,6 +211,26 @@ public class PlayerController : MonoBehaviour
         return hit.collider != null;
     }
     
+    //몬스터 근접공격 받기
+    public void CheckEnemyContactAndTakeDamage(int damage = 10, float knockbackForce = 3)
+    {
+        Vector2 checkCenter = transform.position;
+        Vector2 checkSize = new Vector2(0.55f, 0.55f);
+
+        Collider2D[] hits = Physics2D.OverlapBoxAll(checkCenter, checkSize, 0f, enemyLayer);
+
+        foreach (var hit in hits)
+        {
+            stats.TakeDamageKnockback(damage, hit.transform.position, knockbackForce);
+            break; // 여러 몬스터와 겹쳐도 1회만
+        }
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireCube(transform.position,new Vector2(0.55f, 0.55f));
+    }
+    
     //스턴
     public void LongStun(float duration)
     {
@@ -208,15 +238,27 @@ public class PlayerController : MonoBehaviour
         longStunTimer = duration;
         rb.linearVelocity = Vector2.zero; // 즉시 멈춤 (선택)
     }
-    public void ShortStun(float duration)
+    public void ShortStun(float stunDuration)
     {
         isShortStunned = true;
-        shortStunTimer = duration;
+        shortStunTimer = stunDuration;
         rb.linearVelocity = Vector2.zero; // 즉시 멈춤 (선택)
-        if (stats != null)
-            stats.SetInvincible(duration);
     }
+    
 
+    //넉백
+    public void KnockbackFrom(Vector2 sourcePosition, float knockbackForce)
+    {
+        // 넉백 방향: 플레이어 → 소스(몬스터) 방향의 반대 (플레이어가 튕겨나감)
+        Vector2 knockbackDir = ((Vector2)transform.position - sourcePosition).normalized;
+        // 주로 x축만 고려(수평 튕김), y도 조금 올리면 자연스러움
+        knockbackDir.y = 0.5f; // 수직도 살짝 추가(옵션)
+        knockbackDir.Normalize();
+        
+        rb.linearVelocity = Vector2.zero; // 이전 속도 제거(옵션)
+        rb.AddForce(knockbackDir * knockbackForce, ForceMode2D.Impulse);
+    }
+    
     void OnDeath()
     {
         //죽는 애니

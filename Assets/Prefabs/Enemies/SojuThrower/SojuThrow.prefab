@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5869185143113118571}
   - component: {fileID: -2011553812080270117}
   - component: {fileID: 7188111118439453318}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SojuThrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,14 +103,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
-  outOfRangeDuration: 2
-  patrolEdgeOffset: 0.5
   currentState: 0
   player: {fileID: 0}
-  moveSpeed: 1.5
-  agroRange: 10
-  attackRange: 7
-  prepareTime: 1
   sojuPrefab: {fileID: 4367968913552322755, guid: d35ddd8929f3a7e47ad1572bd1c7cb7a, type: 3}
 --- !u!50 &-2011553812080270117
 Rigidbody2D:
