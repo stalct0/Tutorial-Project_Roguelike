@@ -2,27 +2,40 @@ using UnityEngine;
 
 public class DisappearingPlatform : MonoBehaviour
 {
-    public float disappearDelay = 2.0f; // 사라질 때까지 대기 시간
+    private float disappearDelay = 0.7f; // 사라질 때까지 대기 시간
 
     private bool isSteppedOn = false;
     private SpriteRenderer spriteRenderer;
     private Collider2D col;
-
+    
+    private Vector2 checkSize = new Vector2(0.7f, 0.1f); // 발판 위 폭, 두께
+    private Vector2 checkOffset = new Vector2(0f, 0.3f); // 발판 중심에서 위로
+    
+    
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         col = GetComponent<Collider2D>();
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void Update()
     {
-        // 플레이어가 발판 위에 올라섰는지 확인 (Tag, Layer 등으로 필터)
-        if (!isSteppedOn && collision.collider.CompareTag("Player"))
+        if (isSteppedOn) return;
+
+        // 발판 위에 플레이어가 올라와 있는지 체크 (플레이어 Layer/Tag 조정)
+        Vector2 center = (Vector2)transform.position + checkOffset;
+        Collider2D[] hits = Physics2D.OverlapBoxAll(center, checkSize, 0f, LayerMask.GetMask("Player"));
+        foreach (var hit in hits)
         {
-            isSteppedOn = true;
-            StartCoroutine(DisappearCoroutine());
+            if (hit.CompareTag("Player"))
+            {
+                isSteppedOn = true;
+                StartCoroutine(DisappearCoroutine());
+                break;
+            }
         }
     }
+    
 
     System.Collections.IEnumerator DisappearCoroutine()
     {
@@ -35,5 +48,11 @@ public class DisappearingPlatform : MonoBehaviour
 
         // 완전히 파괴하려면 Destroy(gameObject); 해도 됨
         // Destroy(gameObject);
+    }
+    void OnDrawGizmosSelected()
+    {
+        Vector2 center = (Vector2)transform.position + checkOffset;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(center, checkSize);
     }
 }

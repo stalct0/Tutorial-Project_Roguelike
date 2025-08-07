@@ -57,6 +57,15 @@ public class PlayerController : MonoBehaviour
     //일방향 발판 관련
     private float platformDropCooldown = 0.5f;
     private float lastPlatformDropTime = -10f;
+
+    //스턴 관련
+    private bool isShortStunned = false;
+    private float shortStunTimer = 0f;
+    public float shortStunDuration = 0.3f;
+
+    private bool isLongStunned = false;
+    private float longStunTimer = 0f;
+    public float longStunDuration = 2.0f;
     
     void Awake()
     {
@@ -87,11 +96,30 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        // 스턴 처리
+        if (isLongStunned)
+        {
+            longStunTimer -= Time.deltaTime;
+            if (longStunTimer <= 0f)
+            {
+                isLongStunned = false;
+            }
+            return; // 스턴 중엔 다른 입력/이동 무시
+        }
         
         if (isOnLadder)
             HandleLadder();
         else
         {
+            if (isShortStunned)
+            {
+                shortStunTimer -= Time.deltaTime;
+                if (shortStunTimer <= 0f)
+                {
+                    isShortStunned = false;
+                }
+                return; // 스턴 중엔 다른 입력/이동 무시
+            }
             HandleMovement();
             HandleJump();
             CheckLadderEnter();
@@ -173,6 +201,21 @@ public class PlayerController : MonoBehaviour
         return hit.collider != null;
     }
     
+    //스턴
+    public void LongStun(float duration)
+    {
+        isLongStunned = true;
+        longStunTimer = duration;
+        rb.linearVelocity = Vector2.zero; // 즉시 멈춤 (선택)
+    }
+    public void ShortStun(float duration)
+    {
+        isShortStunned = true;
+        shortStunTimer = duration;
+        rb.linearVelocity = Vector2.zero; // 즉시 멈춤 (선택)
+        if (stats != null)
+            stats.SetInvincible(duration);
+    }
 
     void OnDeath()
     {
@@ -235,6 +278,12 @@ public class PlayerController : MonoBehaviour
 
         float verticalMove = moveInput.y;
         
+        // 사다리 상태에서 아래키만 누르면 일방향 발판 통과
+        if (moveInput.y < -0.1f && IsOnOneWayPlatform() && Time.time - lastPlatformDropTime >= platformDropCooldown)
+        {
+            DropFromPlatform();
+            lastPlatformDropTime = Time.time;
+        }
         
         Vector2 velocity = rb.linearVelocity;
 
@@ -249,6 +298,9 @@ public class PlayerController : MonoBehaviour
         else{
             velocity.y = 0f;
         }
+        
+
+
         
         velocity.x = 0f; // 사다리 중엔 좌우 이동 불가
         rb.linearVelocity = velocity;

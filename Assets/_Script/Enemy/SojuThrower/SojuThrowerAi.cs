@@ -26,7 +26,7 @@ public class SojuThrowerAI : MonoBehaviour
 
     // 플레이어가 사거리를 넘어가면 몇초 후 패트롤로 돌아감. 
     private float outOfRangeTimer = 0f;
-    public float outOfRangeDuration = 2f; // seconds to wait before returning to patrol
+    private float outOfRangeDuration = 1f; // seconds to wait before returning to patrol
 
 
 
@@ -41,7 +41,7 @@ public class SojuThrowerAI : MonoBehaviour
     private float moveSpeed = 1f;
     private float agroRange = 4f;
     private float attackRange = 5f;
-    private float prepareTime = 1.0f;
+    private float prepareTime = 1f;
 
     private float currentDirection = 1f;
 
@@ -50,7 +50,10 @@ public class SojuThrowerAI : MonoBehaviour
     // Removed unused isFacingRight field
     // Removed unused isHit field
     private float prepareTimer;
+    
+    private bool isFirstAttack = true;
 
+    
     // 던지는 소주병  불러오기
     public GameObject sojuPrefab; // Assign this in the Unity Inspector
 
@@ -99,7 +102,7 @@ public class SojuThrowerAI : MonoBehaviour
     void Patrol()
     {
         //animator.SetBool("isWalking", true);
-
+        isFirstAttack = true;
 
         // 좌우 순회 로직 
         if (player == null)
@@ -148,7 +151,7 @@ public class SojuThrowerAI : MonoBehaviour
     {
         // 어그로 끌리고 잠시 정지
         rb.linearVelocity = Vector2.zero;
-        Invoke(nameof(GoToMoveState), 0.5f);
+        Invoke(nameof(GoToMoveState), 0f);
     }
 
     void GoToMoveState()
@@ -258,18 +261,27 @@ public class SojuThrowerAI : MonoBehaviour
     {
         //animator.SetBool("isWalking", false);
         //animator.SetBool("isPreparing", true);
-        if (player == null)
+        if (isFirstAttack)
         {
-            // No player, return to patrol
-            currentState = EnemyState.Patrol;
-            return;
-        }
-        prepareTimer -= Time.deltaTime;
-
-        if (prepareTimer <= 0)
-        {
+            isFirstAttack = false;
+            prepareTimer = 0f; // 또는 아래에서 바로 Attack 상태로
             currentState = EnemyState.Attack;
         }
+        else
+        {
+            if (player == null)
+            {
+                // No player, return to patrol
+                currentState = EnemyState.Patrol;
+                return;
+            }
+            prepareTimer -= Time.deltaTime;
+            if (prepareTimer <= 0)
+            {
+                currentState = EnemyState.Attack;
+            }
+        }
+        
     }
 
     

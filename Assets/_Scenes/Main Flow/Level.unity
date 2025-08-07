@@ -3493,6 +3493,9 @@ MonoBehaviour:
   - type: 5
     prefabs:
     - {fileID: 388145940727604920, guid: 1890d249a2b719949b86618e2c4aa7ab, type: 3}
+    - {fileID: 388145940727604920, guid: cb3c99c30e787ff4681642c729dd7510, type: 3}
+    - {fileID: 388145940727604920, guid: 2cd83bfa03103604bbf5c09d3e7a13ba, type: 3}
+    - {fileID: 388145940727604920, guid: b9832b64c5044b046ad85d2c57b49e4e, type: 3}
   - type: 6
     prefabs:
     - {fileID: 388145940727604920, guid: 073e1f7eff8dc8f429b0706b8e1d17eb, type: 3}
