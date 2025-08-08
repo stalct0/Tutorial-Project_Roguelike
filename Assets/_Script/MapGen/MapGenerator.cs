@@ -56,17 +56,10 @@ public class MapGenerator : MonoBehaviour
             Transform spawnPoint = startRoomPrefab.transform.Find("SpawnPoint");
             if (spawnPoint != null)
             {
-                Vector3 spawnPos = st + Vector3.Scale(spawnPoint.position, cellSize) ; 
-                GameObject player = Instantiate(playerPrefab, spawnPos, Quaternion.identity); // 플레이어 생성
-                
-                var vcam = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>(); //플레이어에 카메라 부착
-                var playerController = player.GetComponent<PlayerController>();
+                Vector3 spawnPos = st + Vector3.Scale(spawnPoint.position, cellSize);
                 var ladderTilemap = GameObject.Find("LadderTilemap").GetComponent<Tilemap>();
-                playerController.ladderTilemap = ladderTilemap;  //플레이어 laddertilemap 할당 
-                if (vcam != null)
-                {
-                    vcam.Follow = player.transform;
-                }
+                
+                GameManager.Instance.SpawnOrMovePlayer(spawnPos, ladderTilemap);
             }
             
             GameObject.Destroy(startRoomPrefab); 

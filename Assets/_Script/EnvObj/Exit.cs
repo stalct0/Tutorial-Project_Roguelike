@@ -27,6 +27,7 @@ public class Exit : MonoBehaviour
         {
             GameManager.Instance.SetGameState(GameManager.GameState.Shop);
             GameManager.Instance.LoadScene("Shop");
+            GameManager.Instance.ResetPlayerPosition();
         }
     }
 

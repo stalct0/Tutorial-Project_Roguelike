@@ -23,7 +23,6 @@ public class PlayerStats : MonoBehaviour
 
     void Awake()
     {
-        statDisplay = GameObject.Find("Canvas").GetComponent<StatDisplay>();
         controller = GetComponent<PlayerController>();
 
         currentHealth = maxHealth;
@@ -139,6 +138,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Die()
     {
+        GameObject.Destroy(gameObject);
         if (onDie != null)
             onDie.Invoke();
     }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class GameManager : MonoBehaviour
 {
@@ -12,6 +13,14 @@ public class GameManager : MonoBehaviour
     
     [NonSerialized] public int GameStage = 1;
     [NonSerialized] public int GameLevel = 1;
+    
+    [Header("Player")]
+    public GameObject playerPrefab;
+    public GameObject playerInstance {get; private set; }   // 생성 후 유지 
+    // 캐싱할 레퍼런스들
+    public PlayerController PC { get; private set; }
+    public PlayerStats     PStats { get; private set; }
+    public Rigidbody2D     PRB { get; private set; }
     
     public enum GameState
     {
@@ -59,6 +68,8 @@ public class GameManager : MonoBehaviour
                     ResumeGame();
                 }
                 break;
+            case GameState.Shop:
+                break;
         }
     }
     
@@ -83,6 +94,35 @@ public class GameManager : MonoBehaviour
         stats.onDie.AddListener(GameOver);
     }
 
+    public void SpawnOrMovePlayer(Vector3 spawnPos, Tilemap ladderTilemap)
+    {
+        if (playerInstance == null)
+        {
+            playerInstance = Instantiate(playerPrefab, spawnPos, Quaternion.identity);
+            DontDestroyOnLoad(playerInstance);
+            CachePlayerComponents(); 
+        }
+        else
+        {
+            playerInstance.transform.position = spawnPos;
+            if (PRB) PRB.linearVelocity = Vector2.zero;
+        }
+
+        // 사다리/카메라 참조 재결합
+        if (PC) PC.ladderTilemap = ladderTilemap;
+
+        var vcam = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>();
+        if (vcam) vcam.Follow = playerInstance.transform;
+        
+        BindPlayerUI();
+    }
+
+    public void ResetPlayerPosition()
+    {
+        playerInstance.transform.position = Vector3.zero;
+        PC.ladderTilemap = null;
+    }
+    
     void GameOver()
     {
         gameOverUI.SetActive(true);
@@ -129,6 +169,31 @@ public class GameManager : MonoBehaviour
                 GameStage++;
                 GameLevel = 1;
             }
+        }
+        
+        void BindPlayerUI()
+        {
+            if (PStats == null) return;
+
+            // 씬에 새로 생성된 StatDisplay 찾기 (이름말고 타입으로)
+            var sd = FindFirstObjectByType<StatDisplay>();  // 2022+ 권장
+            if (sd == null) return;
+
+            // PlayerStats에 UI 연결
+            PStats.statDisplay = sd;
+
+            // 현재 스탯을 UI에 밀어넣기
+            sd.SetMaxHealth(PStats.maxHealth);
+            sd.SetHealth(PStats.currentHealth);
+            sd.SetStat(PStats.attackDamage);
+            sd.SetMoney(PStats.Money);
+        }
+        
+        void CachePlayerComponents()
+        {
+            PC     = playerInstance.GetComponent<PlayerController>();
+            PStats = playerInstance.GetComponent<PlayerStats>();
+            PRB    = playerInstance.GetComponent<Rigidbody2D>();
         }
 
 
