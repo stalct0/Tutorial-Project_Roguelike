@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     // 캐싱할 레퍼런스들
     public PlayerController PC { get; private set; }
     public PlayerStats     PStats { get; private set; }
+    public PlayerInventory PInventory { get; private set; }
     public Rigidbody2D     PRB { get; private set; }
     
     public enum GameState

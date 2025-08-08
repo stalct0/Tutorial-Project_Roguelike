@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,6 +23,9 @@ public class PlayerStats : MonoBehaviour
     public UnityEvent onDie;
     public PlayerController controller; 
 
+    //아이템
+    private readonly List<StatDelta> _appliedDeltas = new();
+    
     void Awake()
     {
         controller = GetComponent<PlayerController>();
@@ -148,5 +153,73 @@ public class PlayerStats : MonoBehaviour
         currentHealth = maxHealth;
     }
     
-    
+    //아이템 
+    public void ApplyStatDelta(StatDelta d)
+    {
+        switch (d.stat)
+        {
+            case StatType.MaxHealth:
+                if (d.isMultiplier) maxHealth = Mathf.RoundToInt(maxHealth * (1f + d.amount));
+                else maxHealth = Mathf.Max(1, maxHealth + Mathf.RoundToInt(d.amount));
+                currentHealth = Mathf.Min(currentHealth, maxHealth);
+                statDisplay?.SetMaxHealth(maxHealth);
+                statDisplay?.SetHealth(currentHealth);
+                break;
+
+            case StatType.AttackDamage:
+                if (d.isMultiplier) attackDamage = Mathf.RoundToInt(attackDamage * (1f + d.amount));
+                else attackDamage += Mathf.RoundToInt(d.amount);
+                statDisplay?.SetStat(attackDamage);
+                break;
+
+            case StatType.MoveSpeed:
+                var pc = GetComponent<PlayerController>();
+                if (pc != null)
+                {
+                    if (d.isMultiplier) pc.moveSpeed = pc.moveSpeed * (1f + d.amount);
+                    else pc.moveSpeed += d.amount;
+                }
+                break;
+
+            case StatType.AbilityPower:
+                if (d.isMultiplier) abilityPower = Mathf.RoundToInt(abilityPower * (1f + d.amount));
+                else abilityPower += Mathf.RoundToInt(d.amount);
+                break;
+        }
+    }
+
+    // 해제(원복) – 간단화를 위해 반대로 적용
+    public void RemoveStatDelta(StatDelta d)
+    {
+        StatDelta inv = d;
+        inv.amount = d.isMultiplier ? (-d.amount / (1f + d.amount)) : (-d.amount);
+        ApplyStatDelta(inv);
+    }
+
+    public void ApplyDeltas(IEnumerable<StatDelta> list)
+    {
+        foreach (var d in list)
+        {
+            ApplyStatDelta(d);
+            _appliedDeltas.Add(d);
+        }
+    }
+
+    public void RemoveDeltas(IEnumerable<StatDelta> list)
+    {
+        foreach (var d in list)
+        {
+            RemoveStatDelta(d);
+            _appliedDeltas.Remove(d);
+        }
+    }
+
+    public IEnumerator ApplyTimedDeltas(IEnumerable<StatDelta> list, float sec)
+    {
+        ApplyDeltas(list);
+        yield return new WaitForSeconds(sec);
+        RemoveDeltas(list);
+    }
 }
+    
+
