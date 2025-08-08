@@ -43,7 +43,11 @@ public class SojuProjectile : MonoBehaviour
         
         
         // Destroy on contact with platform/ground
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Platform"))
+        if (
+            collision.gameObject.CompareTag("Ground") || 
+            collision.gameObject.CompareTag("Platform") || 
+            collision.gameObject.CompareTag("OneWayPlatform")
+            )
         {
             Destroy(gameObject);
         }

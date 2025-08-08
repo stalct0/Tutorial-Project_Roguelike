@@ -16,12 +16,17 @@ public enum EnemyState {
 // 적 AI 정의 
 public class SojuThrowerAI : MonoBehaviour
 {
-
+    
     //적 스탯 정의 
     // 체력
     public int health = 100; 
 
-
+    private float frontCheckOffset = 0.3f;   // 몸 중심에서 살짝 앞
+    private float frontCheckDist   = 0.1f;   // 전방 레이 길이
+    private float sameLevelYTolerance = 0.6f;// 높이 차 허용(같은 층만 충돌로 간주)
+    
+    public LayerMask enemyLayerMask;        // "Enemy" 레이어만 포함
+    
 
 
     // 플레이어가 사거리를 넘어가면 몇초 후 패트롤로 돌아감. 
@@ -120,8 +125,18 @@ public class SojuThrowerAI : MonoBehaviour
             }
         }
 
-        // 패트롤 움직임 및 엣지 감지
+        // 패트롤 움직임 및 
         float direction = currentDirection;
+        
+        // 전방 몬스터 충돌 체크 → 있으면 반전
+        if (IsEnemyInFront())
+        {
+            currentDirection = -currentDirection;
+            rb.linearVelocity = Vector2.zero;
+            return;
+        }
+        
+        //엣지 감지
         Vector2 edgeCheckOrigin = transform.position + new Vector3(direction * patrolEdgeOffset, 0f, 0f);
         int platformLayerMask = LayerMask.GetMask("Ground"); // add your platform layers
         RaycastHit2D[] hits = new RaycastHit2D[4];
@@ -144,6 +159,7 @@ public class SojuThrowerAI : MonoBehaviour
             rb.linearVelocity = Vector2.zero;     // (선택) 잠시 멈춤
             return;
         }
+
         rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
     }
 
@@ -283,8 +299,6 @@ public class SojuThrowerAI : MonoBehaviour
         }
         
     }
-
-    
     
     
     void Attack()
@@ -339,4 +353,29 @@ public class SojuThrowerAI : MonoBehaviour
             // Optional: play hit animation or effect
         }
     }
+    
+    bool IsEnemyInFront()
+    {
+        float dir = Mathf.Sign(currentDirection); // +1 오른쪽, -1 왼쪽
+        // 가슴 높이 정도에서 전방으로 쏘는 레이
+        Vector2 origin = (Vector2)transform.position + new Vector2(dir * frontCheckOffset, 0f);
+        Vector2 dirVec = new Vector2(dir, 0f);
+
+        // 레이캐스트
+        var hit = Physics2D.Raycast(origin, dirVec, frontCheckDist, enemyLayerMask);
+
+        // 디버그
+        Debug.DrawRay(origin, dirVec * frontCheckDist, Color.cyan, 0.05f);
+
+        if (hit.collider == null) return false;
+        if (hit.collider.attachedRigidbody == rb) return false; // 자기 자신 제외
+
+        // 같은 층(높이)만 적으로 간주 (경사/난간에서 위아래 다른 층은 무시)
+        float myY = GetComponent<Collider2D>().bounds.center.y;
+        float otherY = hit.collider.bounds.center.y;
+        if (Mathf.Abs(myY - otherY) > sameLevelYTolerance) return false;
+
+        return true;
+    }
+    
 }
