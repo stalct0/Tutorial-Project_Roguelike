@@ -23,6 +23,9 @@ public class GameManager : MonoBehaviour
     public PlayerInventory PInventory { get; private set; }
     public Rigidbody2D     PRB { get; private set; }
     
+    // 플레이어 생성 완료 신호 이벤트
+    public event System.Action<PlayerInventory> OnInventoryReady;
+    
     public enum GameState
     {
         Menu,
@@ -116,6 +119,7 @@ public class GameManager : MonoBehaviour
         if (vcam) vcam.Follow = playerInstance.transform;
         
         BindPlayerUI();
+         
     }
 
     public void ResetPlayerPosition()
@@ -123,6 +127,9 @@ public class GameManager : MonoBehaviour
         playerInstance.transform.position = Vector3.zero;
         PC.ladderTilemap = null;
     }
+
+        
+    
     
     void GameOver()
     {
@@ -188,12 +195,15 @@ public class GameManager : MonoBehaviour
             sd.SetHealth(PStats.currentHealth);
             sd.SetStat(PStats.attackDamage);
             sd.SetMoney(PStats.Money);
+            
+            OnInventoryReady?.Invoke(PInventory);
         }
         
         void CachePlayerComponents()
         {
             PC     = playerInstance.GetComponent<PlayerController>();
             PStats = playerInstance.GetComponent<PlayerStats>();
+            PInventory= playerInstance.GetComponent<PlayerInventory>(); 
             PRB    = playerInstance.GetComponent<Rigidbody2D>();
         }
 
