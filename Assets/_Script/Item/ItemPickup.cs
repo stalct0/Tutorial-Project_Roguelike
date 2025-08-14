@@ -4,20 +4,12 @@ public class ItemPickup : MonoBehaviour
 {
     public ItemDefinition item;
 
-    private void OnTriggerEnter2D(Collider2D other)
+    // 플레이어가 집을 때 호출
+    public bool TryPickup(PlayerInventory inv)
     {
-        if (!other.CompareTag("Player")) return;
-
-        var inv = other.GetComponent<PlayerInventory>();
-        if (inv == null) return;
-
-        if (inv.TryAdd(item))
-        {
-            Destroy(gameObject); // 주웠으면 제거
-        }
-        else
-        {
-            // 가득 차서 못 줍는 경우: UI로 알림 등
-        }
+        if (inv == null || item == null) return false;
+        bool ok = inv.TryAdd(item);
+        if (ok) Destroy(gameObject);
+        return ok;
     }
 }

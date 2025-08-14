@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2990424006308086525}
   - component: {fileID: 932091006342307369}
   - component: {fileID: -5637587607098765950}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: CauBurger
   m_TagString: Untagged
   m_Icon: {fileID: 0}

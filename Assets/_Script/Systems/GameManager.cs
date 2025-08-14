@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public PlayerController PC { get; private set; }
     public PlayerStats     PStats { get; private set; }
     public PlayerInventory PInventory { get; private set; }
+    public PlayerItemInteractor PItemInteractor { get; private set; }
     public Rigidbody2D     PRB { get; private set; }
     
     // 플레이어 생성 완료 신호 이벤트
@@ -119,7 +120,9 @@ public class GameManager : MonoBehaviour
         if (vcam) vcam.Follow = playerInstance.transform;
         
         BindPlayerUI();
-         
+        
+        
+        
     }
 
     public void ResetPlayerPosition()
@@ -181,15 +184,13 @@ public class GameManager : MonoBehaviour
         
         void BindPlayerUI()
         {
-            if (PStats == null) return;
-
             // 씬에 새로 생성된 StatDisplay 찾기 (이름말고 타입으로)
-            var sd = FindFirstObjectByType<StatDisplay>();  // 2022+ 권장
-            if (sd == null) return;
+            var sd = FindFirstObjectByType<StatDisplay>();
 
             // PlayerStats에 UI 연결
             PStats.statDisplay = sd;
-
+            
+            
             // 현재 스탯을 UI에 밀어넣기
             sd.SetMaxHealth(PStats.maxHealth);
             sd.SetHealth(PStats.currentHealth);
@@ -197,13 +198,24 @@ public class GameManager : MonoBehaviour
             sd.SetMoney(PStats.Money);
             
             OnInventoryReady?.Invoke(PInventory);
+            
+          var prompt = FindFirstObjectByType<InteractUI>(); 
+          if (PItemInteractor != null && prompt != null)
+          {
+              PItemInteractor.promptUI = prompt;
+              prompt.gameObject.SetActive(false); // 시작은 꺼둠
+              PItemInteractor.screenPrompt = PItemInteractor.promptUI.GetComponent<RectTransform>();
+
+          }
+          
         }
         
         void CachePlayerComponents()
         {
             PC     = playerInstance.GetComponent<PlayerController>();
             PStats = playerInstance.GetComponent<PlayerStats>();
-            PInventory= playerInstance.GetComponent<PlayerInventory>(); 
+            PInventory= playerInstance.GetComponent<PlayerInventory>();
+            PItemInteractor = playerInstance.GetComponent<PlayerItemInteractor>();
             PRB    = playerInstance.GetComponent<Rigidbody2D>();
         }
 
