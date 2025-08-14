@@ -11,7 +11,7 @@ public class PlayerItemInteractor : MonoBehaviour
     public KeyCode pickupKey = KeyCode.I;
 
     [Header("OverlapBox 설정")]
-    private Vector2 boxSize = new Vector2(1.0f, 1.0f);   // 플레이어 주위 범위
+    private Vector2 boxSize = new Vector2(0.65f, 0.65f);   // 플레이어 주위 범위
     private Vector2 boxOffset = new Vector2(0f, 0f);     // 플레이어 기준 오프셋
     public LayerMask itemLayer;                         // "Item" 레이어만 포함
     public LayerMask exitLayer;
