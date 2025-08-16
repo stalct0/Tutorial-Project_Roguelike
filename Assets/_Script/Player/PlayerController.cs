@@ -70,6 +70,12 @@ public class PlayerController : MonoBehaviour
     private float longStunTimer = 0f;
     [ReadOnly] public float longStunDuration = 2.0f;
     
+    // Dash 관련 
+    [ReadOnly] public float dashSpeed = 12f;       // 대시 속도(수평)
+    [ReadOnly] public float dashDuration = 0.15f;  // 대시 유지 시간
+    [ReadOnly] public float dashCooldown = 2.0f;   // 쿨타임 (요청: 2초)
+    private bool  isDashing = false;               // 대시 중 여부
+    private float lastDashTime = -999f;            // 마지막 대시 시각
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -103,6 +109,20 @@ public class PlayerController : MonoBehaviour
         //근접 피격 적용
         CheckEnemyContactAndTakeDamage(10, 3);
         
+        // ★ 대시 입력: Shift 키 (좌/우 중 아무거나) & 쿨타임 확인 & 조건 체크
+        if (!isDashing 
+            && Time.time - lastDashTime >= dashCooldown
+            && !isOnLadder
+            && !isLongStunned && !isShortStunned)
+        {
+            // 좌/우 Shift 아무거나 눌림 체크
+            if ((Keyboard.current != null) &&
+                (Keyboard.current.leftShiftKey.wasPressedThisFrame || Keyboard.current.rightShiftKey.wasPressedThisFrame))
+            {
+                StartCoroutine(DashRoutine()); // 대시 시작
+            }
+        }
+        
         // 스턴 처리
         if (isLongStunned)
         {
@@ -112,6 +132,12 @@ public class PlayerController : MonoBehaviour
                 isLongStunned = false;
             }
             return; // 스턴 중엔 다른 입력/이동 무시
+        }
+        
+        // ★ 대시 중이면 다른 입력은 모두 무시 (대시 속도 유지)
+        if (isDashing)
+        {
+            return;
         }
         
         if (isOnLadder)
@@ -221,6 +247,31 @@ public class PlayerController : MonoBehaviour
         Debug.DrawRay(origin.position, Vector2.down * groundCheckDistance, Color.red);
     #endif
         return hit.collider != null;
+    }
+    IEnumerator DashRoutine()
+    {
+        isDashing = true;
+        lastDashTime = Time.time;
+
+        // 바라보는 방향으로 수평 대시 (localScale.x의 부호 사용)
+        float dirX = Mathf.Sign(transform.localScale.x);
+        // 점프 중에도 대시가 자연스럽게 느껴지도록, 수직 속도는 유지하고 수평만 덮어씁니다.
+        rb.linearVelocity = new Vector2(dirX * dashSpeed, rb.linearVelocity.y);
+
+        // 대시 지속 시간 동안 유지 (이 동안 이동/점프 로직은 Update에서 return으로 정지됨)
+        float t = 0f;
+        while (t < dashDuration)
+        {
+            // 외부에서 X속도를 덮어쓰지 않도록 매 프레임 유지(원치 않으면 이 줄은 생략 가능)
+            rb.linearVelocity = new Vector2(dirX * dashSpeed, rb.linearVelocity.y);
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        isDashing = false;
+        // 대시 종료 후, 속도를 살짝 풀어줘도 되고 그대로 둬도 됨(원하는 감각에 맞게)
+        // 예) 감속 없이 즉시 플레이어 입력으로 전환: 아무 것도 안 함
+        // 예) 살짝 감속: rb.linearVelocity = new Vector2(rb.linearVelocity.x * 0.5f, rb.linearVelocity.y);
     }
     
     //몬스터 근접공격 받기
