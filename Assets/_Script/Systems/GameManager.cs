@@ -60,6 +60,10 @@ public class GameManager : MonoBehaviour
         switch (CurrentState)
         {
             case GameState.Playing:
+                if (resetLadder)
+                {
+                    resetLadder = false;
+                }
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     PauseGame();
@@ -74,6 +78,7 @@ public class GameManager : MonoBehaviour
                 }
                 break;
             case GameState.Shop:
+                ResetPlayerladder();
                 break;
         }
     }
@@ -128,9 +133,20 @@ public class GameManager : MonoBehaviour
     public void ResetPlayerPosition()
     {
         playerInstance.transform.position = Vector3.zero;
-        PC.ladderTilemap = null;
+        if (PC) PC.ladderTilemap = null;
     }
 
+    private bool resetLadder = false;
+
+    public void ResetPlayerladder()
+    {
+        if (resetLadder == false)
+        {
+            resetLadder = true;
+            Tilemap ladderTilemap = GameObject.Find("LadderTilemap").GetComponent<Tilemap>();
+            if (PC) PC.ladderTilemap = ladderTilemap;
+        }
+    }
         
     
     

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: CauBurger
   icon: {fileID: 3356498961701232270, guid: 552c5dc5f6ab3bc4380dee980428e6f3, type: 3}
-  description: "\uAE40\uBBFC\uC9C0 \uCD94\uCC9C"
+  description: asdasdasd
   kind: 0
   deltas:
   - stat: 0
