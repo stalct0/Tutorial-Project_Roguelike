@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 
@@ -10,17 +11,15 @@ public enum EnemyState {
     AttackPrepare,
     Attack,
     Reset,
+    Stun
 }
 
 
 // 적 AI 정의 
 public class SojuThrowerAI : MonoBehaviour
 {
+    private EnemyCombat combat;
     
-    //적 스탯 정의 
-    // 체력
-    public int health = 100; 
-
     private float frontCheckOffset = 0.3f;   // 몸 중심에서 살짝 앞
     private float frontCheckDist   = 0.1f;   // 전방 레이 길이
     private float sameLevelYTolerance = 0.6f;// 높이 차 허용(같은 층만 충돌로 간주)
@@ -61,7 +60,7 @@ public class SojuThrowerAI : MonoBehaviour
     
     // 던지는 소주병  불러오기
     public GameObject sojuPrefab; // Assign this in the Unity Inspector
-
+    
     
     void Start()
     {
@@ -73,12 +72,28 @@ public class SojuThrowerAI : MonoBehaviour
         }
         //animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        
+        combat = GetComponent<EnemyCombat>(); 
         // Freeze rotation so enemy doesn't rotate
         rb.freezeRotation = true;
     }
-
+    void OnEnable()
+    {
+        // (선택) 이벤트에 구독해서 디버그/연출 가능
+        if (combat != null)
+        {
+            //combat.OnStunBegin.AddListener(() => { /* 필요시 애니/이펙트 */ });
+            //combat.OnLaunchedBegin.AddListener(() => { /* 필요시 애니/이펙트 */ });
+            //combat.OnDied.AddListener(() => { /* 파편/코인 드롭 등 */ });
+        }
+    }
+    
     void Update()
     {
+        if (combat != null && (combat.IsStunned || combat.IsLaunched))
+        {
+            currentState = EnemyState.Stun;
+        }
         switch (currentState)
         {
             case EnemyState.Patrol:
@@ -98,6 +113,9 @@ public class SojuThrowerAI : MonoBehaviour
                 break;
             case EnemyState.Reset:
                 ResetAfterAttack();
+                break;
+            case EnemyState.Stun:
+                Stun();
                 break;
         }
     }
@@ -161,6 +179,14 @@ public class SojuThrowerAI : MonoBehaviour
         }
 
         rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
+    }
+    
+    void Stun()
+    {
+        if (combat != null && !(combat.IsStunned || combat.IsLaunched))
+        {
+            currentState = EnemyState.Patrol;
+        } 
     }
 
     void Agro()
@@ -339,20 +365,7 @@ public class SojuThrowerAI : MonoBehaviour
             //animator.SetTrigger("resetAttack");
         }
     }
-
-    public void TakeDamage(int amount)
-    {
-        health -= amount;
-        if (health <= 0)
-        {
-            // Handle enemy death (destroy, play animation, etc.)
-            Destroy(gameObject);
-        }
-        else
-        {
-            // Optional: play hit animation or effect
-        }
-    }
+    
     
     bool IsEnemyInFront()
     {
