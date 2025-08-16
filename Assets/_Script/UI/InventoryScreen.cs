@@ -61,7 +61,13 @@ public class InventoryScreen : MonoBehaviour
         if (Input.GetKeyDown(toggleKey))
         {
             if (isOpen) Close();
-            else Open();
+            else
+            {
+                if (GameManager.Instance.CurrentState == GameManager.GameState.Playing || GameManager.Instance.CurrentState == GameManager.GameState.Shop)
+                {
+                    Open();
+                }
+            }
         }
 
         if (!isOpen || inv == null) return;
@@ -114,6 +120,7 @@ public class InventoryScreen : MonoBehaviour
     
     void Open()
     {
+        GameManager.Instance.SetGameState(GameManager.GameState.Inventory);
         if (panelRoot == null) return;
         isOpen = true;
         prevTimeScale = Time.timeScale;
@@ -124,6 +131,7 @@ public class InventoryScreen : MonoBehaviour
 
     void Close()
     {
+        GameManager.Instance.SetGameState(GameManager.GameState.Playing);
         if (panelRoot == null) return;
         isOpen = false;
         Time.timeScale = prevTimeScale;               // 시간 복구

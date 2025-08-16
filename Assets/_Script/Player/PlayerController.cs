@@ -10,11 +10,10 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     // 점프랑 움직임
-    [NonSerialized] public float moveSpeed = 5f;
-    
-    [NonSerialized] public float jumpForce = 5f;         // 기본 점프력(바로 부여)
-    [NonSerialized] public float jumpHoldForce = 15f;     // 누르는 동안 프레임마다 추가 부여할 힘
-    [NonSerialized] public float jumpHoldDuration = 0.2f; // 추가 힘을 줄 수 있는 최대 시간
+    [ReadOnly] public float moveSpeed = 5f;
+    [ReadOnly] public float jumpForce = 4f;         // 기본 점프력(바로 부여)
+    [ReadOnly] public float jumpHoldForce = 14f;     // 누르는 동안 프레임마다 추가 부여할 힘
+    [ReadOnly] public float jumpHoldDuration = 0.25f; // 추가 힘을 줄 수 있는 최대 시간
 
     private bool isJumping = false;      // 점프 중인지
     private float jumpTime = 0f;         // 점프 버튼 누른 시간
@@ -25,7 +24,7 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheckLeft;
     public Transform groundCheckCenter;
     public Transform groundCheckRight;
-    public float groundCheckDistance = 0.1f;
+    [ReadOnly] public float groundCheckDistance = 0.1f;
 
     private Rigidbody2D rb;
     Collider2D playerCol;
@@ -38,38 +37,38 @@ public class PlayerController : MonoBehaviour
     private PlayerStats stats;
     
     //사다리 관련
-    public Tilemap ladderTilemap;
-    public float ladderSpeed = 2f;
-    public float snapToLadderXSpeed = 20f;
-    public float ladderSnapOffset = 0f; // X 중심 보정
+    [ReadOnly] public Tilemap ladderTilemap;
+    [ReadOnly] public float ladderSpeed = 2f;
+    [ReadOnly] public float snapToLadderXSpeed = 20f;
+    [ReadOnly] public float ladderSnapOffset = 0f; // X 중심 보정
 
     private bool isOnLadder = false;
     private Vector3Int currentLadderCell;
     private float originalGravity;
 
-    private float ladderGrabCooldown = 0.3f; // 쿨타임(초)
-    private float nextLadderGrabTime = 0f;  // 다음 진입 허용 시각
+    [ReadOnly] public float ladderGrabCooldown = 0.3f; // 쿨타임(초)
+    [ReadOnly] public float nextLadderGrabTime = 0f;  // 다음 진입 허용 시각
     
-    private float playerHeight = 0.55f;
-    private float footOffset = 0.01f;
-    private float headOffset = 0.01f;
+    [ReadOnly] public float playerHeight = 0.55f;
+    [ReadOnly] public float footOffset = 0.01f;
+    [ReadOnly] public float headOffset = 0.01f;
     
     //근접데미지 받기 관련
     public LayerMask enemyLayer; // "Enemy"만 포함
     
     //일방향 발판 관련
-    private float platformDropCooldown = 0.5f;
-    private float lastPlatformDropTime = -10f;
+    [ReadOnly] public float platformDropCooldown = 0.5f;
+    [ReadOnly] public float lastPlatformDropTime = -10f;
 
     //스턴 관련
     private bool isShortStunned = false;
     private float shortStunTimer = 0f;
-    [NonSerialized] public float shortStunDuration = 0.3f;
-    [NonSerialized] public float shortStunInvincibleDuration = 0.8f;
+    [ReadOnly] public float shortStunDuration = 0.3f;
+    [ReadOnly] public float shortStunInvincibleDuration = 0.8f;
 
     private bool isLongStunned = false;
     private float longStunTimer = 0f;
-    public float longStunDuration = 2.0f;
+    [ReadOnly] public float longStunDuration = 2.0f;
     
     void Awake()
     {
@@ -146,6 +145,19 @@ public class PlayerController : MonoBehaviour
     void HandleMovement()
     {
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+        // 좌우 반전
+        if (moveInput.x > 0.01f)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x);   // x를 양수로 (오른쪽)
+            transform.localScale = scale;
+        }
+        else if (moveInput.x < -0.01f)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = -Mathf.Abs(scale.x);  // x를 음수로 (왼쪽)
+            transform.localScale = scale;
+        }
     }
     
     //점프

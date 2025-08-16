@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         Menu,
         Playing,
         Paused,
+        Inventory,
         GameOver,
         Shop
     }
@@ -76,6 +77,8 @@ public class GameManager : MonoBehaviour
                 {
                     ResumeGame();
                 }
+                break;
+            case GameState.Inventory:
                 break;
             case GameState.Shop:
                 ResetPlayerladder();
@@ -182,12 +185,6 @@ public class GameManager : MonoBehaviour
             SetGameState(GameState.Playing);
         }
 
-        public void RestartGame()
-        {
-
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-        
         public void NextStage()
         {
             GameLevel++;

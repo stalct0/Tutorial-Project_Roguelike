@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 1048726489362991629}
   - component: {fileID: 923347300335654926}
   - component: {fileID: 5356232195973676624}
+  - component: {fileID: -1635428983219495866}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -316,6 +317,33 @@ MonoBehaviour:
   promptUI: {fileID: 0}
   screenPrompt: {fileID: 0}
   worldOffset: {x: 0, y: 0.8, z: 0}
+--- !u!114 &-1635428983219495866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332084759178468638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3027a3318442f2f499de1bda66de0307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackKey: 106
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  baseDamage: 10
+  knockbackForce: 6
+  stunSeconds: 0.4
+  cooldown: 0.35
+  activeTime: 0.15
+  sweepPoints: 3
+  boxSize: {x: 1, y: 0.8}
+  topOffset: {x: 0.7, y: 1}
+  bottomOffset: {x: 0.7, y: 0.1}
+  flipByLocalScaleX: 1
+  drawGizmos: 1
 --- !u!1 &7356647992810592606
 GameObject:
   m_ObjectHideFlags: 0

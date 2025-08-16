@@ -5,6 +5,7 @@ using UnityEngine;
 // 적 AI 상태 정의 
 public enum EnemyStateD {
     Patrol,
+    Stun,
     Reset,
 }
 
@@ -12,32 +13,29 @@ public enum EnemyStateD {
 // 적 AI 정의 
 public class EnemyAiDefault : MonoBehaviour
 {
+    private EnemyCombat combat;
     
-    //적 스탯 정의 
-    // 체력
-    public int health = 100; 
-
-    private float frontCheckOffset = 0.3f;   // 몸 중심에서 살짝 앞
-    private float frontCheckDist   = 0.1f;   // 전방 레이 길이
-    private float sameLevelYTolerance = 0.6f;// 높이 차 허용(같은 층만 충돌로 간주)
+    [SerializeField][ReadOnly] private float frontCheckOffset = 0.3f;   // 몸 중심에서 살짝 앞
+    [SerializeField][ReadOnly] private float frontCheckDist   = 0.1f;   // 전방 레이 길이
+    [SerializeField][ReadOnly] private float sameLevelYTolerance = 0.6f;// 높이 차 허용(같은 층만 충돌로 간주)
     
     public LayerMask enemyLayerMask;        // "Enemy" 레이어만 포함
 
     // 패드롤 논리 변수 정의 
-    private float patrolEdgeOffset = 0.3f; // Distance from edge to stop
+    [SerializeField][ReadOnly] private float patrolEdgeOffset = 0.3f; // Distance from edge to stop
     public EnemyStateD currentState = EnemyStateD.Patrol;
     
     // 플레이어 변수 정의 (사실 unity inspector 에서 할당된 값이 우선 적용됨. )
     public Transform player;
     
-    private float moveSpeed = 1f;
-    private float currentDirection = 1f;
+    [SerializeField][ReadOnly] private float moveSpeed = 1f;
+    [SerializeField][ReadOnly] private float currentDirection = 1f;
 
     //private Animator animator;
     private Rigidbody2D rb;
     // Removed unused isFacingRight field
     // Removed unused isHit field
-    
+
     void Start()
     {
         if (player == null)
@@ -47,17 +45,36 @@ public class EnemyAiDefault : MonoBehaviour
                 player = go.transform;
         }
         //animator = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>(); 
+        combat = GetComponent<EnemyCombat>(); 
+
         // Freeze rotation so enemy doesn't rotate
         rb.freezeRotation = true;
     }
-
+    void OnEnable()
+    {
+        // (선택) 이벤트에 구독해서 디버그/연출 가능
+        if (combat != null)
+        {
+            //combat.OnStunBegin.AddListener(() => { /* 필요시 애니/이펙트 */ });
+            //combat.OnLaunchedBegin.AddListener(() => { /* 필요시 애니/이펙트 */ });
+            //combat.OnDied.AddListener(() => { /* 파편/코인 드롭 등 */ });
+        }
+    }
+    
     void Update()
     {
-        switch (currentState)
+        if (combat != null && (combat.IsStunned || combat.IsLaunched))
         {
+            currentState = EnemyStateD.Stun;
+        }
+        switch (currentState)
+        { 
             case EnemyStateD.Patrol:
                 Patrol();
+                break;
+            case EnemyStateD.Stun:
+                Stun();
                 break;
         }
     }
@@ -66,6 +83,8 @@ public class EnemyAiDefault : MonoBehaviour
     //패트롤 
     void Patrol()
     {
+
+        
         //animator.SetBool("isWalking", true);
         
         // 패트롤 움직임 및 
@@ -105,20 +124,13 @@ public class EnemyAiDefault : MonoBehaviour
 
         rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
     }
-    
 
-    public void TakeDamage(int amount)
+    void Stun()
     {
-        health -= amount;
-        if (health <= 0)
+        if (combat != null && !(combat.IsStunned || combat.IsLaunched))
         {
-            // Handle enemy death (destroy, play animation, etc.)
-            Destroy(gameObject);
-        }
-        else
-        {
-            // Optional: play hit animation or effect
-        }
+            currentState = EnemyStateD.Patrol;
+        } 
     }
     
     bool IsEnemyInFront()
