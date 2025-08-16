@@ -115,8 +115,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1266879957
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -141,6 +141,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5ea6367e65dbf4db6b644414325f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 5
+  jumpForce: 4
+  jumpHoldForce: 14
+  jumpHoldDuration: 0.25
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -152,9 +156,18 @@ MonoBehaviour:
   ladderSpeed: 4
   snapToLadderXSpeed: 20
   ladderSnapOffset: 0
+  ladderGrabCooldown: 0.3
+  nextLadderGrabTime: 0
+  playerHeight: 0.55
+  footOffset: 0.01
+  headOffset: 0.01
   enemyLayer:
     serializedVersion: 2
     m_Bits: 1024
+  platformDropCooldown: 0.5
+  lastPlatformDropTime: -10
+  shortStunDuration: 0.3
+  shortStunInvincibleDuration: 0.8
   longStunDuration: 2
 --- !u!50 &6450627703100026735
 Rigidbody2D:
