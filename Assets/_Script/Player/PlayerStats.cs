@@ -8,17 +8,22 @@ public class PlayerStats : MonoBehaviour
 {
     public StatDisplay statDisplay;
     
-    public int maxHealth = 100;
-    public int startAD = 1;
-    public int startMoney = 0;
-    public int currentHealth { get; private set; }
-    public int attackDamage { get; private set; }
-    public int abilityPower { get; private set; }
+    [ReadOnly] public int startAttackDamage = 1;
+    [ReadOnly] public int startMoney = 0;
+    [ReadOnly] public int startMoveSpeed = 5;
+    [ReadOnly] public int startDashCoolDown = 2;
+    
+    [ReadOnly] public int maxHealth = 100; // = starthealth
+    [ReadOnly] public int currentHealth { get; private set; }
+    [ReadOnly] public int currentAttackDamage { get; private set; }
+    [ReadOnly] public int currentMoney { get; private set; }
+    [ReadOnly] public int currentMoveSpeed { get; private set; }
+    [ReadOnly] public int currentDashCoolDown { get; private set; }
+
     
     public bool isInvincible = false;
     private float invincibleTimer = 0f;
     
-    public int Money { get; private set; }
     
     public UnityEvent onDie;
     public PlayerController controller; 
@@ -31,14 +36,14 @@ public class PlayerStats : MonoBehaviour
         controller = GetComponent<PlayerController>();
 
         currentHealth = maxHealth;
-        attackDamage = startAD;
-        Money = startMoney;
+        currentAttackDamage = startAttackDamage;
+        currentMoney = startMoney;
         
         if (statDisplay != null)
         {
             statDisplay.SetMaxHealth(maxHealth);
-            statDisplay.SetStat(attackDamage);
-            statDisplay.SetMoney(Money);
+            statDisplay.SetAttackDamage(currentAttackDamage);
+            statDisplay.SetCurrentMoney(currentMoney);
         }
 
         
@@ -68,7 +73,7 @@ public class PlayerStats : MonoBehaviour
         if (currentHealth < 0)
             currentHealth = 0;
         if (statDisplay != null)
-            statDisplay.SetHealth(currentHealth);
+            statDisplay.SetCurrentHealth(currentHealth);
         
         //스턴
         if (controller.shortStunDuration > 0f)
@@ -89,7 +94,7 @@ public class PlayerStats : MonoBehaviour
         if (currentHealth < 0)
             currentHealth = 0;
         if (statDisplay != null)
-            statDisplay.SetHealth(currentHealth);
+            statDisplay.SetCurrentHealth(currentHealth);
         
         // 이 시점에서 넉백 먼저 적용
         
@@ -128,17 +133,17 @@ public class PlayerStats : MonoBehaviour
         if (currentHealth > maxHealth)
             currentHealth = maxHealth;
         if (statDisplay != null)
-            statDisplay.SetHealth(currentHealth);
+            statDisplay.SetCurrentHealth(currentHealth);
     }
 
     public void ChangeStats()
     {
-        statDisplay.SetStat(attackDamage);
+        statDisplay.SetAttackDamage(currentAttackDamage);
     }
 
     public void ChangeMoney(int money)
     {
-        statDisplay.SetMoney(money);
+        statDisplay.SetCurrentMoney(money);
     }
 
     private void Die()
@@ -159,31 +164,49 @@ public class PlayerStats : MonoBehaviour
         switch (d.stat)
         {
             case StatType.MaxHealth:
-                if (d.isMultiplier) maxHealth = Mathf.RoundToInt(maxHealth * (1f + d.amount));
-                else maxHealth = Mathf.Max(1, maxHealth + Mathf.RoundToInt(d.amount));
+                int initial = currentHealth;
+                if (d.isMultiplier)
+                {
+                    maxHealth = Mathf.RoundToInt(maxHealth * (1f + d.amount));
+                    currentHealth = Mathf.RoundToInt(currentHealth * (1f + d.amount));
+                }
+                else
+                {
+                    maxHealth = Mathf.Max(1, maxHealth + Mathf.RoundToInt(d.amount));
+                    currentHealth = Mathf.Max(1, currentHealth + Mathf.RoundToInt(d.amount));
+                }
+                currentHealth = Mathf.Max(initial, currentHealth);
                 currentHealth = Mathf.Min(currentHealth, maxHealth);
                 statDisplay?.SetMaxHealth(maxHealth);
-                statDisplay?.SetHealth(currentHealth);
+                statDisplay?.SetCurrentHealth(currentHealth);
+                break;
+            
+            case StatType.CurrentHealth:
+                int initial2 = currentHealth;
+                if (d.isMultiplier) currentHealth = Mathf.RoundToInt(currentHealth * (1f + d.amount));
+                else currentHealth = Mathf.Max(1, currentHealth + Mathf.RoundToInt(d.amount));
+                currentHealth = Mathf.Min(currentHealth, maxHealth);
+                currentHealth = Mathf.Max(initial2, currentHealth);
+                statDisplay?.SetCurrentHealth(currentHealth);
                 break;
 
-            case StatType.AttackDamage:
-                if (d.isMultiplier) attackDamage = Mathf.RoundToInt(attackDamage * (1f + d.amount));
-                else attackDamage += Mathf.RoundToInt(d.amount);
-                statDisplay?.SetStat(attackDamage);
+            case StatType.CurrentAttackDamage:
+                if (d.isMultiplier) currentAttackDamage = Mathf.RoundToInt(currentAttackDamage * (1f + d.amount));
+                else currentAttackDamage += Mathf.RoundToInt(d.amount);
+                statDisplay?.SetAttackDamage(currentAttackDamage);
+                break;
+            
+            case StatType.CurrentMoney:
+                if (d.isMultiplier) currentMoney = Mathf.RoundToInt(currentMoney * (1f + d.amount));
+                else currentMoney += Mathf.RoundToInt(d.amount);
+                statDisplay?.SetCurrentMoney(currentMoney);
                 break;
 
-            case StatType.MoveSpeed:
-                var pc = GetComponent<PlayerController>();
-                if (pc != null)
-                {
-                    if (d.isMultiplier) pc.moveSpeed = pc.moveSpeed * (1f + d.amount);
-                    else pc.moveSpeed += d.amount;
-                }
-                break;
-
-            case StatType.AbilityPower:
-                if (d.isMultiplier) abilityPower = Mathf.RoundToInt(abilityPower * (1f + d.amount));
-                else abilityPower += Mathf.RoundToInt(d.amount);
+            case StatType.CurrentMoveSpeed:
+                if (d.isMultiplier) currentMoveSpeed = Mathf.RoundToInt(currentMoveSpeed * (1f + d.amount));
+                else currentMoveSpeed += Mathf.RoundToInt(d.amount);
+                controller.moveSpeed = currentMoveSpeed;
+                statDisplay?.SetCurrentMoveSpeed(currentMoveSpeed);
                 break;
         }
     }

@@ -7,6 +7,8 @@ public class PlayerInventory : MonoBehaviour
     public ItemDefinition[] slots;
 
     private PlayerStats stats;
+    
+    public ItemDefinition lastConsumedItem; // 최근 먹은 OnPickup 아이템을 보관
 
     void Awake()
     {
@@ -19,7 +21,9 @@ public class PlayerInventory : MonoBehaviour
         // 즉시발동형: 소지하지 않고 바로 적용 후 끝
         if (item.kind == ItemKind.OnPickup)
         {
-            ApplyItem(item);
+            lastConsumedItem = item;      // 최근 먹은 즉발 아이템 기억
+            ApplyItem(item);              // 효과 적용
+            InventoryChanged?.Invoke();   // UI 갱신 트리거
             return true;
         }
 
@@ -39,25 +43,7 @@ public class PlayerInventory : MonoBehaviour
         }
         return false; // 가득 참
     }
-
-    public void UseSlot(int idx)
-    {
-        if (idx < 0 || idx >= slots.Length) return;
-        var item = slots[idx];
-        if (item == null) return;
-
-        if (item.kind == ItemKind.Consumable)
-        {
-            ApplyItem(item);
-            if (item.consumeOnUse)
-            {
-                slots[idx] = null;
-                InventoryChanged?.Invoke();
-            }
-        }
-        // Passive는 사용 개념 없음(들고 있으면 적용 상태)
-    }
-
+    
     public void RemoveSlot(int idx)
     {
         if (idx < 0 || idx >= slots.Length) return;

@@ -2,8 +2,8 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 
-public enum ItemKind { Passive, Consumable, OnPickup }
-public enum StatType { MaxHealth, AttackDamage, MoveSpeed, AbilityPower }
+public enum ItemKind { Passive, OnPickup}
+public enum StatType { MaxHealth, CurrentHealth, CurrentAttackDamage, CurrentMoney, CurrentMoveSpeed, CurrentDashCoolDown}
 
 [Serializable]
 public struct StatDelta
@@ -21,13 +21,10 @@ public class ItemDefinition : ScriptableObject
     [TextArea] public string description;
     public ItemKind kind;
 
-    [Header("공통 효과(패시브/소모/즉시발동)")]
+    [Header("공통 효과(패시브/즉시발동)")]
     public List<StatDelta> deltas = new();
 
     [Header("지속시간(선택)")]
     public bool hasDuration;
     public float durationSec = 0f;   // >0이면 일정 시간 후 원복
-
-    [Header("소모형만: 사용 후 삭제")]
-    public bool consumeOnUse = true;
 }

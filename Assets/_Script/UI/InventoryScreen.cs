@@ -15,15 +15,18 @@ public class InventoryScreen : MonoBehaviour
         public TextMeshProUGUI nameText;
         public TextMeshProUGUI descText;
     }
-
+    
+    [Header("소모품")]
+    [SerializeField] private SlotView[] cslots = new SlotView[1];
+    
     [Header("3개 슬롯 뷰")]
     [SerializeField] private SlotView[] slots = new SlotView[3];
 
-    [Header("입력 키")]
-    [SerializeField] private KeyCode toggleKey = KeyCode.E;     // 열기/닫기
-    [SerializeField] private KeyCode dropKey1 = KeyCode.Alpha1; // 1
-    [SerializeField] private KeyCode dropKey2 = KeyCode.Alpha2; // 2
-    [SerializeField] private KeyCode dropKey3 = KeyCode.Alpha3; // 3
+
+    private KeyCode toggleKey = KeyCode.E;     // 열기/닫기
+    private KeyCode dropKey1 = KeyCode.Alpha1; // 1
+    private KeyCode dropKey2 = KeyCode.Alpha2; // 2
+    private KeyCode dropKey3 = KeyCode.Alpha3; // 3
 
     private PlayerInventory inv;
     private bool isOpen = false;
@@ -52,10 +55,6 @@ public class InventoryScreen : MonoBehaviour
 
     void Update()
     {
-        if (inv == null)
-        {
-            Debug.Log("inv is null");
-        }
         
         // E로 열고/닫기
         if (Input.GetKeyDown(toggleKey))
@@ -89,7 +88,7 @@ public class InventoryScreen : MonoBehaviour
     void Refresh()
     {
         if (inv == null || slots == null) return;
-
+        // 3칸 인벤토리 렌더
         for (int i = 0; i < slots.Length; i++)
         {
             var slotView = slots[i];
@@ -114,6 +113,25 @@ public class InventoryScreen : MonoBehaviour
                 }
                 if (slotView.nameText != null) slotView.nameText.text = "";
                 if (slotView.descText != null) slotView.descText.text = "";
+            }
+        }
+        // 최근 먹은 OnPickup(= lastConsumedItem) 표시
+        if (cslots != null && cslots.Length > 0)
+        {
+            var view = cslots[0];
+            var last = inv.lastConsumedItem;  
+
+            if (last != null)
+            {
+                if (view.icon != null) { view.icon.enabled = true; view.icon.sprite = last.icon; }
+                if (view.nameText != null) view.nameText.text = last.displayName;
+                if (view.descText != null) view.descText.text = last.description;
+            }
+            else
+            {
+                if (view.icon != null) { view.icon.enabled = false; view.icon.sprite = null; }
+                if (view.nameText != null) view.nameText.text = "";
+                if (view.descText != null) view.descText.text = "";
             }
         }
     }

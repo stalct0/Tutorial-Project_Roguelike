@@ -61,10 +61,6 @@ public class GameManager : MonoBehaviour
         switch (CurrentState)
         {
             case GameState.Playing:
-                if (resetLadder)
-                {
-                    resetLadder = false;
-                }
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     PauseGame();
@@ -81,7 +77,6 @@ public class GameManager : MonoBehaviour
             case GameState.Inventory:
                 break;
             case GameState.Shop:
-                ResetPlayerladder();
                 break;
         }
     }
@@ -206,9 +201,9 @@ public class GameManager : MonoBehaviour
             
             // 현재 스탯을 UI에 밀어넣기
             sd.SetMaxHealth(PStats.maxHealth);
-            sd.SetHealth(PStats.currentHealth);
-            sd.SetStat(PStats.attackDamage);
-            sd.SetMoney(PStats.Money);
+            sd.SetCurrentHealth(PStats.currentHealth);
+            sd.SetAttackDamage(PStats.currentAttackDamage);
+            sd.SetCurrentMoney(PStats.currentMoney);
             
             OnInventoryReady?.Invoke(PInventory);
             

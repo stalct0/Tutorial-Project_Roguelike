@@ -372,6 +372,20 @@ public class PlayerController : MonoBehaviour
 
     void HandleLadder() // 사다리 타고 있는 상태에서는 이렇게 처리
     {
+        // 좌우 반전
+        if (moveInput.x > 0.01f)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x);   // x를 양수로 (오른쪽)
+            transform.localScale = scale;
+        }
+        else if (moveInput.x < -0.01f)
+        {
+            Vector3 scale = transform.localScale;
+            scale.x = -Mathf.Abs(scale.x);  // x를 음수로 (왼쪽)
+            transform.localScale = scale;
+        }
+        
         Vector3 playerPos = transform.position;
         // X좌표를 사다리 중앙에 스냅
         float targetX = ladderTilemap.CellToWorld(currentLadderCell).x + ladderTilemap.cellSize.x * 0.5f +

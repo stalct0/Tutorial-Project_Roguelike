@@ -106,7 +106,7 @@ public class PlayerAttack : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f, enemyLayer);
         if (hits == null || hits.Length == 0) return;
 
-        int finalDamage = (pstats != null ? pstats.attackDamage : 0) + baseDamage;
+        int finalDamage = (pstats != null ? pstats.currentAttackDamage : 0) + baseDamage;
 
         for (int i = 0; i < hits.Length; i++)
         {
