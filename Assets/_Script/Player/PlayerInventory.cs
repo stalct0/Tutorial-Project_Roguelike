@@ -120,4 +120,10 @@ public class PlayerInventory : MonoBehaviour
 
         return true;
     }
+    public bool HasEmptySlot()
+    {
+        for (int i = 0; i < slots.Length; i++)
+            if (slots[i] == null) return true;
+        return false;
+    }
 }

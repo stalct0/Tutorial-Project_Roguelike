@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
@@ -8,10 +9,10 @@ public class PlayerStats : MonoBehaviour
 {
     public StatDisplay statDisplay;
     
-    [ReadOnly] public int startAttackDamage = 1;
-    [ReadOnly] public int startMoney = 0;
-    [ReadOnly] public int startMoveSpeed = 5;
-    [ReadOnly] public int startDashCoolDown = 2;
+    [NonSerialized] public int startAttackDamage = 1;
+    [NonSerialized] public int startMoney = 50;
+    [NonSerialized] public int startMoveSpeed = 5;
+    [NonSerialized] public int startDashCoolDown = 2;
     
     [ReadOnly] public int maxHealth = 100; // = starthealth
     [ReadOnly] public int currentHealth { get; private set; }

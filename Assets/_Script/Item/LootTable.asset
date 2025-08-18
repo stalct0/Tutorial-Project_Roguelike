@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entries:
   - item: {fileID: 11400000, guid: 1436d8a6438a73f4396bd85f65b19950, type: 2}
-    weight: 0
+    weight: 1
     allowOnPickup: 0
     minStage: 0
     maxStage: 100
