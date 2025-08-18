@@ -13,13 +13,12 @@ MonoBehaviour:
   m_Name: CauBurger
   m_EditorClassIdentifier: 
   displayName: CauBurger
-  icon: {fileID: 3356498961701232270, guid: 552c5dc5f6ab3bc4380dee980428e6f3, type: 3}
-  description: asdasdasd
+  icon: {fileID: -6328750076722268041, guid: 726097ebf992e8646be097554e306bb6, type: 3}
+  description: kmj
   kind: 0
   deltas:
-  - stat: 0
-    amount: 10
+  - stat: 5
+    amount: 50
     isMultiplier: 0
   hasDuration: 0
   durationSec: 0
-  consumeOnUse: 0

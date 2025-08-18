@@ -19,7 +19,6 @@ public class PlayerItemInteractor : MonoBehaviour
     [Header("선택")]
     private float maxPickupDistance = 1.0f; // 너무 먼 건 제외
     private float maxExitDistance = 1.0f;
-    public bool showPrompt = true;
 
     [Header("프롬프트 UI(고정 위치)")]
     public InteractUI promptUI;  // 인스펙터에서 연결

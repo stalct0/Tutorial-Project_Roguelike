@@ -38,12 +38,15 @@ public class PlayerStats : MonoBehaviour
         currentHealth = maxHealth;
         currentAttackDamage = startAttackDamage;
         currentMoney = startMoney;
+        currentMoveSpeed = startMoveSpeed;
+        currentDashCoolDown = startDashCoolDown;
         
         if (statDisplay != null)
         {
             statDisplay.SetMaxHealth(maxHealth);
             statDisplay.SetAttackDamage(currentAttackDamage);
             statDisplay.SetCurrentMoney(currentMoney);
+            statDisplay.SetCurrentMoveSpeed(currentMoveSpeed);
         }
 
         
@@ -126,26 +129,8 @@ public class PlayerStats : MonoBehaviour
         isInvincible = true;
         invincibleTimer = duration;
     }
+
     
-    public void Heal(int amount)
-    {
-        currentHealth += amount;
-        if (currentHealth > maxHealth)
-            currentHealth = maxHealth;
-        if (statDisplay != null)
-            statDisplay.SetCurrentHealth(currentHealth);
-    }
-
-    public void ChangeStats()
-    {
-        statDisplay.SetAttackDamage(currentAttackDamage);
-    }
-
-    public void ChangeMoney(int money)
-    {
-        statDisplay.SetCurrentMoney(money);
-    }
-
     private void Die()
     {
         GameObject.Destroy(gameObject);

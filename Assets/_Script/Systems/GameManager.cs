@@ -96,7 +96,13 @@ public class GameManager : MonoBehaviour
         {
             SetGameState(GameState.Playing);
         }
+
+        if (scene.name == "Lobby")
+        {
+            SetGameState(GameState.Playing);
+        }
     }
+    
     public void RegisterPlayer(PlayerStats stats)
     {
         stats.onDie.AddListener(GameOver);
@@ -227,5 +233,10 @@ public class GameManager : MonoBehaviour
             PRB    = playerInstance.GetComponent<Rigidbody2D>();
         }
 
+        public void DestroyPlayer()
+        {
+            Destroy(playerInstance);
+            playerInstance = null;
+        }
 
     }

@@ -161,7 +161,20 @@ public class InventoryScreen : MonoBehaviour
     void DropSlot(int index)
     {
         if (inv == null) return;
-        inv.RemoveSlot(index); // Passive면 효과 원복, Consumable은 그냥 제거
-        Refresh();
+
+        // 플레이어 위치/방향을 기준으로 드롭 지점 및 임펄스 계산
+        var pstats = GameManager.Instance?.PStats;
+        if (pstats == null) return;
+
+        // 플레이어 약간 위쪽에서 툭 떨어뜨리듯 생성
+        Vector3 dropOrigin = pstats.transform.position + Vector3.up * 0.6f;
+
+        // 바라보는 방향(로컬 스케일 x 부호)으로 약간 튀게
+        float dirX = Mathf.Sign(pstats.transform.localScale.x);
+        Vector2 throwImpulse = new Vector2(1.5f * dirX, 2.5f);
+
+        // 패시브만 드롭 가능. 성공 시 UI 갱신
+        bool ok = inv.TryDrop(index, dropOrigin, throwImpulse);
+        if (ok) Refresh();
     }
 }

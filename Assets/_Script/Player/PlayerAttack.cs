@@ -12,7 +12,7 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [Header("입력")]
-    [SerializeField] private KeyCode attackKey = KeyCode.J; // 필요시 New Input System으로 교체
+    [SerializeField] [ReadOnly] private KeyCode attackKey = KeyCode.J; // 필요시 New Input System으로 교체
 
     [Header("타겟 레이어")]
     [SerializeField] private LayerMask enemyLayer;

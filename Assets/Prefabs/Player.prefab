@@ -116,7 +116,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1266879957
-  m_SortingLayer: 1
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -169,6 +169,9 @@ MonoBehaviour:
   shortStunDuration: 0.3
   shortStunInvincibleDuration: 0.8
   longStunDuration: 2
+  dashSpeed: 12
+  dashDuration: 0.15
+  dashCooldown: 2
 --- !u!50 &6450627703100026735
 Rigidbody2D:
   serializedVersion: 5
@@ -285,9 +288,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statDisplay: {fileID: 0}
-  maxHealth: 100
-  startAD: 1
+  startAttackDamage: 1
   startMoney: 0
+  startMoveSpeed: 5
+  startDashCoolDown: 2
+  maxHealth: 100
   isInvincible: 0
   onDie:
     m_PersistentCalls:
@@ -307,6 +312,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotCount: 3
   slots: []
+  lastConsumedItem: {fileID: 0}
+  pickupPrefab: {fileID: 4708220600895377997, guid: 2bacafb5516fe4a4d896165a2ef7a895, type: 3}
 --- !u!114 &5356232195973676624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,7 +333,6 @@ MonoBehaviour:
   exitLayer:
     serializedVersion: 2
     m_Bits: 4096
-  showPrompt: 1
   promptUI: {fileID: 0}
   screenPrompt: {fileID: 0}
   worldOffset: {x: 0, y: 0.8, z: 0}
