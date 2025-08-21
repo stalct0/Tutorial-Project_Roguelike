@@ -5,6 +5,8 @@ public class CharacterSelector : MonoBehaviour
     public void SelectRed()
     {
         GameManager.Instance.LoadScene("Lobby");
+        GameManager.Instance.GameLevel = 1;
+        GameManager.Instance.GameStage = 1;
     }
 
     public void SelectBlue()

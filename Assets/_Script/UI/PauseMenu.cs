@@ -7,4 +7,11 @@ public class PauseMenu : MonoBehaviour
         this.gameObject.SetActive(false);
         GameManager.Instance.pauseMenuUI = this.gameObject;
     }
+    
+    public void OnRetryClicked()
+    {
+        GameManager.Instance.ResumeGame();
+        GameManager.Instance.DestroyPlayer();
+        GameManager.Instance.LoadScene("CharSelect");
+    }
 }

@@ -65,21 +65,25 @@ public class ShopManager : MonoBehaviour
     
     void Update()
     {
+        //넘어가기
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            GameManager.Instance.NextStage();
+            GameManager.Instance.LoadScene("Level");
+        }
+        
         // 좌우 선택
         if (Input.GetKeyDown(leftKey))
         {
-            Debug.Log("left Pressed");
             MoveSelection(-1);
         }
         else if (Input.GetKeyDown(rightKey))
         {
-            Debug.Log("right Pressed");
             MoveSelection(+1);
         }
 
         if (Input.GetKeyDown(buyKey))
         {
-            Debug.Log("Enter Pressed");
             TryBuySelected();
         }
     }
@@ -133,40 +137,15 @@ public class ShopManager : MonoBehaviour
             slots[i].Set(data);
         }
     }
-    
     int GetPlayerMoney()
     {
-        // 프로젝트에 따라 변수명이 다른 경우가 있어서 두 가지 다 시도
-        if (pstats == null) return 0;
-
-        // 1) money 필드가 있는 경우
-        var moneyField = typeof(PlayerStats).GetField("money");
-        if (moneyField != null && moneyField.FieldType == typeof(int))
-            return (int)moneyField.GetValue(pstats);
-
-        // 2) gold 필드가 있는 경우
-        var goldField = typeof(PlayerStats).GetField("gold");
-        if (goldField != null && goldField.FieldType == typeof(int))
-            return (int)goldField.GetValue(pstats);
-
-        return 0;
+        return (pstats != null) ? pstats.currentMoney : 0;
     }
 
     bool TrySpend(int price)
     {
-        Debug.Log("TrySpend");
         if (pstats == null) return false;
-
-        var moneyField = typeof(PlayerStats).GetField("currentMoney");
-        if (moneyField != null && moneyField.FieldType == typeof(int))
-        {
-            int m = (int)moneyField.GetValue(pstats);
-            if (m < price) return false;
-            moneyField.SetValue(pstats, m - price);
-            return true;
-        }
-        
-        return false;
+        return pstats.TrySpendMoney(price); // ← PlayerStats 헬퍼 호출
     }
 
     void TryBuySelected()
@@ -179,28 +158,31 @@ public class ShopManager : MonoBehaviour
 
         int price = data.price;
 
+        // 1) 돈 체크
         if (GetPlayerMoney() < price)
         {
-            Debug.Log("[Shop] Not enough money");
             return;
         }
 
+        // 2) 인벤 꽉 차면 불가
         if (!inv.HasEmptySlot())
         {
-            Debug.Log("[Shop] Inventory full");
+
             return;
         }
 
+        // 3) 결제
         if (!TrySpend(price))
         {
-            Debug.Log("[Shop] Spend failed");
+
             return;
         }
 
+        // 4) 아이템 지급
         bool ok = inv.TryAdd(data.def);
         if (!ok) return;
 
-        // 구매 후 슬롯 비우기
+        // 5) 슬롯 비우기 + UI 갱신
         items[selectedIndex] = null;
         slots[selectedIndex].Set(null);
     }

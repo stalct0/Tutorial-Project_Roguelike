@@ -144,6 +144,23 @@ public class PlayerStats : MonoBehaviour
         currentHealth = maxHealth;
     }
     
+    public bool TrySpendMoney(int amount)
+    {
+        if (amount <= 0) return true;
+        if (currentMoney < amount) return false;
+        currentMoney -= amount;
+        statDisplay?.SetCurrentMoney(currentMoney);
+        return true;
+    }
+
+// 돈 추가(+), UI 갱신 포함
+    public void AddMoney(int amount)
+    {
+        if (amount == 0) return;
+        currentMoney = Mathf.Max(0, currentMoney + amount);
+        statDisplay?.SetCurrentMoney(currentMoney);
+    }
+    
     //아이템 
     public void ApplyStatDelta(StatDelta d)
     {
