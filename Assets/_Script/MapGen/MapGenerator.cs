@@ -5,6 +5,16 @@ using Unity.Cinemachine;
     
 public class MapGenerator : MonoBehaviour
 {
+    [Header("World Trigger Bounds (tiles padding)")]
+    public int padLeft  = 3;
+    public int padRight = 3;
+    public int padDown  = 3;
+    public int padUp    = 3;
+    
+    [Header("World Trigger Bounds")]
+    public string boundsObjectName = "MapTriggerBounds";
+    public int boundsLayer = 0;               // 필요시 레이어 지정(없으면 0=Default)
+    
     public Tilemap mainTilemap;
     public Tilemap ladderTilemap;
     public Tilemap borderTilemap;
@@ -68,6 +78,8 @@ public class MapGenerator : MonoBehaviour
         RoomTilePainter.PaintBorder(borderTilemap, wallTile, config.Width * roomWidth, 
             config.Height * roomHeight, thickness);
         
+        CreateOrUpdateWorldTriggerBounds(config.Width, config.Height, roomWidth, roomHeight, gridLayout.cellSize);
+
     }
 
     void InitRooms()
@@ -83,5 +95,46 @@ public class MapGenerator : MonoBehaviour
         return new Vector2Int(x, 0); // bottom row
     }
 
+    void CreateOrUpdateWorldTriggerBounds(int roomsX, int roomsY, int roomW, int roomH, Vector3 cellSize)
+    {
+        // 맵의 "타일 단위" 크기
+        int mapTilesW = roomsX * roomW;
+        int mapTilesH = roomsY * roomH;
+
+        // 패딩(타일)을 월드 단위로 변환
+        float extraW = (padLeft + padRight) * cellSize.x;
+        float extraH = (padDown + padUp)   * cellSize.y;
+
+        // 맵 자체의 월드 크기
+        float worldW = mapTilesW * cellSize.x;
+        float worldH = mapTilesH * cellSize.y;
+
+        // 콜라이더의 최종 사이즈(월드 단위)
+        Vector2 size = new Vector2(worldW + extraW, worldH + extraH);
+
+        // 콜라이더의 월드 중심
+        //  - 기본 맵은 (0,0)부터 오른쪽/위로 깔리므로, 중심은 맵 절반 + (패딩의 좌우/상하 차이) 절반
+        float centerX = (mapTilesW * 0.5f + (padRight - padLeft) * 0.5f) * cellSize.x;
+        float centerY = (mapTilesH * 0.5f + (padUp    - padDown) * 0.5f) * cellSize.y;
+        Vector3 center = new Vector3(centerX, centerY, 0f);
+
+        // 기존 오브젝트가 있으면 재사용, 없으면 생성
+        GameObject go = GameObject.Find(boundsObjectName);
+        if (go == null)
+            go = new GameObject(boundsObjectName);
+
+        go.layer = boundsLayer;
+        go.transform.position = center;
+
+        var box = go.GetComponent<BoxCollider2D>();
+        if (box == null) box = go.AddComponent<BoxCollider2D>();
+        box.isTrigger = true;      // ✅ 요청: 트리거 ON
+        box.size = size;
+
+        // (선택) 기즈모 보이게끔 헬퍼 붙이기
+    //    var giz = go.GetComponent<WorldBoundsGizmo>();
+     //   if (giz == null) giz = go.AddComponent<WorldBoundsGizmo>();
+     //   giz.enabled = showBoundsGizmos;
+    }
 
 }
