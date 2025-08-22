@@ -15,9 +15,9 @@ MonoBehaviour:
   displayName: CauBurger
   icon: {fileID: -6328750076722268041, guid: 726097ebf992e8646be097554e306bb6, type: 3}
   description: kmj
-  kind: 0
+  kind: 1
   deltas:
-  - stat: 5
+  - stat: 1
     amount: 50
     isMultiplier: 0
   hasDuration: 0

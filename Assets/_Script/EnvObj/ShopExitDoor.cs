@@ -25,7 +25,6 @@ public class ShopExitDoor : MonoBehaviour
         if (playerInRange && Input.GetKeyDown(KeyCode.I)) // 
         {
             GameManager.Instance.NextStage();
-            GameManager.Instance.LoadScene("Level");
         }
     }
 

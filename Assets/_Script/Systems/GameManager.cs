@@ -89,10 +89,10 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
-    
+
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Level") 
+        if (scene.name == "Level")
         {
             SetGameState(GameState.Playing);
         }
@@ -101,7 +101,12 @@ public class GameManager : MonoBehaviour
         {
             SetGameState(GameState.Playing);
         }
-    }
+
+        if (scene.name == "Boss")
+        {
+            SetGameState(GameState.Playing);
+        }
+}
     
     public void RegisterPlayer(PlayerStats stats)
     {
@@ -186,10 +191,19 @@ public class GameManager : MonoBehaviour
             SetGameState(GameState.Playing);
         }
 
-        public void NextStage()
+       public void NextStage()
         {
             GameLevel++;
-            if (GameLevel > 5)
+            if (GameLevel == 5)
+            {
+                LoadScene("Boss");
+            }
+            else
+            {
+                LoadScene("Level");
+            }
+
+            if (GameLevel == 6)
             {
                 GameStage++;
                 GameLevel = 1;

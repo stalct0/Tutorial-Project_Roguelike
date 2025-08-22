@@ -69,7 +69,6 @@ public class ShopManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             GameManager.Instance.NextStage();
-            GameManager.Instance.LoadScene("Level");
         }
         
         // 좌우 선택
