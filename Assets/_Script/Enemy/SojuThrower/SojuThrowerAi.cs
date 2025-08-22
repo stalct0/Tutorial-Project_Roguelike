@@ -49,7 +49,9 @@ public class SojuThrowerAI : MonoBehaviour
 
     private float currentDirection = 1f;
 
-    //private Animator animator;
+    private Animator animator;
+    private SpriteRenderer sr;
+    
     private Rigidbody2D rb;
     // Removed unused isFacingRight field
     // Removed unused isHit field
@@ -61,6 +63,7 @@ public class SojuThrowerAI : MonoBehaviour
     // 던지는 소주병  불러오기
     public GameObject sojuPrefab; // Assign this in the Unity Inspector
     
+    static readonly int HashThrow = Animator.StringToHash("Throw");
     
     void Start()
     {
@@ -70,7 +73,8 @@ public class SojuThrowerAI : MonoBehaviour
             if (go != null)
                 player = go.transform;
         }
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>();          // ★ 추가
+        sr = GetComponent<SpriteRenderer>();          // ★ 추가
         rb = GetComponent<Rigidbody2D>();
         
         combat = GetComponent<EnemyCombat>(); 
@@ -90,10 +94,21 @@ public class SojuThrowerAI : MonoBehaviour
     
     void Update()
     {
-        if (combat != null && (combat.IsStunned || combat.IsLaunched))
+        bool stunned = (combat != null && (combat.IsStunned || combat.IsLaunched));
+        
+        if (animator) animator.SetBool("IsStunned", stunned);
+
+        if (stunned)
         {
             currentState = EnemyState.Stun;
         }
+        
+        if (animator) animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
+        UpdateFacing();
+
+        
+        
+        
         switch (currentState)
         {
             case EnemyState.Patrol:
@@ -119,7 +134,18 @@ public class SojuThrowerAI : MonoBehaviour
                 break;
         }
     }
-
+    void UpdateFacing()
+    {
+        float faceDir = currentDirection;
+        if (player != null && (currentState == EnemyState.MoveToRange || currentState == EnemyState.AttackPrepare || currentState == EnemyState.Attack))
+        {
+            faceDir = Mathf.Sign(player.position.x - transform.position.x);
+            if (faceDir == 0) faceDir = currentDirection;
+        }
+        currentDirection = Mathf.Sign(faceDir);
+        if (sr) sr.flipX = (currentDirection > 0f);
+        
+    }
 
     //패트롤 
     void Patrol()
@@ -185,6 +211,7 @@ public class SojuThrowerAI : MonoBehaviour
     {
         if (combat != null && !(combat.IsStunned || combat.IsLaunched))
         {
+            if (animator) animator.SetBool("IsStunned", false);
             currentState = EnemyState.Patrol;
         } 
     }
@@ -301,8 +328,8 @@ public class SojuThrowerAI : MonoBehaviour
 
     void AttackPrepare()
     {
-        //animator.SetBool("isWalking", false);
-        //animator.SetBool("isPreparing", true);
+        if (animator) animator.SetBool("IsPreparing", true);
+        
         if (isFirstAttack)
         {
             isFirstAttack = false;
@@ -329,19 +356,25 @@ public class SojuThrowerAI : MonoBehaviour
     
     void Attack()
     {
-        //animator.SetTrigger("isThrowing");
-        // 실제 곡선 투사체는 여기서 Instantiate
-        if (player != null)
+        // 1) 여기서는 애니메이션만 시작
+        animator.SetTrigger(HashThrow);
+        currentState = EnemyState.Reset;
+    }
+    
+    public void ThrowSoju()
+    {
+        if (player != null && sojuPrefab != null)
         {
-            GameObject soju = Instantiate(sojuPrefab, transform.position, Quaternion.identity);
+            var soju = Instantiate(sojuPrefab, transform.position, Quaternion.identity);
             soju.GetComponent<SojuProjectile>().Launch(player.position);
         }
-        currentState = EnemyState.Reset;
+        
+        currentState = (player == null) ? EnemyState.Patrol : EnemyState.MoveToRange;
     }
 
     void ResetAfterAttack()
     {
-        //animator.SetBool("isPreparing", false);
+        if (animator) animator.SetBool("IsPreparing", false);
         if (player == null)
         {
             currentState = EnemyState.Patrol;

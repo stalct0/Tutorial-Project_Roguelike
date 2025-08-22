@@ -13,7 +13,7 @@ public class MapGenerator : MonoBehaviour
     
     [Header("World Trigger Bounds")]
     public string boundsObjectName = "MapTriggerBounds";
-    public int boundsLayer = 0;               // 필요시 레이어 지정(없으면 0=Default)
+    public int boundsLayer = 0;             
     
     public Tilemap mainTilemap;
     public Tilemap ladderTilemap;
@@ -130,11 +130,7 @@ public class MapGenerator : MonoBehaviour
         if (box == null) box = go.AddComponent<BoxCollider2D>();
         box.isTrigger = true;      // ✅ 요청: 트리거 ON
         box.size = size;
-
-        // (선택) 기즈모 보이게끔 헬퍼 붙이기
-    //    var giz = go.GetComponent<WorldBoundsGizmo>();
-     //   if (giz == null) giz = go.AddComponent<WorldBoundsGizmo>();
-     //   giz.enabled = showBoundsGizmos;
+        
     }
 
 }

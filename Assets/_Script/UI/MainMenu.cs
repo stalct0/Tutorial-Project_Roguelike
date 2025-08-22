@@ -2,19 +2,19 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
-    public void OnClickNew ()
+    public void OnClickNormalMode ()
     {
         GameManager.Instance.LoadScene("CharSelect");
     }
 
-    public void OnClickLoad()
+    public void OnClickInfinityMode()
     {
-        
+        GameManager.Instance.LoadScene("CharSelect");
     }
 
-    public void OnClickOption()
+    public void OnClickCredit()
     {
-        GameManager.Instance.LoadScene("Option");
+        GameManager.Instance.LoadScene("Credit");
     }
 
 
