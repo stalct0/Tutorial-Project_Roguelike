@@ -12,6 +12,7 @@ public class ShopItemData
 {
     public ItemDefinition def;
     public int price;
+    public int rolledValue;       
 }
 public class ShopManager : MonoBehaviour
 {
@@ -124,7 +125,11 @@ public class ShopManager : MonoBehaviour
             // ✅ 가격은 여기서 랜덤으로 정해줌
             int randPrice = Random.Range(priceRange.x, priceRange.y + 1);
             
-            items[i] = new ShopItemData { def = pick, price = randPrice };
+            int rolled = 0;
+            if (pick != null)
+                rolled = Random.Range(pick.minRoll, pick.maxRoll + 1); 
+            
+            items[i] = new ShopItemData { def = pick, price = randPrice, rolledValue = rolled };
         }
     }
 
@@ -178,7 +183,7 @@ public class ShopManager : MonoBehaviour
         }
 
         // 4) 아이템 지급
-        bool ok = inv.TryAdd(data.def);
+        bool ok = inv.TryAdd(data.def, data.rolledValue);
         if (!ok) return;
 
         // 5) 슬롯 비우기 + UI 갱신
@@ -208,7 +213,12 @@ public class ShopItemView
 
         if (icon) { icon.enabled = (data.def.icon != null); icon.sprite = data.def.icon; }
         if (nameText) nameText.text = data.def.displayName;
-        if (descText) descText.text = data.def.description;
+        if (descText)
+        {
+            string fmt = string.IsNullOrEmpty(data.def.uiEffectFormat) ? "+{0}" : data.def.uiEffectFormat; // ★ ADD
+            string eff = string.Format(fmt, data.rolledValue);                                             // ★ ADD
+            descText.text = $"{data.def.description}\n{eff}";                                              // ★ CHG
+        }
         if (priceText) priceText.text = $"$ {data.price}";
     }
 }

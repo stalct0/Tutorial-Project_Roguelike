@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dccc131ea62c6724582615ff69c8377a, type: 3}
+  m_Name: CauBurger
+  m_EditorClassIdentifier: 
+  displayName: CauBurger
+  icon: {fileID: -6328750076722268041, guid: 726097ebf992e8646be097554e306bb6, type: 3}
+  description: kmj
+  kind: 1
+  deltas:
+  - stat: 1
+    isMultiplier: 0
+  minRoll: 2
+  maxRoll: 10
+  uiEffectFormat: "\uCCB4\uB825 +{0}"

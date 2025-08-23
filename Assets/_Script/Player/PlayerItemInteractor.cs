@@ -21,7 +21,7 @@ public class PlayerItemInteractor : MonoBehaviour
     private float maxExitDistance = 1.0f;
 
     [Header("프롬프트 UI(고정 위치)")]
-    public InteractUI promptUI;  // 인스펙터에서 연결
+    public InteractUI promptUI; 
     private PlayerInventory inv;
     
     [Header("프롬프트 UI(화면 공간)")]
@@ -50,12 +50,12 @@ public class PlayerItemInteractor : MonoBehaviour
         if (item != null)
         {
             targetTf = item.transform;
-            promptUI.gameObject.SetActive(true);
+            if (promptUI) promptUI.gameObject.SetActive(true);
         }
         else if (exitTf != null)
         {
             targetTf = exitTf;
-            promptUI.gameObject.SetActive(true);
+            if (promptUI) promptUI.gameObject.SetActive(true);
         }
 
         // 3) 프롬프트 토글 + 위치 갱신

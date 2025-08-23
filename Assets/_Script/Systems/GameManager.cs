@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     
     [NonSerialized] public int GameStage = 1;
     [NonSerialized] public int GameLevel = 1;
+    [NonSerialized] public int LevelCoefficient = 1;
     
     [Header("Player")]
     public GameObject playerPrefab;
@@ -23,6 +24,8 @@ public class GameManager : MonoBehaviour
     public PlayerInventory PInventory { get; private set; }
     public PlayerItemInteractor PItemInteractor { get; private set; }
     public Rigidbody2D     PRB { get; private set; }
+
+    
     
     // 플레이어 생성 완료 신호 이벤트
     public event System.Action<PlayerInventory> OnInventoryReady;
@@ -37,8 +40,16 @@ public class GameManager : MonoBehaviour
         Shop
     }
 
+    public enum GameMode
+    {
+        Normal,
+        Infinite
+    }
+    
     public GameState CurrentState { get; private set; }
 
+    public GameMode CurrentGameMode { get; private set; }
+    
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -53,13 +64,16 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
+        CurrentState = GameState.Menu;
     }
 
     void Update()
     {
         switch (CurrentState)
         {
+            case GameState.Menu:
+                break;
+            
             case GameState.Playing:
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
@@ -135,8 +149,6 @@ public class GameManager : MonoBehaviour
         
         BindPlayerUI();
         
-        
-        
     }
 
     public void ResetPlayerPosition()
@@ -171,6 +183,10 @@ public class GameManager : MonoBehaviour
             CurrentState = newState;
         }
 
+    public void SetGameMode(GameMode newGameMode)
+    {
+        CurrentGameMode = newGameMode;
+    }
 
         public void LoadScene(string sceneName)
         {
@@ -192,21 +208,42 @@ public class GameManager : MonoBehaviour
         }
 
        public void NextStage()
-        {
-            GameLevel++;
-            if (GameLevel == 5)
+       {
+           LevelCoefficient++;
+            if (CurrentGameMode == GameMode.Normal)
             {
-                LoadScene("Boss");
-            }
-            else
-            {
-                LoadScene("Level");
-            }
+                GameLevel++;
+                if (GameLevel == 5)
+                {
+                    LoadScene("Boss");
+                }
+                else
+                {
+                    LoadScene("Level");
+                }
 
-            if (GameLevel == 6)
+                if (GameLevel == 6)
+                {
+                    LoadScene("Ending");
+                }                
+            }
+            else if (CurrentGameMode == GameMode.Infinite)
             {
-                GameStage++;
-                GameLevel = 1;
+                GameLevel++;
+                if (GameLevel == 5)
+                {
+                    LoadScene("Boss");
+                }
+                else
+                {
+                    LoadScene("Level");
+                }
+
+                if (GameLevel == 6)
+                {
+                    GameStage++;
+                    GameLevel = 1;
+                } 
             }
         }
         
@@ -220,10 +257,14 @@ public class GameManager : MonoBehaviour
             
             
             // 현재 스탯을 UI에 밀어넣기
-            sd.SetMaxHealth(PStats.maxHealth);
-            sd.SetCurrentHealth(PStats.currentHealth);
-            sd.SetAttackDamage(PStats.currentAttackDamage);
-            sd.SetCurrentMoney(PStats.currentMoney);
+            if (sd != null)
+            {
+                sd.SetMaxHealth(PStats.maxHealth);
+                sd.SetCurrentHealth(PStats.currentHealth);
+                sd.SetAttackDamage(PStats.currentAttackDamage);
+                sd.SetCurrentMoney(PStats.currentMoney);
+                sd.SetCurrentMoveSpeed(PStats.currentMoveSpeed);
+            }
             
             OnInventoryReady?.Invoke(PInventory);
             

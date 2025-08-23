@@ -68,13 +68,15 @@ public class InventoryScreen : MonoBehaviour
                 }
             }
         }
-
-        if (!isOpen || inv == null) return;
-
-        // 열린 동안 1/2/3으로 버리기
+        
         if (Input.GetKeyDown(dropKey1)) DropSlot(0);
         if (Input.GetKeyDown(dropKey2)) DropSlot(1);
         if (Input.GetKeyDown(dropKey3)) DropSlot(2);
+        
+        if (!isOpen || inv == null) return;
+
+        // 열린 동안 1/2/3으로 버리기
+        
     }
     
     void Bind(PlayerInventory inventory)
@@ -85,6 +87,7 @@ public class InventoryScreen : MonoBehaviour
         Refresh();
     }
 
+    
     void Refresh()
     {
         if (inv == null || slots == null) return;
@@ -101,8 +104,14 @@ public class InventoryScreen : MonoBehaviour
                     slotView.icon.enabled = true;
                     slotView.icon.sprite = item.icon;
                 }
-                if (slotView.nameText != null) slotView.nameText.text = item.displayName;
-                if (slotView.descText != null) slotView.descText.text = item.description;
+                if (slotView.nameText) slotView.nameText.text = item.displayName;
+                if (slotView.descText)
+                {
+                    int rolled = (i < inv.slotRolledValues.Length) ? inv.slotRolledValues[i] : 0; // ★ ADD
+                    string fmt = string.IsNullOrEmpty(item.uiEffectFormat) ? "+{0}" : item.uiEffectFormat; // ★ ADD
+                    string eff = string.Format(fmt, rolled);                                               // ★ ADD
+                    slotView.descText.text = $"{item.description}\n{eff}";                                 // ★ CHG
+                }
             }
             else
             {
@@ -115,6 +124,7 @@ public class InventoryScreen : MonoBehaviour
                 if (slotView.descText != null) slotView.descText.text = "";
             }
         }
+        
         // 최근 먹은 OnPickup(= lastConsumedItem) 표시
         if (cslots != null && cslots.Length > 0)
         {
@@ -125,13 +135,19 @@ public class InventoryScreen : MonoBehaviour
             {
                 if (view.icon != null) { view.icon.enabled = true; view.icon.sprite = last.icon; }
                 if (view.nameText != null) view.nameText.text = last.displayName;
-                if (view.descText != null) view.descText.text = last.description;
+                if (view.descText)
+                {
+                    string fmt = string.IsNullOrEmpty(last.uiEffectFormat) ? "+{0}" : last.uiEffectFormat; // ★ ADD
+                    string eff = string.Format(fmt, inv.lastConsumedRolledValue);                           // ★ ADD
+                    view.descText.text = $"{last.description}\n{eff}";                                     // ★ CHG
+                }
             }
             else
             {
-                if (view.icon != null) { view.icon.enabled = false; view.icon.sprite = null; }
-                if (view.nameText != null) view.nameText.text = "";
-                if (view.descText != null) view.descText.text = "";
+                // last가 없을 때는 전부 비우기
+                if (view.icon) { view.icon.enabled = false; view.icon.sprite = null; }
+                if (view.nameText) view.nameText.text = "";
+                if (view.descText) view.descText.text = "";
             }
         }
     }
@@ -167,7 +183,7 @@ public class InventoryScreen : MonoBehaviour
         if (pstats == null) return;
 
         // 플레이어 약간 위쪽에서 툭 떨어뜨리듯 생성
-        Vector3 dropOrigin = pstats.transform.position + Vector3.up * 0.6f;
+        Vector3 dropOrigin = pstats.transform.position + Vector3.up * 0.2f;
 
         // 바라보는 방향(로컬 스케일 x 부호)으로 약간 튀게
         float dirX = Mathf.Sign(pstats.transform.localScale.x);

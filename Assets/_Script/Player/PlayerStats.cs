@@ -153,7 +153,6 @@ public class PlayerStats : MonoBehaviour
         return true;
     }
 
-// 돈 추가(+), UI 갱신 포함
     public void AddMoney(int amount)
     {
         if (amount == 0) return;
@@ -186,7 +185,7 @@ public class PlayerStats : MonoBehaviour
             
             case StatType.CurrentHealth:
                 int initial2 = currentHealth;
-                if (d.isMultiplier) currentHealth = Mathf.RoundToInt(currentHealth * (1f + d.amount));
+                if (d.isMultiplier) currentHealth = Mathf.RoundToInt(currentHealth + (maxHealth*d.amount));
                 else currentHealth = Mathf.Max(1, currentHealth + Mathf.RoundToInt(d.amount));
                 currentHealth = Mathf.Min(currentHealth, maxHealth);
                 currentHealth = Mathf.Max(initial2, currentHealth);
@@ -238,13 +237,6 @@ public class PlayerStats : MonoBehaviour
             RemoveStatDelta(d);
             _appliedDeltas.Remove(d);
         }
-    }
-
-    public IEnumerator ApplyTimedDeltas(IEnumerable<StatDelta> list, float sec)
-    {
-        ApplyDeltas(list);
-        yield return new WaitForSeconds(sec);
-        RemoveDeltas(list);
     }
 }
     

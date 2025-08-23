@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class StatDisplay : MonoBehaviour
 {
     public Slider slider;
+    public TMP_Text maxHealthText;
     public TMP_Text attackDamageText;
     public TMP_Text stageText;
     public TMP_Text moneyText;
@@ -21,6 +22,7 @@ public class StatDisplay : MonoBehaviour
     
     public void SetMaxHealth(int health)
     {
+        maxHealthText.text = $"{health}";
         slider.maxValue = health;
     }
 

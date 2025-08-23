@@ -1,7 +1,16 @@
+using System;
 using UnityEngine;
 
 public class CharacterSelector : MonoBehaviour
 {
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Exit();
+        }
+    }
+
     public void SelectRed()
     {
         GameManager.Instance.LoadScene("Lobby");
@@ -22,5 +31,11 @@ public class CharacterSelector : MonoBehaviour
     public void SelectYellow()
     {
         //GameManager.Instance.LoadScene("Level");
+    }
+
+    public void Exit()
+    {
+        GameManager.Instance.SetGameState(GameManager.GameState.Menu);
+        GameManager.Instance.LoadScene("MainMenu");
     }
 }

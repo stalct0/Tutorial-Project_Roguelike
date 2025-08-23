@@ -4,6 +4,10 @@ public class ItemPickup : MonoBehaviour
 {
     public ItemDefinition item;
     
+    [Header("Rolled Value")]           // ★ ADD
+    public int rolledValue;            // 이 픽업의 굴려진 수치
+    public bool hasRolled;             // 이미 굴렸는가?
+    
     [Header("Visual")]
     [SerializeField] private SpriteRenderer spriteRenderer;   // 비워두면 자동 할당
     [SerializeField] private string sortingLayerName = "Item";
@@ -15,7 +19,8 @@ public class ItemPickup : MonoBehaviour
     public bool TryPickup(PlayerInventory inv)
     {
         if (inv == null || item == null) return false;
-        bool ok = inv.TryAdd(item);
+        int rolled = EnsureRolled();
+        bool ok = inv.TryAdd(item, rolled);
         if (ok) Destroy(gameObject);
         return ok;
     }
@@ -54,8 +59,31 @@ public class ItemPickup : MonoBehaviour
     public void SetItem(ItemDefinition def)
     {
         item = def;
+        hasRolled = false;                      // 아직 미확정
         ApplyVisual();
     }
+    
+    // ▶ 상자/상점 등에서 "미리 굴려서" 픽업을 만들 때 사용
+    public void Set(ItemDefinition def, int rolled) // ★ ADD
+    {
+        item = def;
+        rolledValue = rolled;
+        hasRolled = true;
+        ApplyVisual();
+    }
+
+    // ▶ 필요하면 이 순간에 한 번만 굴린다(인벤/상자 어디서 와도 일관)
+    public int EnsureRolled()                   // ★ ADD
+    {
+        if (!item) return 0;
+        if (!hasRolled)
+        {
+            rolledValue = Random.Range(item.minRoll, item.maxRoll + 1);
+            hasRolled = true;
+        }
+        return rolledValue;
+    }
+
 
     private void ApplyVisual()
     {

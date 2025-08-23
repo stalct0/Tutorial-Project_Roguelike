@@ -96,7 +96,7 @@ public class SojuThrowerAI : MonoBehaviour
     {
         bool stunned = (combat != null && (combat.IsStunned || combat.IsLaunched));
         
-        if (animator) animator.SetBool("IsStunned", stunned);
+        if (animator) animator.SetBool("isStunned", stunned);
 
         if (stunned)
         {
@@ -163,7 +163,6 @@ public class SojuThrowerAI : MonoBehaviour
             float dist = Vector2.Distance(transform.position, player.position);
             if (!float.IsNaN(dist) && dist < agroRange)
             {
-                //animator.SetTrigger("isStunned");
                 currentState = EnemyState.Agro;
                 return;
             }
@@ -211,7 +210,7 @@ public class SojuThrowerAI : MonoBehaviour
     {
         if (combat != null && !(combat.IsStunned || combat.IsLaunched))
         {
-            if (animator) animator.SetBool("IsStunned", false);
+            if (animator) animator.SetBool("isStunned", false);
             currentState = EnemyState.Patrol;
         } 
     }

@@ -133,8 +133,6 @@ public class BreakableChest : MonoBehaviour, IHittable
         {
             var def = lootTable.Roll(currentStageForFilter, includeOnPickup);
             if (def == null) continue;
-
-            // ✅ 무조건 fallback 프리팹 사용
             if (pickupPrefabFallback == null) continue;
             GameObject prefab = pickupPrefabFallback;
 
@@ -148,7 +146,10 @@ public class BreakableChest : MonoBehaviour, IHittable
             // 아이템 정보 세팅
             var pickup = go.GetComponent<ItemPickup>();
             if (pickup != null)
-                pickup.SetItem(def);
+            {
+                int rolled = Random.Range(def.minRoll, def.maxRoll + 1); // ★ ADD
+                pickup.Set(def, rolled);                                 // ★ CHG
+            }
             else
             {
                 // 안전망: SpriteRenderer 직접 세팅

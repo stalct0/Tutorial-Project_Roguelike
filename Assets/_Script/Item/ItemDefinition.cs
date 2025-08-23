@@ -9,13 +9,14 @@ public enum StatType { MaxHealth, CurrentHealth, CurrentAttackDamage, CurrentMon
 public struct StatDelta
 {
     public StatType stat;
-    public float amount;         // +10, -5 같은 가감치
+    [NonSerialized] public float amount;         // +10, -5 같은 가감치
     public bool isMultiplier;    // true면 배율(예: 0.1 = +10%)
 }
 
 [CreateAssetMenu(menuName = "Game/Item Definition")]
 public class ItemDefinition : ScriptableObject
 {
+    
     public string displayName;
     public Sprite icon;
     [TextArea] public string description;
@@ -23,8 +24,12 @@ public class ItemDefinition : ScriptableObject
 
     [Header("공통 효과(패시브/즉시발동)")]
     public List<StatDelta> deltas = new();
+    
+    [Header("Roll Range (정수)")]          // ★ ADD
+    public int minRoll = 0;                // 예: 4
+    public int maxRoll = 0;                // 예: 12
 
-    [Header("지속시간(선택)")]
-    public bool hasDuration;
-    public float durationSec = 0f;   // >0이면 일정 시간 후 원복
+    [Header("UI 포맷")]                    // ★ ADD
+    public string uiEffectFormat = "+{0}"; // 예: "+{0}", "x{0}", "+{0} ATK"
+    
 }
