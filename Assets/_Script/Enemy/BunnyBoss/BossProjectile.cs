@@ -3,14 +3,14 @@ using UnityEngine;
 public class Bomb : MonoBehaviour
 {
     // Call this after instantiating the bomb to throw it in a parabolic arc
-    public void Throw(Vector2 direction, float force)
+    // Set the velocity directly for a true parabolic arc
+    public void SetVelocity(Vector2 velocity)
     {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         if (rb != null)
         {
-            rb.bodyType = RigidbodyType2D.Dynamic; // Ensure physics is enabled
-            rb.linearVelocity = Vector2.zero; // Reset velocity
-            rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
+            rb.bodyType = RigidbodyType2D.Dynamic;
+            rb.linearVelocity = velocity;
         }
     }
     public float autoExplosionDelay = 5f;  // If it never hits, explode after this
@@ -21,13 +21,39 @@ public class Bomb : MonoBehaviour
     private bool stuckToPlayer = false;
     private Transform playerTransform;
 
+    private Collider2D bombCollider;
+    private Vector3 targetPosition;
+    private bool colliderEnabled = false;
+
     private void Start()
     {
-    // Auto-explode if nothing happens
-    Invoke(nameof(Explode), autoExplosionDelay);
+        // Auto-explode if nothing happens
+        Invoke(nameof(Explode), autoExplosionDelay);
 
-    // Example usage (remove/comment out in production):
-    // Throw(new Vector2(1, 1), 10f); // Throws up and to the right
+        bombCollider = GetComponent<Collider2D>();
+        if (bombCollider != null)
+            bombCollider.enabled = false; // Disable collider at spawn
+    }
+
+    // Call this from BunnyBoss.cs after instantiating the bomb
+    public void SetTarget(Vector3 target)
+    {
+        targetPosition = target;
+    }
+
+    private void Update()
+    {
+        // Only enable collider when close to target position and not stuck to player
+        if (!colliderEnabled && !stuckToPlayer && targetPosition != Vector3.zero)
+        {
+            float distance = Vector2.Distance(transform.position, targetPosition);
+            if (distance < 0.5f) // Adjust threshold as needed
+            {
+                if (bombCollider != null)
+                    bombCollider.enabled = true;
+                colliderEnabled = true;
+            }
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -35,6 +61,16 @@ public class Bomb : MonoBehaviour
         if (!stuckToPlayer && collision.gameObject.CompareTag("Player"))
         {
             StickToPlayer(collision.gameObject.transform);
+        }
+        // If bomb lands on ground or platform, stop sliding
+        if (!stuckToPlayer && !collision.gameObject.CompareTag("Player"))
+        {
+            Rigidbody2D rb = GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.linearVelocity = Vector2.zero;
+                rb.bodyType = RigidbodyType2D.Kinematic;
+            }
         }
     }
 
@@ -60,9 +96,8 @@ public class Bomb : MonoBehaviour
             rb.bodyType = RigidbodyType2D.Kinematic;
         }
 
-        // Disable collider so it doesn't mess with movement
-        Collider2D col = GetComponent<Collider2D>();
-        if (col != null) col.enabled = false;
+    // Disable collider so it doesn't mess with movement
+    if (bombCollider != null) bombCollider.enabled = false;
 
         // Parent bomb to player so it moves with them
         transform.SetParent(playerTransform);
