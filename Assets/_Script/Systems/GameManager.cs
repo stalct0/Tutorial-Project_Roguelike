@@ -13,8 +13,9 @@ public class GameManager : MonoBehaviour
     
     [NonSerialized] public int GameStage = 1;
     [NonSerialized] public int GameLevel = 1;
-    [NonSerialized] public int LevelCoefficient = 1;
-    
+    [NonSerialized] public float LevelCoefficient = 1f;
+    [NonSerialized] public float LevelCoRate = 0.3f;
+        
     [Header("Player")]
     public GameObject playerPrefab;
     public GameObject playerInstance {get; private set; }   // 생성 후 유지 
@@ -209,7 +210,7 @@ public class GameManager : MonoBehaviour
 
        public void NextStage()
        {
-           LevelCoefficient++;
+           LevelCoefficient = LevelCoefficient + LevelCoRate;
             if (CurrentGameMode == GameMode.Normal)
             {
                 GameLevel++;

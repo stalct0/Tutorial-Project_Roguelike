@@ -93,9 +93,12 @@ public class PlayerStats : MonoBehaviour
     {
         if (isInvincible) return;
         
-        currentHealth -= amount;
+        int totalDamage = Mathf.RoundToInt(amount * (GameManager.Instance.LevelCoefficient));
+        currentHealth -= totalDamage;
+        
         if (currentHealth < 0)
             currentHealth = 0;
+        
         if (statDisplay != null)
             statDisplay.SetCurrentHealth(currentHealth);
         
@@ -113,15 +116,13 @@ public class PlayerStats : MonoBehaviour
     public void TakeDamageKnockback(int amount,Vector2? sourcePosition, float knockbackForce)
     {
         if (isInvincible) return;
-        
-        currentHealth -= amount;
+        int totalDamage = Mathf.RoundToInt(amount * (GameManager.Instance.LevelCoefficient));
+        currentHealth -= totalDamage;
         if (currentHealth < 0)
             currentHealth = 0;
-        if (statDisplay != null)
+        
+        if (statDisplay) 
             statDisplay.SetCurrentHealth(currentHealth);
-        
-        // 이 시점에서 넉백 먼저 적용
-        
         
         //스턴
         if (controller.shortStunDuration > 0f)
@@ -135,7 +136,12 @@ public class PlayerStats : MonoBehaviour
             Die();
     }
     
-
+    public void InstantDeath()
+    {
+        currentHealth = 0;
+        Die();
+    }
+    
     public void TakeLongStun(int amount)
     {
         if (controller.longStunDuration > 0f)
