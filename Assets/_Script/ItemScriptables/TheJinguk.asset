@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dccc131ea62c6724582615ff69c8377a, type: 3}
-  m_Name: CauBurger
+  m_Name: TheJinguk
   m_EditorClassIdentifier: 
-  displayName: "\uCE74\uC6B0\uBC84\uAC70"
-  icon: {fileID: 3356498961701232270, guid: 5d531534ca503c3409c9769917ad90b0, type: 3}
-  description: "\uAC00\uC131\uBE44\uB2E4"
+  displayName: "\uB354\uC9C4\uAD6D \uC218\uC721\uAD6D\uBC25"
+  icon: {fileID: 21300000, guid: 820b60cffc6d705449fabd81ebd1bd97, type: 3}
+  description: "\uC219\uCDE8\uAC00 \uD574\uC18C\uB41C\uB2E4"
   kind: 1
   deltas:
-  - stat: 1
-    isMultiplier: 1
-  minRoll: 5
-  maxRoll: 15
-  uiEffectFormat: "\uCCB4\uB825 +{0}%"
+  - stat: 0
+    isMultiplier: 0
+  minRoll: 40
+  maxRoll: 70
+  uiEffectFormat: "\uCD5C\uB300\uCCB4\uB825 +{0}"

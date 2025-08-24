@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dccc131ea62c6724582615ff69c8377a, type: 3}
   m_Name: Mech
   m_EditorClassIdentifier: 
-  displayName: 
-  icon: {fileID: 0}
-  description: 
+  displayName: "\uC804\uC9C4\uAE30\uACC4 \uACFC\uC7A0"
+  icon: {fileID: 21300000, guid: 73fde603ffa1cce438b560f7c8c4e146, type: 3}
+  description: "\uB0C4\uC0C8\uAC00 \uB09C\uB2E4.."
   kind: 0
-  deltas: []
-  minRoll: 0
-  maxRoll: 0
-  uiEffectFormat: +{0}
+  deltas:
+  - stat: 0
+    isMultiplier: 1
+  minRoll: 50
+  maxRoll: 70
+  uiEffectFormat: "\uCD5C\uB300\uCCB4\uB825 {0}%"

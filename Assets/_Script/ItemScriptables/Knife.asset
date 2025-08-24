@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dccc131ea62c6724582615ff69c8377a, type: 3}
   m_Name: Knife
   m_EditorClassIdentifier: 
-  displayName: 
-  icon: {fileID: 0}
-  description: 
+  displayName: "\uCEE4\uD130\uCE7C"
+  icon: {fileID: 21300000, guid: 87395f2d2761a2043b3927cb26cea99b, type: 3}
+  description: "\uBCA0\uC774\uBA74 \uC544\uD504\uB2E4"
   kind: 0
-  deltas: []
-  minRoll: 0
-  maxRoll: 0
-  uiEffectFormat: +{0}
+  deltas:
+  - stat: 2
+    isMultiplier: 1
+  minRoll: 300
+  maxRoll: 500
+  uiEffectFormat: "\uACF5\uACA9\uB825 {0}%"

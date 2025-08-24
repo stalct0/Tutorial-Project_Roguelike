@@ -9,10 +9,6 @@ public class LootTable : ScriptableObject
     {
         public ItemDefinition item;
         [Min(0)] public int weight = 1;          // 0이면 뽑히지 않음
-        public bool allowOnPickup = true;        // OnPickup 포함할지 (원하면 필터링)
-        [Header("Optional Filters")]
-        public int minStage = 0;
-        public int maxStage = 9999;
     }
 
     public List<Entry> entries = new();
@@ -27,8 +23,6 @@ public class LootTable : ScriptableObject
         {
             if (e.item == null) continue;
             if (!includeOnPickup && e.item.kind == ItemKind.OnPickup) continue;
-            if (currentStage < e.minStage || currentStage > e.maxStage) continue;
-            if (!e.allowOnPickup && e.item.kind == ItemKind.OnPickup) continue;
             if (e.weight <= 0) continue;
 
             pool.Add((e.item, e.weight));

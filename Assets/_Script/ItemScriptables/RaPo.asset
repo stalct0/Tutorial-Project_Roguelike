@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dccc131ea62c6724582615ff69c8377a, type: 3}
-  m_Name: CauBurger
+  m_Name: RaPo
   m_EditorClassIdentifier: 
-  displayName: "\uCE74\uC6B0\uBC84\uAC70"
-  icon: {fileID: 3356498961701232270, guid: 5d531534ca503c3409c9769917ad90b0, type: 3}
-  description: "\uAC00\uC131\uBE44\uB2E4"
+  displayName: "\uB77C\uD3EC \uBCF6\uC74C\uBC25"
+  icon: {fileID: 21300000, guid: df688d7e48b6bfc4a900fac6c821785e, type: 3}
+  description: "\uB9DB\uC788\uB294\uD3B8"
   kind: 1
   deltas:
   - stat: 1
     isMultiplier: 1
   minRoll: 5
-  maxRoll: 15
+  maxRoll: 10
   uiEffectFormat: "\uCCB4\uB825 +{0}%"
