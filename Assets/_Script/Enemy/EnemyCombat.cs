@@ -8,9 +8,9 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Collider2D))]
 public class EnemyCombat : MonoBehaviour, IHittable
 {
-    [Header("HP")]
-    [ReadOnly] public int maxHP = 30;
-    [ReadOnly] public int currentHP;
+    
+    [NonSerialized] public int maxHP = 30;
+    [NonSerialized]public int currentHP;
 
 
     [NonSerialized] public float invincibleSecOnHit = 0.15f; // 중복타/폭주 방지
@@ -35,6 +35,7 @@ public class EnemyCombat : MonoBehaviour, IHittable
     
     [Header("연쇄 타격(캐리어)")]
     public EnemyHurtCarrier carrier;         // 자식 오브젝트(Trigger) 참조
+    
     [Tooltip("발사 동안 레이어를 변경하려면 설정(없으면 -1)")]
     [ReadOnly] public int projectileLayer = -1;
     private int originalLayer;
@@ -42,15 +43,22 @@ public class EnemyCombat : MonoBehaviour, IHittable
     [Header("이벤트")]
     public UnityEvent onDie;
 
+    [Header("Visuals (Hit Flash)")]
+    [SerializeField] private SpriteRenderer spriteRenderer;   // 비워두면 자동 할당
+    [SerializeField] private float hitFlashDuration = 0.05f;  // 상자와 동일 0.05s
+    [SerializeField] private Color hitFlashColor = new Color(1f, 0.6f, 0.6f, 1f);
+    
     // 캐시
     private Rigidbody2D rb;
     private Collider2D  col;
+    private Coroutine _hitFlashCo;    
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
-
+        maxHP = Mathf.RoundToInt(maxHP * GameManager.Instance.LevelCoefficient);
+        
         currentHP = maxHP;
         originalLayer = gameObject.layer;
 
@@ -62,6 +70,8 @@ public class EnemyCombat : MonoBehaviour, IHittable
 
         // 빠르게 날아갈 일이 있으니(다운스윙 발사), 터널링 방지
         rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+        
+        if (!spriteRenderer) spriteRenderer = GetComponentInChildren<SpriteRenderer>();
     }
 
     void Update()
@@ -101,6 +111,13 @@ public class EnemyCombat : MonoBehaviour, IHittable
 
         // 대미지
         currentHP -= Mathf.Max(0, e.damage);
+        
+        if (spriteRenderer)
+        {
+            if (_hitFlashCo != null) StopCoroutine(_hitFlashCo);
+            _hitFlashCo = StartCoroutine(HitFlashCo());
+        }
+        
         if (currentHP <= 0)
         {
             currentHP = 0;
@@ -206,12 +223,20 @@ public class EnemyCombat : MonoBehaviour, IHittable
         invTimer = sec;
     }
 
-    void Die()
+    public void Die()
     {
         // 캐리어 끄기
         if (carrier != null) carrier.SetActiveCarrier(false);
-
+        
         onDie?.Invoke();
+        GameManager.Instance.PStats.AddMoney();
+        Destroy(gameObject);
+    }
+
+    public void InstaDie()
+    {
+        onDie?.Invoke();
+        GameManager.Instance.PStats.AddMoney();
         Destroy(gameObject);
     }
 
@@ -247,4 +272,14 @@ public class EnemyCombat : MonoBehaviour, IHittable
     // 외부에서 현재 스턴/발사 상태를 필요하면 읽을 수 있게
     public bool IsStunned => isStunned;
     public bool IsLaunched => isLaunched;
+    
+    private IEnumerator HitFlashCo()
+    {
+        Color orig = spriteRenderer.color;
+        Color flash = new Color(hitFlashColor.r, hitFlashColor.g, hitFlashColor.b, orig.a);
+        spriteRenderer.color = flash;
+        yield return new WaitForSeconds(hitFlashDuration);
+        spriteRenderer.color = orig;
+        _hitFlashCo = null;
+    }
 }

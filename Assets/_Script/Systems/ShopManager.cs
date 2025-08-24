@@ -167,18 +167,16 @@ public class ShopManager : MonoBehaviour
         {
             return;
         }
-
-        // 2) 인벤 꽉 차면 불가
-        if (!inv.HasEmptySlot())
+        
+        bool isOnPickup = (data.def.kind == ItemKind.OnPickup);
+        if (!inv.HasEmptySlot() && !isOnPickup)
         {
-
             return;
         }
 
         // 3) 결제
         if (!TrySpend(price))
         {
-
             return;
         }
 
@@ -191,6 +189,7 @@ public class ShopManager : MonoBehaviour
         slots[selectedIndex].Set(null);
     }
 }
+
 
 [System.Serializable]
 public class ShopItemView

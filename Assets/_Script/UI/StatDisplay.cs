@@ -8,8 +8,10 @@ public class StatDisplay : MonoBehaviour
     public TMP_Text maxHealthText;
     public TMP_Text attackDamageText;
     public TMP_Text stageText;
+    
     public TMP_Text moneyText;
-    public TMP_Text speedText; 
+    public TMP_Text speedText;
+    public TMP_Text deathStageText;
     
     void Start()
     {
@@ -18,6 +20,7 @@ public class StatDisplay : MonoBehaviour
     public void SetStage(string stage)
     {
         stageText.text = $"{stage}";
+        deathStageText.text = $"기록: {stage}";
     }
     
     public void SetMaxHealth(int health)

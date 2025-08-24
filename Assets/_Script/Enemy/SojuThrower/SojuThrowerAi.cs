@@ -26,7 +26,9 @@ public class SojuThrowerAI : MonoBehaviour
     
     public LayerMask enemyLayerMask;        // "Enemy" 레이어만 포함
     
-
+    [SerializeField] LayerMask groundLayer = 0;    // Ground 레이어 지정
+    [SerializeField] float   groundCheckDist = 0.2f;
+    private Collider2D col;
 
     // 플레이어가 사거리를 넘어가면 몇초 후 패트롤로 돌아감. 
     private float outOfRangeTimer = 0f;
@@ -80,6 +82,9 @@ public class SojuThrowerAI : MonoBehaviour
         combat = GetComponent<EnemyCombat>(); 
         // Freeze rotation so enemy doesn't rotate
         rb.freezeRotation = true;
+        
+        col = GetComponent<Collider2D>();
+
     }
     void OnEnable()
     {
@@ -152,7 +157,11 @@ public class SojuThrowerAI : MonoBehaviour
     {
         //animator.SetBool("isWalking", true);
         isFirstAttack = true;
-
+        if (!IsGrounded())
+        {
+           // rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            return;
+        }
         // 좌우 순회 로직 
         if (player == null)
         {
@@ -218,7 +227,7 @@ public class SojuThrowerAI : MonoBehaviour
     void Agro()
     {
         // 어그로 끌리고 잠시 정지
-        rb.linearVelocity = Vector2.zero;
+        rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
         Invoke(nameof(GoToMoveState), 0f);
     }
 
@@ -242,6 +251,12 @@ public class SojuThrowerAI : MonoBehaviour
             // No player, return to patrol
             currentState = EnemyState.Patrol;
             rb.linearVelocity = Vector2.zero;
+            return;
+        }
+        
+        if (!IsGrounded())
+        {
+        //    rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             return;
         }
         
@@ -397,7 +412,16 @@ public class SojuThrowerAI : MonoBehaviour
             //animator.SetTrigger("resetAttack");
         }
     }
-    
+    bool IsGrounded()
+    {
+        if (!col) return false;
+        var b = col.bounds;
+        Vector2 origin = new Vector2(b.center.x, b.min.y - 0.02f);
+        // 바운즈 폭만큼 아래로 BoxCast
+        RaycastHit2D hit = Physics2D.BoxCast(origin, new Vector2(b.size.x * 0.9f, 0.05f), 0f, Vector2.down, groundCheckDist, groundLayer);
+        Debug.DrawRay(origin, Vector2.down * groundCheckDist, Color.green, 0.05f);
+        return hit.collider != null;
+    }
     
     bool IsEnemyInFront()
     {

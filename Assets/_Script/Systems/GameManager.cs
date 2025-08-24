@@ -13,8 +13,9 @@ public class GameManager : MonoBehaviour
     
     [NonSerialized] public int GameStage = 1;
     [NonSerialized] public int GameLevel = 1;
-    [NonSerialized] public int LevelCoefficient = 1;
-    
+    [NonSerialized] public float LevelCoefficient = 1f;
+    [NonSerialized] public float LevelCoRate = 0.3f;
+        
     [Header("Player")]
     public GameObject playerPrefab;
     public GameObject playerInstance {get; private set; }   // 생성 후 유지 
@@ -106,21 +107,15 @@ public class GameManager : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Level")
+        if (scene.name == "Level" || scene.name == "Lobby" || scene.name == "Boss")
         {
             SetGameState(GameState.Playing);
-        }
 
-        if (scene.name == "Lobby")
-        {
-            SetGameState(GameState.Playing);
+            // ★ 지금 진입한 씬 기준으로 하이스코어 갱신
+            HighScore.TrySet(GameStage, GameLevel);
         }
+    }
 
-        if (scene.name == "Boss")
-        {
-            SetGameState(GameState.Playing);
-        }
-}
     
     public void RegisterPlayer(PlayerStats stats)
     {
@@ -172,7 +167,8 @@ public class GameManager : MonoBehaviour
     
     
     void GameOver()
-    {
+    {    
+        HighScore.TrySet(GameStage, GameLevel);
         gameOverUI.SetActive(true);
         SetGameState(GameState.GameOver);
         Time.timeScale = 0f;
@@ -209,7 +205,7 @@ public class GameManager : MonoBehaviour
 
        public void NextStage()
        {
-           LevelCoefficient++;
+           LevelCoefficient = LevelCoefficient + LevelCoRate;
             if (CurrentGameMode == GameMode.Normal)
             {
                 GameLevel++;

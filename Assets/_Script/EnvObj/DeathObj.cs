@@ -6,11 +6,19 @@ public class DeathObj : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // PlayerStats 컴포넌트 찾아서 체력을 0으로
             PlayerStats stats = other.GetComponent<PlayerStats>();
             if (stats != null)
             {
-                stats.TakeDamage(stats.currentHealth); // 즉사
+                stats.InstantDeath();
+            }
+        }
+
+        if (other.CompareTag("Enemy"))
+        {
+            EnemyCombat combat = other.GetComponent<EnemyCombat>();
+            if (combat)
+            {
+                combat.InstaDie();
             }
         }
     }

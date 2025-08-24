@@ -1,7 +1,14 @@
+using TMPro;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+    public TMP_Text HighScoreText;
+    void Start()
+    {
+        // 저장된 최고 기록 불러와서 표시
+        HighScoreText.text = $"최고 기록: {HighScore.GetAsText()}";
+    }
     public void OnClickNormalMode ()
     {
         GameManager.Instance.SetGameMode(GameManager.GameMode.Normal);
@@ -27,4 +34,6 @@ public class MainMenu : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
         #endif
     }
+    
+    
 }

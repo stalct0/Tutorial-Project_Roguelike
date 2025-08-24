@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7019572450545265163}
   m_Layer: 10
   m_Name: DefaultEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -200,13 +200,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4cf7f023c619d468d1109c758cb1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 30
-  currentHP: 15
   carrier: {fileID: 8251925254795553817}
   projectileLayer: -1
   onDie:
     m_PersistentCalls:
       m_Calls: []
+  spriteRenderer: {fileID: 0}
+  hitFlashDuration: 0.05
+  hitFlashColor: {r: 1, g: 0.6, b: 0.6, a: 1}
 --- !u!1 &8942983721531768525
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,11 +299,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2d6497badaddb4d846d1e88d617e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseDamage: 8
-  knockbackForce: 4.5
-  stunSec: 0.25
-  scaleBySpeed: 1
-  speedToDamage: 0.6
-  speedToKnock: 0.7
-  maxHits: 3
-  perVictimCooldown: 0.25

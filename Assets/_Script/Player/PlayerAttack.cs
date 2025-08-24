@@ -17,7 +17,7 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask enemyLayer;
     public LayerMask projectileLayer;
     
-    private int baseDamage = 10;
+    private int baseDamage = 1;
     private float knockbackForce = 6f;
     private float stunSeconds = 0.4f;
     private float cooldown = 0.7f;
@@ -106,11 +106,11 @@ public class PlayerAttack : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f, mask);
         if (hits == null || hits.Length == 0) return;
 
-        int finalDamage = (pstats != null ? pstats.currentAttackDamage : 0) + baseDamage;
+        int finalDamage = pstats.currentAttackDamage + baseDamage;
 
         foreach (var col in hits)
         {
-            if (col == null) continue;
+            if (!col) continue;
 
             // IHittable이면 통일 처리: 적이든 소주병이든 TakeHit 호출
             if (col.TryGetComponent<IHittable>(out var hittable) ||

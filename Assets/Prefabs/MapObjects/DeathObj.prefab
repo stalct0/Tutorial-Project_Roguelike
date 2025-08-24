@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 836030506833108577}
   - component: {fileID: 1390281505044940327}
   - component: {fileID: 5347721531504763996}
-  m_Layer: 6
+  m_Layer: 15
   m_Name: DeathObj
   m_TagString: Ground
   m_Icon: {fileID: 0}

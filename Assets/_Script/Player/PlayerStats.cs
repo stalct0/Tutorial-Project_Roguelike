@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 public class PlayerStats : MonoBehaviour
 {
     public StatDisplay statDisplay;
     
-    [NonSerialized] public int startAttackDamage = 1;
+    [NonSerialized] public int startAttackDamage = 10;
     [NonSerialized] public int startMoney = 50;
     [NonSerialized] public int startMoveSpeed = 5;
     [NonSerialized] public int startDashCoolDown = 2;
@@ -31,6 +32,13 @@ public class PlayerStats : MonoBehaviour
     float _spdAddPassive   = 0f, _spdMulPassive   = 1f;
     float _dashAddPassive  = 0f, _dashMulPassive  = 1f;
     
+    [SerializeField] private SpriteRenderer[] spriteRenderers;   // 비워두면 자동 할당
+    [SerializeField] private float hitFlashDuration = 0.05f;     // 상자와 동일
+    [SerializeField] private Color hitFlashColor   = new Color(1f, 0.6f, 0.6f, 1f);
+    [SerializeField] private float invincibleBlinkInterval = 0.1f;
+
+    private Coroutine _hitFlashCo;
+    private Coroutine _blinkCo;
     
     public bool isInvincible = false;
     private float invincibleTimer = 0f;
@@ -69,7 +77,8 @@ public class PlayerStats : MonoBehaviour
             statDisplay.SetCurrentMoney(currentMoney);
             statDisplay.SetCurrentMoveSpeed(currentMoveSpeed);
         }
-
+        if (spriteRenderers == null || spriteRenderers.Length == 0)
+            spriteRenderers = GetComponentsInChildren<SpriteRenderer>(includeInactive: false);
         
     }
 
@@ -91,11 +100,19 @@ public class PlayerStats : MonoBehaviour
     
     public void TakeDamage(int amount)
     {
+        
         if (isInvincible) return;
         
-        currentHealth -= amount;
+        if (_hitFlashCo != null) StopCoroutine(_hitFlashCo);
+        _hitFlashCo = StartCoroutine(HitFlashCo());
+        
+        int totalDamage = Mathf.RoundToInt(amount * (GameManager.Instance.LevelCoefficient));
+        currentHealth -= totalDamage;
+        Debug.Log($"damage: {totalDamage}");
+        
         if (currentHealth < 0)
             currentHealth = 0;
+        
         if (statDisplay != null)
             statDisplay.SetCurrentHealth(currentHealth);
         
@@ -114,14 +131,18 @@ public class PlayerStats : MonoBehaviour
     {
         if (isInvincible) return;
         
-        currentHealth -= amount;
+        if (_hitFlashCo != null) StopCoroutine(_hitFlashCo);
+        _hitFlashCo = StartCoroutine(HitFlashCo());
+        
+        int totalDamage = Mathf.RoundToInt(amount * (GameManager.Instance.LevelCoefficient));
+        currentHealth -= totalDamage;
         if (currentHealth < 0)
             currentHealth = 0;
-        if (statDisplay != null)
+        
+        Debug.Log($"damage: {totalDamage}");
+
+        if (statDisplay) 
             statDisplay.SetCurrentHealth(currentHealth);
-        
-        // 이 시점에서 넉백 먼저 적용
-        
         
         //스턴
         if (controller.shortStunDuration > 0f)
@@ -135,7 +156,12 @@ public class PlayerStats : MonoBehaviour
             Die();
     }
     
-
+    public void InstantDeath()
+    {
+        currentHealth = 0;
+        Die();
+    }
+    
     public void TakeLongStun(int amount)
     {
         if (controller.longStunDuration > 0f)
@@ -149,6 +175,9 @@ public class PlayerStats : MonoBehaviour
     {
         isInvincible = true;
         invincibleTimer = duration;
+        
+        if (_blinkCo != null) StopCoroutine(_blinkCo);
+        _blinkCo = StartCoroutine(InvincibleBlinkCo());
     }
 
     
@@ -173,8 +202,9 @@ public class PlayerStats : MonoBehaviour
         return true;
     }
 
-    public void AddMoney(int amount)
+    public void AddMoney()
     {
+        int amount = Random.Range(5, 10);
         if (amount == 0) return;
         currentMoney = Mathf.Max(0, currentMoney + amount);
         statDisplay?.SetCurrentMoney(currentMoney);
@@ -386,6 +416,55 @@ public class PlayerStats : MonoBehaviour
         currentDashCoolDown = Mathf.Max(0,
             Mathf.RoundToInt( (_baseStartDashCoolDown + _dashAddPassive) * _dashMulPassive ));
         controller.dashCooldown = currentDashCoolDown;
+    }
+    
+    private IEnumerator HitFlashCo()
+    {
+        if (spriteRenderers == null || spriteRenderers.Length == 0) yield break;
+
+        // 원래 색 저장
+        var origs = new Color[spriteRenderers.Length];
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            if (!spriteRenderers[i]) continue;
+            origs[i] = spriteRenderers[i].color;
+
+            // 알파는 유지하면서 붉은 색 틴트
+            var o = origs[i];
+            spriteRenderers[i].color = new Color(hitFlashColor.r, hitFlashColor.g, hitFlashColor.b, o.a);
+        }
+
+        yield return new WaitForSeconds(hitFlashDuration);
+
+        // 원상복귀
+        for (int i = 0; i < spriteRenderers.Length; i++)
+        {
+            if (!spriteRenderers[i]) continue;
+            spriteRenderers[i].color = origs[i];
+        }
+        _hitFlashCo = null;
+    }
+
+    private IEnumerator InvincibleBlinkCo()
+    {
+        if (spriteRenderers == null || spriteRenderers.Length == 0) yield break;
+
+        // 무적 동안 빠르게 깜빡깜빡 (enable 토글)
+        bool visible = true;
+        while (isInvincible)
+        {
+            visible = !visible;
+            for (int i = 0; i < spriteRenderers.Length; i++)
+                if (spriteRenderers[i]) spriteRenderers[i].enabled = visible;
+
+            yield return new WaitForSeconds(invincibleBlinkInterval);
+        }
+
+        // 무적 종료: 반드시 보이게 원복
+        for (int i = 0; i < spriteRenderers.Length; i++)
+            if (spriteRenderers[i]) spriteRenderers[i].enabled = true;
+
+        _blinkCo = null;
     }
     
 }
