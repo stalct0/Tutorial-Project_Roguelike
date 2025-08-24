@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,24 +12,27 @@ public class EnemyCombat : MonoBehaviour, IHittable
     [ReadOnly] public int maxHP = 30;
     [ReadOnly] public int currentHP;
 
-    [Header("방어/무적")]
-    [ReadOnly] public float invincibleSecOnHit = 0.15f; // 중복타/폭주 방지
+
+    [NonSerialized] public float invincibleSecOnHit = 0.15f; // 중복타/폭주 방지
     private bool isInvincible;
     private float invTimer;
 
-    [Header("스턴")]
-    [ReadOnly] public float minStunSec = 0.2f;          // 들어온 e.stunSec과 비교해서 더 큰 값 사용
+
+    [NonSerialized] public float minStunSec = 0.2f;          // 들어온 e.stunSec과 비교해서 더 큰 값 사용
     private bool isStunned;
     private float stunTimer;
 
-    [Header("넉백/발사")]
-    [ReadOnly] public float upwardKnockAdd = 0.35f;     // 수직 성분 가산(다운스윙 느낌용)
-    [ReadOnly] public float launchMinSpeed = 2.0f;      // 이 속도 미만이면 발사 상태 종료 후보
-    [ReadOnly] public float launchMaxDuration = 0.8f;   // 발사 유지 최대 시간
-    [ReadOnly] public float stopSpeedThreshold = 0.8f;  // 완전히 멈췄다고 볼 속도
+    [NonSerialized] public float upwardKnockAdd = 0.35f;     // 수직 성분 가산(다운스윙 느낌용)
+    [NonSerialized] public float launchMinSpeed = 2.0f;      // 이 속도 미만이면 발사 상태 종료 후보
+    [NonSerialized] public float launchMaxDuration = 0.8f;   // 발사 유지 최대 시간
+    [NonSerialized] public float stopSpeedThreshold = 0.8f;  // 완전히 멈췄다고 볼 속도
     private bool isLaunched;
     private float launchTimer;
 
+    private bool deathLaunch = true;        // 죽을 때도 발사로 날아가게 할지
+    private float deathKnockMultiplier = 1.0f; // 죽음 시 넉백 보정
+    private float deathMaxAirTime = 0.8f;   // 최대 비행 대기시간(세이프티)
+    
     [Header("연쇄 타격(캐리어)")]
     public EnemyHurtCarrier carrier;         // 자식 오브젝트(Trigger) 참조
     [Tooltip("발사 동안 레이어를 변경하려면 설정(없으면 -1)")]

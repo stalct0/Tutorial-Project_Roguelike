@@ -11,34 +11,25 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerStats))]
 public class PlayerAttack : MonoBehaviour
 {
-    [Header("입력")]
-    [SerializeField] [ReadOnly] private KeyCode attackKey = KeyCode.J; // 필요시 New Input System으로 교체
-
-    [Header("타겟 레이어")]
-    [SerializeField] private LayerMask enemyLayer;
-
-    [Header("공격 스펙")]
-    [Tooltip("기본 공격력(여기에 PlayerStats.attackDamage를 더해 최종 대미지를 계산)")]
-    [SerializeField] [ReadOnly] private int baseDamage = 10;
-    [SerializeField] [ReadOnly] private float knockbackForce = 6f;
-    [SerializeField] [ReadOnly] private float stunSeconds = 0.4f;
-    [SerializeField] [ReadOnly] private float cooldown = 0.35f;
-
-    [Header("액티브 프레임/스윕")]
-    [Tooltip("액티브(유효) 시간 전체 길이")]
-    [SerializeField] [ReadOnly] private float activeTime = 0.15f;
-    [Tooltip("스윕 포인트 개수(권장 3). 3이면 상/중/하 순서로 검사")]
-    [SerializeField] [ReadOnly] private int sweepPoints = 3;
-
-    [Header("히트박스 설정(로컬 기준)")]
-    [Tooltip("OverlapBox의 월드 크기")]
-    [SerializeField] [ReadOnly] private Vector2 boxSize = new Vector2(1.0f, 0.8f);
-    [Tooltip("스윙 시작(위쪽) 로컬 오프셋")]
-    [SerializeField] [ReadOnly] private Vector2 topOffset = new Vector2(0.7f, 1.0f);
-    [Tooltip("스윙 끝(아래쪽) 로컬 오프셋")]
-    [SerializeField] [ReadOnly] private Vector2 bottomOffset = new Vector2(0.7f, 0.1f);
-    [Tooltip("로컬 X 방향을 좌우 반전할지(캐릭터 좌우 반전 시 사용)")]
-    [SerializeField] [ReadOnly] private bool flipByLocalScaleX = true;
+ 
+    private KeyCode attackKey = KeyCode.J; // 필요시 New Input System으로 교체
+    
+    public LayerMask enemyLayer;
+    
+    private int baseDamage = 10;
+    private float knockbackForce = 6f;
+    private float stunSeconds = 0.4f;
+    private float cooldown = 1f;
+    private float attackDelay = 0.2f;
+    
+    private float activeTime = 0.3f;
+    private int sweepPoints = 3;
+    
+    private Vector2 boxSize = new Vector2(0.2f, 0.3f);
+    private Vector2 topOffset = new Vector2(0.45f, 0.2f);
+    private Vector2 bottomOffset = new Vector2(0.45f, -0.2f);
+    
+    private bool flipByLocalScaleX = true;
 
     [Header("디버그")]
     [SerializeField] [ReadOnly] private bool drawGizmos = true;
@@ -49,8 +40,11 @@ public class PlayerAttack : MonoBehaviour
     private readonly HashSet<int> hitVictims = new();
     private PlayerStats pstats;
 
+    private Animator animator;
+    
     void Awake()
     {
+        animator = GetComponent<Animator>();
         pstats = GetComponent<PlayerStats>();
     }
 
@@ -70,7 +64,11 @@ public class PlayerAttack : MonoBehaviour
     {
         isAttacking = true;
         hitVictims.Clear();
-
+        
+        if (animator) animator.SetTrigger("Attack");
+        
+        yield return new WaitForSeconds(attackDelay);
+        
         // 액티브 구간을 sweepPoints 등분해서 순차 검사
         int steps = Mathf.Max(3, sweepPoints);              // 최소 3 보장
         float stepWait = activeTime / (steps - 1);          // 3포인트면 0, 0.5, 1.0 타이밍

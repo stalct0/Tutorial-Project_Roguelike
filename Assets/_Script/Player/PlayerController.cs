@@ -10,10 +10,10 @@ using UnityEngine.Tilemaps;
 public class PlayerController : MonoBehaviour
 {
     // 점프랑 움직임
-    [ReadOnly] public float moveSpeed = 5f;
-    [ReadOnly] public float jumpForce = 4f;         // 기본 점프력(바로 부여)
-    [ReadOnly] public float jumpHoldForce = 14f;     // 누르는 동안 프레임마다 추가 부여할 힘
-    [ReadOnly] public float jumpHoldDuration = 0.25f; // 추가 힘을 줄 수 있는 최대 시간
+    [NonSerialized] public float moveSpeed = 5f;
+    [NonSerialized] public float jumpForce = 4f;         // 기본 점프력(바로 부여)
+    [NonSerialized] public float jumpHoldForce = 14f;     // 누르는 동안 프레임마다 추가 부여할 힘
+    [NonSerialized] public float jumpHoldDuration = 0.25f; // 추가 힘을 줄 수 있는 최대 시간
 
     private bool isJumping = false;      // 점프 중인지
     private float jumpTime = 0f;         // 점프 버튼 누른 시간
@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
     private PlayerInputActions inputActions;
     private Vector2 moveInput;
     private bool jumpRequested;
+    
+    private Animator animator;
+    private SpriteRenderer sr;
     
     //스탯 스크립트
     private PlayerStats stats;
@@ -83,6 +86,9 @@ public class PlayerController : MonoBehaviour
         stats = GetComponent<PlayerStats>();
         stats.onDie.AddListener(OnDeath);
         
+        animator = GetComponent<Animator>();
+        sr = GetComponent<SpriteRenderer>();   
+        
         originalGravity = rb.gravityScale;
         
         inputActions = new PlayerInputActions();
@@ -105,7 +111,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
+        if (sr) sr.flipX = true;
         //근접 피격 적용
         CheckEnemyContactAndTakeDamage(10, 3);
         
@@ -163,7 +169,7 @@ public class PlayerController : MonoBehaviour
                 lastPlatformDropTime = Time.time;
             }
         }
-        
+        UpdateAnimatorParams();
     }
     
     
@@ -537,6 +543,26 @@ public class PlayerController : MonoBehaviour
             }
         }
         return false;
+    }
+    
+    void UpdateAnimatorParams()
+    {
+        if (!animator) return;
+
+        bool stunned = isLongStunned || isShortStunned;
+        animator.SetBool("IsStunned", stunned);
+
+        bool grounded = IsGrounded();
+        animator.SetBool("IsGrounded", grounded);
+
+        animator.SetBool("IsClimbing", isOnLadder);
+
+        // Speed: 사다리/대시/스턴 중이면 0으로 고정(원하는 감각에 맞춰 조정)
+        float speed = (isOnLadder || isDashing || stunned) ? 0f : Mathf.Abs(rb.linearVelocity.x);
+        animator.SetFloat("Speed", speed);
+
+        // 선택: 공중 블렌드용
+        animator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
     }
     
 }
