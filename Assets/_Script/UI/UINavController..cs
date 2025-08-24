@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,7 +18,7 @@ public class UINavController : MonoBehaviour
     public AxisMode linearAxis = AxisMode.Horizontal;
     [Tooltip("끝에서 반대쪽으로 이어질지")]
     public bool wrap = true;
-
+    
     [Header("Build")]
     [Tooltip("Start에서 자식에서 자동으로 항목을 모읍니다.")]
     public bool autoCollectChildren = true;
@@ -34,7 +35,16 @@ public class UINavController : MonoBehaviour
     [Header("Mouse Sync (optional)")]
     public bool selectOnPointerEnter = true;
 
+    bool MainMenu; // 용가리
+    public event Action<RectTransform> OnSelectionChanged;
+    
     int index = 0; // 현재 선택 인덱스
+    int _lastIndex = -1;
+        
+    private void Awake()
+    {
+        MainMenu = (GameManager.Instance.CurrentState == GameManager.GameState.Menu);
+    }
 
     void Start()
     {
@@ -159,8 +169,20 @@ public class UINavController : MonoBehaviour
             if (!items[i]) continue;
             items[i].SetSelected(i == index);
         }
+        if (index != _lastIndex)
+        {
+            _lastIndex = index;
+            var rt = GetCurrentRect();
+            OnSelectionChanged?.Invoke(rt);
+        }
     }
-
+    public RectTransform GetCurrentRect()
+    {
+        if (items.Count == 0) return null;
+        var it = items[index];
+        return it ? it.GetComponent<RectTransform>() : null;
+    }
+    
     public void SubmitCurrent()
     {
         if (items.Count == 0) return;
