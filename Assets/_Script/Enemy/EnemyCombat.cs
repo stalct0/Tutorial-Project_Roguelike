@@ -104,7 +104,21 @@ public class EnemyCombat : MonoBehaviour, IHittable
         if (currentHP <= 0)
         {
             currentHP = 0;
-            Die();
+            if (deathLaunch)
+            {
+                // 더 맞지 않도록 사실상 무적·피격무시
+                isInvincible = true;
+
+                // 죽음 넉백 + 발사 시작
+                DeathLaunch(e);
+
+                // 발사 끝날 때까지 기다렸다가 파괴
+                StartCoroutine(Co_DestroyAfterDeathLaunch());
+            }
+            else
+            {
+                Die();
+            }
             return;
         }
 
@@ -119,6 +133,23 @@ public class EnemyCombat : MonoBehaviour, IHittable
         SetInvincible(invincibleSecOnHit);
     }
 
+    void DeathLaunch(DamageEvent e)
+    {
+        // 넉백 방향 계산(기존 KnockbackFrom 로직과 동일)
+        Vector2 dir = ((Vector2)transform.position - e.sourcePos).normalized;
+        dir.y += upwardKnockAdd;
+        dir.Normalize();
+
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(dir * (e.knockbackForce * deathKnockMultiplier), ForceMode2D.Impulse);
+
+        // 충분히 빨라지면 발사 시작(캐리어 on)
+        if (rb.linearVelocity.magnitude >= launchMinSpeed)
+            BeginLaunched();
+        else
+            BeginLaunched(); // 느려도 캐리어를 잠깐 켜고 싶다면 강제 on (필요 없으면 삭제)
+    }
+    
     void StartStun(float sec)
     {
         isStunned = true;
@@ -184,6 +215,24 @@ public class EnemyCombat : MonoBehaviour, IHittable
         Destroy(gameObject);
     }
 
+    IEnumerator Co_DestroyAfterDeathLaunch()
+    {
+        float t = 0f;
+
+        // 발사 상태가 끝나거나, 속도가 임계 이하이거나, 세이프티 타임아웃에 걸릴 때까지 대기
+        while (t < deathMaxAirTime)
+        {
+            bool doneBySpeed = rb.linearVelocity.magnitude < stopSpeedThreshold;
+            if (!isLaunched || doneBySpeed) break;
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        // 깔끔하게 마무리
+        EndLaunched();                 // 캐리어 off & 레이어 복귀
+        Die();                         // onDie 이벤트 호출 + Destroy
+    }
+    
     // 벽/지형에 크게 박으면 즉시 종료하고 싶을 때(선택)
     void OnCollisionEnter2D(Collision2D collision)
     {

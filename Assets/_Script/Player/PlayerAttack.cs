@@ -15,19 +15,20 @@ public class PlayerAttack : MonoBehaviour
     private KeyCode attackKey = KeyCode.J; // 필요시 New Input System으로 교체
     
     public LayerMask enemyLayer;
+    public LayerMask projectileLayer;
     
     private int baseDamage = 10;
     private float knockbackForce = 6f;
     private float stunSeconds = 0.4f;
-    private float cooldown = 1f;
+    private float cooldown = 0.7f;
     private float attackDelay = 0.2f;
     
     private float activeTime = 0.3f;
     private int sweepPoints = 3;
     
-    private Vector2 boxSize = new Vector2(0.2f, 0.3f);
-    private Vector2 topOffset = new Vector2(0.45f, 0.2f);
-    private Vector2 bottomOffset = new Vector2(0.45f, -0.2f);
+    private Vector2 boxSize = new Vector2(0.6f, 0.5f);
+    private Vector2 topOffset = new Vector2(0.25f, 0.2f);
+    private Vector2 bottomOffset = new Vector2(0.25f, -0.2f);
     
     private bool flipByLocalScaleX = true;
 
@@ -101,24 +102,24 @@ public class PlayerAttack : MonoBehaviour
 
     void DoHitbox(Vector2 center, Vector2 size)
     {
-        Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f, enemyLayer);
+        int mask = enemyLayer.value | projectileLayer.value; // 두 레이어 모두 검색
+        Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f, mask);
         if (hits == null || hits.Length == 0) return;
 
         int finalDamage = (pstats != null ? pstats.currentAttackDamage : 0) + baseDamage;
 
-        for (int i = 0; i < hits.Length; i++)
+        foreach (var col in hits)
         {
-            var col = hits[i];
             if (col == null) continue;
 
-            // 한 스윙에서 같은 대상 중복 히트 방지
-            int id = col.GetInstanceID();
-            if (!hitVictims.Add(id)) continue;
-
-            // IHittable에 대미지 통지
+            // IHittable이면 통일 처리: 적이든 소주병이든 TakeHit 호출
             if (col.TryGetComponent<IHittable>(out var hittable) ||
                 col.GetComponentInParent<IHittable>() is IHittable parentHittable && (hittable = parentHittable) != null)
             {
+                // 한 스윙 중 중복 히트 방지
+                int id = col.GetInstanceID();
+                if (!hitVictims.Add(id)) continue;
+
                 var ev = new DamageEvent
                 {
                     damage = finalDamage,

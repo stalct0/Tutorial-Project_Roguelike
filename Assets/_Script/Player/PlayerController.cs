@@ -284,7 +284,7 @@ public class PlayerController : MonoBehaviour
     public void CheckEnemyContactAndTakeDamage(int damage = 10, float knockbackForce = 3)
     {
         Vector2 checkCenter = transform.position;
-        Vector2 checkSize = new Vector2(0.55f, 0.55f);
+        Vector2 checkSize = new Vector2(0.4f, 0.55f);
 
         Collider2D[] hits = Physics2D.OverlapBoxAll(checkCenter, checkSize, 0f, enemyLayer);
 
@@ -296,8 +296,8 @@ public class PlayerController : MonoBehaviour
     }
     void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.position,new Vector2(0.55f, 0.55f));
+        Gizmos.color = Color.purple;
+        Gizmos.DrawWireCube(transform.position,new Vector2(0.4f, 0.55f));
     }
     
     //스턴

@@ -2,43 +2,45 @@ using UnityEngine;
 
 
 //소주병(프로젝타일) 정의
-public class SojuProjectile : MonoBehaviour
+public class SojuProjectile : MonoBehaviour, IHittable
 {
     public Rigidbody2D rb;
+    private bool _dead; // 중복 파괴 방지
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
+    
+    public void TakeHit(DamageEvent e)
+    {
+        if (_dead) return;
+        _dead = true;
+        Debug.Log("parrrrrrry");
+        // 플레이어 공격이 닿으면 패링됨
+        Destroy(gameObject);
+    }
+    
+    
     // 적 피격 시 데미지 들어감
     // "TakeDamage" 플레이어 AI 스크립트에서 호출해야됨
     // 적이 피격되면 사라짐
     // 플랫폼 피격 시 사라짐
     // 땅 피격 시 사라짐 
 
+    
+    
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Check if the collided object is an enemy
-        
-        /*
-        var enemy = collision.gameObject.GetComponent<SojuThrowerAI>();
-        if (enemy != null)
-        {
-            enemy.SendMessage("TakeDamage", 20, SendMessageOptions.DontRequireReceiver);
-            Destroy(gameObject);
-            return;
-        }
-        */
-        
         // Destroy on contact with player
         
         if (collision.gameObject.CompareTag("Player"))
         {
             var playerStats = collision.gameObject.GetComponent<PlayerStats>();
-            if (playerStats != null)
-                playerStats.TakeDamage(20); // 원하는 데미지
-            Destroy(gameObject);
+            if (playerStats != null) playerStats.TakeDamage(20);
+            if (!_dead) Destroy(gameObject);
+            return;
         }
         
         
@@ -49,7 +51,7 @@ public class SojuProjectile : MonoBehaviour
             collision.gameObject.CompareTag("OneWayPlatform")
             )
         {
-            Destroy(gameObject);
+            if (!_dead) Destroy(gameObject);
         }
         
     }

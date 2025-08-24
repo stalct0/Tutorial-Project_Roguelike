@@ -67,7 +67,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.55, y: 0.55, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7009392066641577884}
@@ -142,10 +142,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b5ea6367e65dbf4db6b644414325f8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  jumpForce: 4
-  jumpHoldForce: 14
-  jumpHoldDuration: 0.25
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -234,7 +230,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.025748134, y: 0.0831863}
+  m_Offset: {x: 0, y: 0.054599136}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -244,7 +240,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.90096855, y: 1.06338}
+  m_Size: {x: 0.66565275, y: 0.9748005}
   m_EdgeRadius: 0
 --- !u!114 &631235682193910370
 MonoBehaviour:
@@ -347,20 +343,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3027a3318442f2f499de1bda66de0307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackKey: 106
   enemyLayer:
     serializedVersion: 2
-    m_Bits: 17408
-  baseDamage: 10
-  knockbackForce: 6
-  stunSeconds: 0.4
-  cooldown: 0.35
-  activeTime: 0.15
-  sweepPoints: 3
-  boxSize: {x: 1, y: 0.8}
-  topOffset: {x: 0.7, y: 1}
-  bottomOffset: {x: 0.7, y: 0.1}
-  flipByLocalScaleX: 1
+    m_Bits: 25600
   drawGizmos: 1
 --- !u!95 &5621674066893875768
 Animator:
