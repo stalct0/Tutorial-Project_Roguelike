@@ -74,9 +74,9 @@ public class PlayerController : MonoBehaviour
     [ReadOnly] public float longStunDuration = 2.0f;
     
     // Dash 관련 
-    [ReadOnly] public float dashSpeed = 12f;       // 대시 속도(수평)
-    [ReadOnly] public float dashDuration = 0.15f;  // 대시 유지 시간
-    [ReadOnly] public float dashCooldown = 2.0f;   // 쿨타임 (요청: 2초)
+    [NonSerialized] public float dashSpeed = 12f;       // 대시 속도(수평)
+    [NonSerialized] public float dashDuration = 0.15f;  // 대시 유지 시간
+    [NonSerialized] public float dashCooldown = 2.0f;   // 쿨타임 (요청: 2초)
     private bool  isDashing = false;               // 대시 중 여부
     private float lastDashTime = -999f;            // 마지막 대시 시각
     void Awake()

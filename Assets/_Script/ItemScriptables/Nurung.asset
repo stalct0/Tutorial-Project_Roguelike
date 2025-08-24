@@ -10,15 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dccc131ea62c6724582615ff69c8377a, type: 3}
-  m_Name: CauBurger
+  m_Name: Nurung
   m_EditorClassIdentifier: 
-  displayName: CauBurger
-  icon: {fileID: -6328750076722268041, guid: 726097ebf992e8646be097554e306bb6, type: 3}
-  description: kmj
-  kind: 1
-  deltas:
-  - stat: 1
-    isMultiplier: 1
-  minRoll: 5
-  maxRoll: 15
-  uiEffectFormat: "\uCCB4\uB825 +{0}"
+  displayName: 
+  icon: {fileID: 0}
+  description: 
+  kind: 0
+  deltas: []
+  minRoll: 0
+  maxRoll: 0
+  uiEffectFormat: +{0}

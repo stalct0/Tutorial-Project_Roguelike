@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 726097ebf992e8646be097554e306bb6
+guid: 73fde603ffa1cce438b560f7c8c4e146
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -6328750076722268041
-    second: CauBurger1_0
+      213: -8703115426366136026
+    second: "ChatGPT Image 2025\uB144 8\uC6D4 24\uC77C \uC624\uD6C4 09_19_34_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 1000
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CauBurger1_0
+      name: "ChatGPT Image 2025\uB144 8\uC6D4 24\uC77C \uC624\uD6C4 09_19_34_0"
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 813
-        height: 733
+        x: 43
+        y: 8
+        width: 979
+        height: 1011
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7783ebc1653cb28a0800000000000000
-      internalID: -6328750076722268041
+      spriteID: 621693c71a2583780800000000000000
+      internalID: -8703115426366136026
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CauBurger1_0: -6328750076722268041
+      "ChatGPT Image 2025\uB144 8\uC6D4 24\uC77C \uC624\uD6C4 09_19_34_0": -8703115426366136026
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
