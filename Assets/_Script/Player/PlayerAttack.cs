@@ -106,12 +106,11 @@ public class PlayerAttack : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapBoxAll(center, size, 0f, mask);
         if (hits == null || hits.Length == 0) return;
 
-        int finalDamage = pstats.currentAttackDamage + baseDamage;
-        Debug.Log($"final damage: {finalDamage}");
+        int finalDamage = (pstats != null ? pstats.currentAttackDamage : 0) + baseDamage;
 
         foreach (var col in hits)
         {
-            if (col) continue;
+            if (col == null) continue;
 
             // IHittable이면 통일 처리: 적이든 소주병이든 TakeHit 호출
             if (col.TryGetComponent<IHittable>(out var hittable) ||

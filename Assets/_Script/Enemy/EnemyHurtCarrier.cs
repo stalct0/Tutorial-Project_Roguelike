@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,17 +8,19 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class EnemyHurtCarrier : MonoBehaviour
 {
+    [Header("캐리어 스펙")]
+    [ReadOnly] public int baseDamage = 8;
+    [ReadOnly] public float knockbackForce = 4.5f;
+    [ReadOnly] public float stunSec = 0.25f;
 
-    [NonSerialized] public int baseDamage = 8;
-    [NonSerialized] public float knockbackForce = 4.5f;
-    [NonSerialized] public float stunSec = 0.25f;
-    
-    [NonSerialized] public bool scaleBySpeed = true;
-    [NonSerialized] public float speedToDamage = 0.6f;   // damage += speed * 이 값
-    [NonSerialized] public float speedToKnock   = 0.7f;  // knockback += speed * 이 값
-    
-    [NonSerialized] public int maxHits = 3;              // 한 번 발사에서 최대 몇 번이나 때릴지
-    [NonSerialized] public float perVictimCooldown = 0.5f; // 같은 피해자 재히트 쿨다운
+    [Header("속도 기반 보정(선택)")]
+    [ReadOnly] public bool scaleBySpeed = true;
+    [ReadOnly] public float speedToDamage = 0.6f;   // damage += speed * 이 값
+    [ReadOnly] public float speedToKnock   = 0.7f;  // knockback += speed * 이 값
+
+    [Header("연쇄 히트 제한")]
+    [ReadOnly] public int maxHits = 3;              // 한 번 발사에서 최대 몇 번이나 때릴지
+    [ReadOnly] public float perVictimCooldown = 0.25f; // 같은 피해자 재히트 쿨다운
 
     private EnemyCombat owner;
     private Collider2D triggerCol;
@@ -73,9 +74,6 @@ public class EnemyHurtCarrier : MonoBehaviour
         int   dmg   = baseDamage + (scaleBySpeed ? Mathf.RoundToInt(speed * speedToDamage) : 0);
         float kb    = knockbackForce + (scaleBySpeed ? speed * speedToKnock : 0f);
 
-        Debug.Log(speed);
-        int finalDamage = GameManager.Instance.PStats.currentAttackDamage + dmg;
-        
         // 넉백 방향: 캐리어 진행 방향
         Vector2 dir = (ownerRB != null && ownerRB.linearVelocity.sqrMagnitude > 0.0001f)
             ? ownerRB.linearVelocity.normalized
@@ -83,7 +81,7 @@ public class EnemyHurtCarrier : MonoBehaviour
 
         var e = new DamageEvent
         {
-            damage        = finalDamage,
+            damage        = dmg,
             sourcePos     = (Vector2)transform.position - dir * 0.1f, // 진행 반대쪽을 소스처럼
             knockbackForce= kb,
             stunSec       = stunSec,

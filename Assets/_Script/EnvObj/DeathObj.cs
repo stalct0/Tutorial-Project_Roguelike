@@ -10,7 +10,7 @@ public class DeathObj : MonoBehaviour
             PlayerStats stats = other.GetComponent<PlayerStats>();
             if (stats != null)
             {
-                stats.InstantDeath();
+                stats.TakeDamage(stats.currentHealth); // 즉사
             }
         }
     }
