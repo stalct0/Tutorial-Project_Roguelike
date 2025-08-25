@@ -8,8 +8,8 @@ public class BossBunny : MonoBehaviour
     public GameObject bombPrefab;
 
     [Header("Jump Settings")]
-    public float gravity = 9.81f;
-    public float jumpHeight = 4f;
+    public float jumpAirTime = 1.4f; // time to complete jump arc
+    public float jumpHeight = 4f;    // peak height of jump
     public float jumpCooldown = 2f;
 
     [Header("Bomb Settings")]
@@ -33,6 +33,8 @@ public class BossBunny : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.isKinematic = true; // disable physics-driven motion
+
         bossCollider = GetComponent<Collider2D>();
 
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -79,74 +81,41 @@ public class BossBunny : MonoBehaviour
         isJumping = true;
         isInvulnerable = true;
         onPlatform = false;
+        bossCollider.enabled = false;
 
-        if (target.position.y > transform.position.y)
+        Vector3 startPos = transform.position;
+        Vector3 endPos = target.position;
+
+        float timer = 0f;
+
+        while (timer < jumpAirTime)
         {
-            // Jump upwards
-            Vector2 velocity = CalculateParabolaVelocityCustomGravity(
-                transform.position,
-                target.position,
-                jumpHeight * 1.5f,
-                gravity * 0.5f
-            );
+            timer += Time.deltaTime;
+            float t = Mathf.Clamp01(timer / jumpAirTime);
 
-            bossCollider.enabled = false; // disable collisions while airborne
-            rb.linearVelocity = velocity;
+            // smooth horizontal lerp
+            float x = Mathf.Lerp(startPos.x, endPos.x, t);
 
-            while (!onPlatform)
-            {
-                if (Vector2.Distance(transform.position, target.position) < 0.2f)
-                {
-                    LandOnPlatform(target);
-                }
-                yield return null;
-            }
+            // vertical arc with sine
+            float y = Mathf.Lerp(startPos.y, endPos.y, t) + Mathf.Sin(t * Mathf.PI) * jumpHeight;
+
+            transform.position = new Vector3(x, y, startPos.z);
+
+            yield return null;
         }
-        else
-        {
-            // Drop down
-            bossCollider.enabled = false; // phase through platform
-            rb.linearVelocity = new Vector2(0, -10f); // strong downward velocity
 
-            while (!onPlatform)
-            {
-                if (transform.position.y <= target.position.y + 0.1f)
-                {
-                    LandOnPlatform(target);
-                }
-                yield return null;
-            }
-        }
+        LandOnPlatform(target);
     }
 
     void LandOnPlatform(Transform target)
     {
         transform.position = target.position;
-        rb.linearVelocity = Vector2.zero;
         onPlatform = true;
         currentPlatform = target;
         isJumping = false;
         isInvulnerable = false;
-        bossCollider.enabled = true; // re-enable collisions
+        bossCollider.enabled = true;
         Debug.Log($"BossBunny Landed on {target.name}");
-    }
-
-    Vector2 CalculateParabolaVelocityCustomGravity(Vector2 start, Vector2 target, float height, float customGravity)
-    {
-        float displacementY = target.y - start.y;
-        Vector2 displacementX = new Vector2(target.x - start.x, 0);
-
-        float safeHeight = Mathf.Max(height, displacementY + 0.5f);
-        float safeGravity = Mathf.Max(customGravity, 0.01f);
-
-        float timeUp = Mathf.Sqrt(Mathf.Max(0.01f, 2 * safeHeight / safeGravity));
-        float timeDown = Mathf.Sqrt(Mathf.Max(0.01f, 2 * Mathf.Max(0.01f, safeHeight - displacementY) / safeGravity));
-        float totalTime = timeUp + timeDown;
-
-        float vx = displacementX.x / totalTime;
-        float vy = Mathf.Sqrt(2 * safeGravity * safeHeight);
-
-        return new Vector2(vx, vy);
     }
 
     void ThrowBomb()
@@ -173,41 +142,21 @@ public class BossBunny : MonoBehaviour
         Vector2 displacementX = new Vector2(target.x - start.x, 0);
 
         float safeHeight = Mathf.Max(height, displacementY + 0.5f);
-        float safeGravity = Mathf.Max(gravity, 0.01f);
+        float g = 9.81f;
 
-        float timeUp = Mathf.Sqrt(2 * safeHeight / safeGravity);
-        float timeDown = Mathf.Sqrt(2 * Mathf.Max(0.01f, safeHeight - displacementY) / safeGravity);
+        float timeUp = Mathf.Sqrt(2 * safeHeight / g);
+        float timeDown = Mathf.Sqrt(2 * Mathf.Max(0.01f, safeHeight - displacementY) / g);
         float totalTime = timeUp + timeDown;
 
         float vx = displacementX.x / totalTime;
-        float vy = Mathf.Sqrt(2 * safeGravity * safeHeight);
+        float vy = Mathf.Sqrt(2 * g * safeHeight);
 
         return new Vector2(vx, vy);
     }
 
     public void OnHitByPlayer(Vector2 knockback)
     {
-        if (onPlatform && !isJumping)
-        {
-            rb.linearVelocity = knockback;
-            StartCoroutine(CheckForFall());
-        }
-    }
-
-    IEnumerator CheckForFall()
-    {
-        yield return new WaitForSeconds(0.2f);
-        if (transform.position.y < currentPlatform.position.y - 0.5f)
-        {
-            float fallHeight = currentPlatform.position.y - transform.position.y;
-            TakeFallDamage(fallHeight);
-        }
-    }
-
-    void TakeFallDamage(float height)
-    {
-        float damage = Mathf.Max(0, height * fallDamagePerUnit);
-        Debug.Log("Bunny takes " + damage + " fall damage!");
-        // Apply damage logic here
+        // Boss can't be knocked with physics anymore
+        Debug.Log("BossBunny was hit! (no knockback with kinematic jump).");
     }
 }
