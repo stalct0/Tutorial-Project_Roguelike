@@ -33,9 +33,10 @@ public class BossBunny : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.isKinematic = true; // disable physics-driven motion
-
         bossCollider = GetComponent<Collider2D>();
+
+        // Set Dynamic initially so physics works when idle
+        rb.bodyType = RigidbodyType2D.Dynamic;
 
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         if (player == null)
@@ -43,6 +44,8 @@ public class BossBunny : MonoBehaviour
 
         currentPlatform = platforms[Random.Range(0, platforms.Length)];
         transform.position = currentPlatform.position;
+        onPlatform = true;
+
         StartCoroutine(BossLoop());
     }
 
@@ -50,6 +53,9 @@ public class BossBunny : MonoBehaviour
     {
         while (true)
         {
+            // ✅ Only jump if on a platform AND not falling
+            yield return new WaitUntil(() => onPlatform && !isJumping && Mathf.Abs(rb.linearVelocity.y) < 0.01f);
+
             Transform targetPlatform = GetRandomPlatform(currentPlatform);
             yield return MoveToPlatform(targetPlatform);
 
@@ -81,11 +87,13 @@ public class BossBunny : MonoBehaviour
         isJumping = true;
         isInvulnerable = true;
         onPlatform = false;
+
+        // ✅ Set Kinematic while jump is scripted
+        rb.bodyType = RigidbodyType2D.Kinematic;
         bossCollider.enabled = false;
 
         Vector3 startPos = transform.position;
         Vector3 endPos = target.position;
-
         float timer = 0f;
 
         while (timer < jumpAirTime)
@@ -110,11 +118,17 @@ public class BossBunny : MonoBehaviour
     void LandOnPlatform(Transform target)
     {
         transform.position = target.position;
+
         onPlatform = true;
         currentPlatform = target;
         isJumping = false;
         isInvulnerable = false;
+
         bossCollider.enabled = true;
+
+        // ✅ Switch back to Dynamic so physics works when idle
+        rb.bodyType = RigidbodyType2D.Dynamic;
+
         Debug.Log($"BossBunny Landed on {target.name}");
     }
 
@@ -156,7 +170,15 @@ public class BossBunny : MonoBehaviour
 
     public void OnHitByPlayer(Vector2 knockback)
     {
-        // Boss can't be knocked with physics anymore
-        Debug.Log("BossBunny was hit! (no knockback with kinematic jump).");
+        // Boss now reacts to knockback if Dynamic
+        if (rb.bodyType == RigidbodyType2D.Dynamic)
+        {
+            rb.linearVelocity = knockback;
+            Debug.Log("BossBunny hit by player and knocked back!");
+        }
+        else
+        {
+            Debug.Log("BossBunny hit during jump (no knockback).");
+        }
     }
 }
