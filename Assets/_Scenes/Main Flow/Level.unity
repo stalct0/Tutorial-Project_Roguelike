@@ -807,10 +807,7 @@ MonoBehaviour:
   entries:
   - type: 1
     prefabs:
-    - {fileID: 388145940727604920, guid: 213eaa3e7224d61498066ccb9af22366, type: 3}
-    - {fileID: 388145940727604920, guid: 231d3712b8e8edb48be869b75210b8b8, type: 3}
-    - {fileID: 388145940727604920, guid: 430f9b8a3093ae547bf7a18059a1d422, type: 3}
-    - {fileID: 388145940727604920, guid: 5c9316e0b77a6984589db95ed2fcedd9, type: 3}
+    - {fileID: 388145940727604920, guid: 9488c50b68214d14788e7582166c73fd, type: 3}
   - type: 2
     prefabs:
     - {fileID: 388145940727604920, guid: 84ad59945dcb06e459e471f744248a44, type: 3}
