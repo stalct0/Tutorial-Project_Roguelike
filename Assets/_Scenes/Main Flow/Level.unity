@@ -589,6 +589,7 @@ MonoBehaviour:
   mainTilemap: {fileID: 645483117}
   ladderTilemap: {fileID: 1357551115}
   borderTilemap: {fileID: 1317219056}
+  backgroundTilemap: {fileID: 5928088793446578542}
   wallTile: {fileID: 11400000, guid: b7aba92c0280e1c448f735df595a7108, type: 2}
   roomLibrary: {fileID: 1875303305}
   playerPrefab: {fileID: 2332084759178468638, guid: a6f202cbcbe8f3748a7f1dd9e93440d0, type: 3}
@@ -1188,6 +1189,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5444403b07016ee44bccb7b928f240a2, type: 3}
+--- !u!1839735485 &5928088793446578542 stripped
+Tilemap:
+  m_CorrespondingSourceObject: {fileID: 2628546307681127083, guid: 5444403b07016ee44bccb7b928f240a2, type: 3}
+  m_PrefabInstance: {fileID: 5928088793446578541}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
