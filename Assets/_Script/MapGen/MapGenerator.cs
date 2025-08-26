@@ -18,6 +18,7 @@ public class MapGenerator : MonoBehaviour
     public Tilemap mainTilemap;
     public Tilemap ladderTilemap;
     public Tilemap borderTilemap;
+    public Tilemap backgroundTilemap;
     public TileBase wallTile;
     
     public RoomPrefabLibrary roomLibrary;
@@ -43,7 +44,8 @@ public class MapGenerator : MonoBehaviour
         var targetTilemaps = new Dictionary<string, Tilemap>
         {
             { "MainTilemap", mainTilemap },
-            { "LadderTilemap", ladderTilemap }
+            { "LadderTilemap", ladderTilemap },
+            {"BackGroundTilemap", backgroundTilemap}
         };
         
         roomGrid = new RoomNode[config.Width, config.Height];
@@ -68,7 +70,6 @@ public class MapGenerator : MonoBehaviour
             {
                 Vector3 spawnPos = st + Vector3.Scale(spawnPoint.position, cellSize);
                 var ladderTilemap = GameObject.Find("LadderTilemap").GetComponent<Tilemap>();
-                
                 GameManager.Instance.SpawnOrMovePlayer(spawnPos, ladderTilemap);
             }
             

@@ -29,7 +29,7 @@ public class BossBunny : MonoBehaviour
     private Transform currentPlatform;
     private Transform player;
     private Collider2D bossCollider;
-
+    
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
