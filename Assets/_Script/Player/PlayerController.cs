@@ -12,8 +12,8 @@ public class PlayerController : MonoBehaviour
     // 점프랑 움직임
     [NonSerialized] public float moveSpeed = 5f;
     [NonSerialized] public float jumpForce = 4f;         // 기본 점프력(바로 부여)
-    [NonSerialized] public float jumpHoldForce = 14f;     // 누르는 동안 프레임마다 추가 부여할 힘
-    [NonSerialized] public float jumpHoldDuration = 0.25f; // 추가 힘을 줄 수 있는 최대 시간
+    [NonSerialized] public float jumpHoldForce = 30f;     // 누르는 동안 프레임마다 추가 부여할 힘
+    [NonSerialized] public float jumpHoldDuration = 0.10f; // 추가 힘을 줄 수 있는 최대 시간
 
     private bool isJumping = false;      // 점프 중인지
     private float jumpTime = 0f;         // 점프 버튼 누른 시간
@@ -35,6 +35,24 @@ public class PlayerController : MonoBehaviour
     
     private Animator animator;
     private SpriteRenderer sr;
+    
+    [NonSerialized] public float coyoteTime = 0.08f; // 코요테 타임
+    private float coyoteTimer = 0f;
+
+    [NonSerialized] public float jumpBufferTime = 0.12f; // 점프 버퍼
+    private float jumpBufferTimer = -999f;
+
+    [NonSerialized] public float gravityUpScale   = 1.6f; // 상승 중
+    [NonSerialized] public float gravityDownScale = 1.2f; // 하강 중
+    [NonSerialized] public float gravityCutScale  = 3.8f; // 점프 컷(버튼 뗐을 때)
+    [NonSerialized] public float maxFallSpeed     = -21f; // 최대 낙하 속도
+
+    [NonSerialized] public float apexThreshold = 2.0f; // |vy|가 이하면 정점 근처
+    [NonSerialized] public float apexBonus     = 0.2f; // 정점 근처 이동 보너스
+    
+    [NonSerialized] public float apexExtraGravity = 3f; // 정점 근처 추가 중력(가중치)
+    [NonSerialized] public float apexVyThreshold  = 1.2f; // |vy| 이하면 정점 근처로 간주
+    
     
     //스탯 스크립트
     private PlayerStats stats;
@@ -112,20 +130,23 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         if (sr) sr.flipX = true;
+
+        // ★ NEW: 코요테/버퍼 타이머 갱신(가능한 한 매 프레임 초반에)
+        UpdateCoyoteAndBuffers();
+
         //근접 피격 적용
         CheckEnemyContactAndTakeDamage(10, 3);
         
-        // ★ 대시 입력: Shift 키 (좌/우 중 아무거나) & 쿨타임 확인 & 조건 체크
+        // ★ 대시 입력
         if (!isDashing 
             && Time.time - lastDashTime >= dashCooldown
             && !isOnLadder
             && !isLongStunned && !isShortStunned)
         {
-            // 좌/우 Shift 아무거나 눌림 체크
             if ((Keyboard.current != null) &&
                 (Keyboard.current.leftShiftKey.wasPressedThisFrame || Keyboard.current.rightShiftKey.wasPressedThisFrame))
             {
-                StartCoroutine(DashRoutine()); // 대시 시작
+                StartCoroutine(DashRoutine());
             }
         }
         
@@ -133,34 +154,41 @@ public class PlayerController : MonoBehaviour
         if (isLongStunned)
         {
             longStunTimer -= Time.deltaTime;
-            if (longStunTimer <= 0f)
-            {
-                isLongStunned = false;
-            }
-            return; // 스턴 중엔 다른 입력/이동 무시
+            if (longStunTimer <= 0f) isLongStunned = false;
+
+            // ★ 스턴 중에는 중력만 적용(떨어지게 하고 싶으면 아래 한 줄 유지)
+            ApplyBetterGravity(); // ★ NEW
+            UpdateAnimatorParams();
+            return;
         }
         
-        // ★ 대시 중이면 다른 입력은 모두 무시 (대시 속도 유지)
+        // ★ 대시 중이면 이동/점프 로직 무시, 중력은 적용할지 선택
         if (isDashing)
         {
+            UpdateAnimatorParams();
             return;
         }
         
         if (isOnLadder)
+        {
             HandleLadder();
+            // 사다리는 중력 0으로 유지 → ApplyBetterGravity 호출하지 않음
+        }
         else
         {
             if (isShortStunned)
             {
                 shortStunTimer -= Time.deltaTime;
-                if (shortStunTimer <= 0f)
-                {
-                    isShortStunned = false;
-                }
-                return; // 스턴 중엔 다른 입력/이동 무시
+                if (shortStunTimer <= 0f) isShortStunned = false;
+
+                // 짧은 스턴 중에도 중력은 적용
+                ApplyBetterGravity(); // ★ NEW
+                UpdateAnimatorParams();
+                return;
             }
-            HandleMovement();
-            HandleJump();
+
+            HandleMovement(); 
+            HandleJump();     // ★ 버퍼/코요테 사용
             CheckLadderEnter();
             
             if (CanDropFromPlatform())
@@ -168,15 +196,24 @@ public class PlayerController : MonoBehaviour
                 DropFromPlatform();
                 lastPlatformDropTime = Time.time;
             }
+
+            // ★ NEW: 공중 중력 보정
+            ApplyBetterGravity();
         }
+
         UpdateAnimatorParams();
     }
     
-    
-    //좌우 움직임
+    //좌우 움직임 (정점 근처 이동 보너스 추가)
     void HandleMovement()
     {
-        rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
+        float bonus = 0f;
+        if (!IsGrounded() && Mathf.Abs(rb.linearVelocity.y) < apexThreshold)
+            bonus = apexBonus; // ★ NEW
+
+        float targetX = moveInput.x * moveSpeed * (1f + bonus); // ★ NEW
+        rb.linearVelocity = new Vector2(targetX, rb.linearVelocity.y);
+
         // 좌우 반전
         if (moveInput.x > 0.01f)
         {
@@ -192,7 +229,7 @@ public class PlayerController : MonoBehaviour
         }
     }
     
-    //점프
+    //점프 입력(버퍼 저장으로 변경)
     void OnJumpStarted()
     {
         if (IsOnOneWayPlatform() && moveInput.y < -0.1f)
@@ -203,29 +240,48 @@ public class PlayerController : MonoBehaviour
         if (isOnLadder)
         {
             jumpRequested = true; // 사다리에서는 무조건 jumpRequested
+            jumpButtonHeld = true;
             return;
         }
-        if (IsGrounded())
-        {
-            isJumping = true;
-            jumpButtonHeld = true;
-            jumpTime = 0f;
 
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce); // 바로 점프!
-        }
+        // ★ 점프 버퍼에 입력만 기록
+        jumpBufferTimer = jumpBufferTime; // ★ NEW
+        jumpButtonHeld = true;            // ★ NEW
     }
 
     void OnJumpReleased()
     {
         jumpButtonHeld = false;
     }
+
+    // 점프 처리(코요테+버퍼+가변 점프)
     void HandleJump()
     {
+        // ★ 1) 점프 시작 조건: 버퍼 + 코요테
+        if (jumpBufferTimer > 0f)
+        {
+            bool canStartJump = (IsGrounded() || coyoteTimer > 0f) && !isOnLadder;
+            if (canStartJump)
+            {
+                jumpBufferTimer = -999f; // 버퍼 소모
+                coyoteTimer = 0f;
+
+                isJumping = true;
+                jumpTime = 0f;
+
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            }
+        }
+
+        // ★ 2) 가변 점프 유지
         if (isJumping)
         {
             if (jumpButtonHeld && jumpTime < jumpHoldDuration)
             {
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y + jumpHoldForce * Time.deltaTime);
+                rb.linearVelocity = new Vector2(
+                    rb.linearVelocity.x,
+                    rb.linearVelocity.y + jumpHoldForce * Time.deltaTime
+                );
                 jumpTime += Time.deltaTime;
             }
             else
@@ -234,11 +290,51 @@ public class PlayerController : MonoBehaviour
             }
 
             // 혹시 땅에 다시 닿으면 isJumping 해제
-            if (IsGrounded() && rb.linearVelocity.y <= 0)
+            if (IsGrounded() && rb.linearVelocity.y <= 0f)
             {
                 isJumping = false;
             }
         }
+    }
+
+    // ★ NEW: 코요테/버퍼 타이머 업데이트
+    void UpdateCoyoteAndBuffers()
+    {
+        // 코요테: 땅이면 리필, 아니면 감소
+        if (IsGrounded()) coyoteTimer = coyoteTime;
+        else              coyoteTimer -= Time.deltaTime;
+
+        // 점프 버퍼 감소
+        jumpBufferTimer -= Time.deltaTime;
+    }
+
+    // ★ NEW: 점프 컷/중력 가중치/최대 낙하 속도
+    void ApplyBetterGravity()
+    {
+        if (isOnLadder) return; // 사다리는 중력 0 유지
+
+        float g = originalGravity;
+
+        if (rb.linearVelocity.y > 0.01f)
+        {
+            // 상승 중: 버튼 유지면 upScale, 떼면 cutScale
+            g *= (jumpButtonHeld ? gravityUpScale : gravityCutScale);
+        }
+        else if (rb.linearVelocity.y < -0.01f)
+        {
+            // 하강 중
+            g *= gravityDownScale;
+        }
+        
+        // ★ 정점 보정: 거의 0에 가까운 순간 약간 더 눌러서 '붕 뜸' 제거
+        if (Mathf.Abs(rb.linearVelocity.y) < apexVyThreshold)
+            g += apexExtraGravity;
+        
+        rb.gravityScale = g;
+
+        // 최대 낙하 속도 제한
+        if (rb.linearVelocity.y < maxFallSpeed)
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, maxFallSpeed);
     }
 
     bool IsGrounded()
@@ -254,6 +350,7 @@ public class PlayerController : MonoBehaviour
     #endif
         return hit.collider != null;
     }
+
     IEnumerator DashRoutine()
     {
         isDashing = true;
@@ -261,23 +358,21 @@ public class PlayerController : MonoBehaviour
 
         // 바라보는 방향으로 수평 대시 (localScale.x의 부호 사용)
         float dirX = Mathf.Sign(transform.localScale.x);
-        // 점프 중에도 대시가 자연스럽게 느껴지도록, 수직 속도는 유지하고 수평만 덮어씁니다.
-        rb.linearVelocity = new Vector2(dirX * dashSpeed, rb.linearVelocity.y);
+        // ★ 대시 시작 순간, 수직 속도 0으로 초기화
+        rb.linearVelocity = new Vector2(dirX * dashSpeed, 0f);
 
         // 대시 지속 시간 동안 유지 (이 동안 이동/점프 로직은 Update에서 return으로 정지됨)
         float t = 0f;
         while (t < dashDuration)
         {
             // 외부에서 X속도를 덮어쓰지 않도록 매 프레임 유지(원치 않으면 이 줄은 생략 가능)
-            rb.linearVelocity = new Vector2(dirX * dashSpeed, rb.linearVelocity.y);
+            rb.linearVelocity = new Vector2(dirX * dashSpeed, 0f);
             t += Time.deltaTime;
             yield return null;
         }
 
         isDashing = false;
-        // 대시 종료 후, 속도를 살짝 풀어줘도 되고 그대로 둬도 됨(원하는 감각에 맞게)
-        // 예) 감속 없이 즉시 플레이어 입력으로 전환: 아무 것도 안 함
-        // 예) 살짝 감속: rb.linearVelocity = new Vector2(rb.linearVelocity.x * 0.5f, rb.linearVelocity.y);
+        // 대시 종료 후 추가 감속/처리는 취향에 따라
     }
     
     //몬스터 근접공격 받기
@@ -318,13 +413,11 @@ public class PlayerController : MonoBehaviour
     //넉백
     public void KnockbackFrom(Vector2 sourcePosition, float knockbackForce)
     {
-        // 넉백 방향: 플레이어 → 소스(몬스터) 방향의 반대 (플레이어가 튕겨나감)
         Vector2 knockbackDir = ((Vector2)transform.position - sourcePosition).normalized;
-        // 주로 x축만 고려(수평 튕김), y도 조금 올리면 자연스러움
-        knockbackDir.y = 0.5f; // 수직도 살짝 추가(옵션)
+        knockbackDir.y = 0.5f; 
         knockbackDir.Normalize();
         
-        rb.linearVelocity = Vector2.zero; // 이전 속도 제거(옵션)
+        rb.linearVelocity = Vector2.zero;
         rb.AddForce(knockbackDir * knockbackForce, ForceMode2D.Impulse);
     }
     
@@ -340,7 +433,6 @@ public class PlayerController : MonoBehaviour
         if (Time.time < nextLadderGrabTime)
             return;
         
-        // 아래에서 중심, 여러 위치에서 ladderTilemap 겹침 체크
         Vector3Int cellCenter = ladderTilemap.WorldToCell(transform.position);
         Vector3Int cellFeet = ladderTilemap.WorldToCell(transform.position + Vector3.down * 0.5f);
 
@@ -358,11 +450,8 @@ public class PlayerController : MonoBehaviour
     
     bool IsOnLadderArea()
     {
-        // 플레이어 중심 좌표 기준
         Vector3 center = transform.position;
-        // 플레이어 발 위치 기준 (Collider 크기 맞게 조정)
         Vector3 feet = center + Vector3.down * (playerHeight * 0.5f - footOffset);
-        // 플레이어 머리 위치 (필요하면)
         Vector3 head = center + Vector3.up * (playerHeight * 0.5f - headOffset);
 
         Vector3Int cellCenter = ladderTilemap.WorldToCell(center);
@@ -423,9 +512,6 @@ public class PlayerController : MonoBehaviour
         else{
             velocity.y = 0f;
         }
-        
-
-
         
         velocity.x = 0f; // 사다리 중엔 좌우 이동 불가
         rb.linearVelocity = velocity;
@@ -564,5 +650,4 @@ public class PlayerController : MonoBehaviour
         // 선택: 공중 블렌드용
         animator.SetFloat("VerticalSpeed", rb.linearVelocity.y);
     }
-    
 }
