@@ -1,0 +1,2698 @@
+fileFormatVersion: 2
+guid: 29828c2da1eb331499d16c396ed8b1fa
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8270366304322703428
+    second: platformerPack_industrial_tilesheet_0
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 107.6923
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 440d383e55e36c270800000000000000
+      internalID: 8270366304322703428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_1
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c280a480acd0cde47b2507b92ecc1e56
+      internalID: 53314391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_2
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 344223b7486036444a45c9055c5976f5
+      internalID: 1988751746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_3
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0fc7eb42058bb543bbd19864c7041d1
+      internalID: 1657543029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_4
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 649749258a3f4c141b5d7d32256ab400
+      internalID: -632052223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_5
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5685a01c740d15f42a46cc27d8233c5e
+      internalID: -1369232367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_6
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd99b6d774af8a04baef48fbab959d94
+      internalID: -17725741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_7
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fad8de2d49ad224c91bd1551fc53518
+      internalID: 444304181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_8
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39504344590cbb54190ec77cefa5b3ec
+      internalID: 375238161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_9
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82efd67d0fc801643baa93951fdf490e
+      internalID: -781483682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_10
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d06ed64d031a66a448522fe1159914cb
+      internalID: 1998902684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_11
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 786abed155aa31a42b88323871760c78
+      internalID: -1624786141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_12
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ef300fd18e50d64d8a3f821733933f5
+      internalID: -1464855856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_13
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 490
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca3c701c94ad6374381b39743653ed3e
+      internalID: 1991621289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_14
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98697a75a2be7104c914abd2d04055ef
+      internalID: 1073840654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_15
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2b8e1afe1f57014f91b0d498fe74c28
+      internalID: 1879464115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_16
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79c868129db01b54380252aa6a612e75
+      internalID: 131637523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_17
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a5c19d6bedb76140b91a06be58a6d0a
+      internalID: -1533838782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_18
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 153027e159c307741b0a73008365c3eb
+      internalID: -256265539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_19
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20cbb8287ea19cf4c864825e4d731959
+      internalID: 1838099077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_20
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f302571b528f634ab9094f49fd486bf
+      internalID: -270417573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_21
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0d8c663c13a6a641b296651e4a40419
+      internalID: 1230940480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_22
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd34abc0156a8a8478d7017945f4b456
+      internalID: -276766291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_23
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8c70474e85ff0043be1fea8f01e66c5
+      internalID: 1609752103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_24
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d91c543a26bb094e81211d0ff9cad8b
+      internalID: -603313150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_25
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2adccc8e4e9dd7a4fac54fe731b608a1
+      internalID: -870065850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_26
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c996f5737aae7be4cb7b5284e24d0d4c
+      internalID: 1835042809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_27
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 420
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1aa3039638bbc64ca8629e2abbf04e6
+      internalID: 363196243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_28
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cd3cf350a397604795fff39b52336fe
+      internalID: 1226137877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_29
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2041c5e68774a394db7fe63460dbffc1
+      internalID: -1713917155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_30
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 699bdf8bc05cb5949b1530e810e8e0bb
+      internalID: 1276684342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_31
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fca81b43dc20e84fb1a7eb98fadf1c8
+      internalID: -8826936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_32
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4eeee88487f7334eb196dd10da83dfd
+      internalID: -2041288079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_33
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfb912df9505994429691bf04e786d18
+      internalID: -1661297522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_34
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8d53c5f3f064fe42b6d3744bf91eceb
+      internalID: 61468189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_35
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6091206327734041b8f13c662c4ae27
+      internalID: -1354575525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_36
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5e84f4eeae5e2443974ac2b3f73fa78
+      internalID: -1633482325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_37
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17e4f2de74e6b0b4a964ac9fc016773f
+      internalID: -532600956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_38
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b79fe614c1481de4faa8c0844f7b75f9
+      internalID: -969699908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_39
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08a3b29952674894d95a58aea2198d20
+      internalID: -2140683930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_40
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f056a0bea9fe59142aa5fe90067c2c9b
+      internalID: 904687131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_41
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 350
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d76a206f3c7b6540b928a4c3bb2597e
+      internalID: -243048418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_42
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 931ec4af1759eb340aee43de887366b5
+      internalID: -803406628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_43
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0b2b5f7fc920cc4699cb1c5bd6c72ba
+      internalID: -1176510717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_44
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f156676486153dd43952e6272da7643a
+      internalID: -1294837266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_45
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d8e606c47932fb4e95ce59e6310f566
+      internalID: -2127091276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_46
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e00274c2e10fdc45bbd83b6e48179b1
+      internalID: 114033892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_47
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27cac2a92a4dc1440bc062eb7967cb1f
+      internalID: -1720514801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_48
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4aac730e7324084aaf26445d10467ca
+      internalID: 1987266547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_49
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb4e881270b08fe42aa3c2fe9c549471
+      internalID: -1359445957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_50
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7511ed85f31d0014198f1c151b5927cc
+      internalID: 1972777056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_51
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12c9a8eacf53d054cbf292360ac67fe0
+      internalID: -1818279411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_52
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 820e03b45f84a994f962ed8976895f13
+      internalID: 738061161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_53
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7286c1c798aa61a4998afeb12b89848f
+      internalID: 1636659333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_54
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 917b43dd430254a42b73b68b0b7b75ec
+      internalID: -256094221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_55
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 280
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b37d58c387affc46a66440932d48dd8
+      internalID: -350441959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_56
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42a9c07be596c6145a68e50c1f306dd7
+      internalID: 1012363530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_57
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84c667b3a34892f4bb8fed2355e9b3dd
+      internalID: -602995896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_58
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2b2e9ce4c4c1be4987c18ee9e63faa6
+      internalID: -86906423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_59
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90d53158b26f98948a7c47c2d347ecd1
+      internalID: -718979029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_60
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 694106795da918d4c9c6fa96182d465e
+      internalID: 710746038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_61
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f6514ff62cb2b84fb52e3c7c70dc3be
+      internalID: -782026823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_62
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b24ee1b4bd838e14c9a4fceac3c6ca41
+      internalID: 1948683556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_63
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f71ca4459ed00c54ea387139dbe28c2e
+      internalID: -536141967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_64
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09a59cc1e32c9694e985a23242e62ee3
+      internalID: -2128036020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_65
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb5fb92d1ed94a442a4a266319b185a1
+      internalID: -943955778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_66
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 330e817ebe09b484786b80e74f9f5858
+      internalID: -703541573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_67
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e5a750e504bc0545be33b306ef52e44
+      internalID: -1496357825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_68
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed38c8319c46f9944b2b780297a1dc3d
+      internalID: 1433236722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_69
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 210
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0e5102ab8020674787b746039af3a94
+      internalID: 192683865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_70
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c01697a51d784474590cc79669d9e19d
+      internalID: 1857295450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_71
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c57536d7bd6fd824abd52e167d28afbf
+      internalID: 361544490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_72
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 784c8abd59eb91349bc9a30073ff9642
+      internalID: -1835088844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_73
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dee3629419c8424797266025ef435b3
+      internalID: 796652661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_74
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f4a68249ec2233418112b7e460a8a67
+      internalID: 809297243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_75
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f88bf3b321e0e8b4ca11cf84196fa41e
+      internalID: -1145615636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_76
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2ddf1f2a23e2f94ab3cc7695d0c5a19
+      internalID: 121250198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_77
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef143b6f01cb56a4b832a8887d36fca0
+      internalID: -900160474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_78
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e045a344d9c54d478ec1a25d934b24c
+      internalID: -1360799001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_79
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e7cf4ce6c883d445a3f78950a080f9b
+      internalID: 2138808486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_80
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c744fee43c4cd24e80d0f4a41be05c0
+      internalID: -810492303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_81
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0576054aa99a6942b3bc0fc021d1535
+      internalID: -544284228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_82
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff0b4429d7450e6469f5a4696d6165ab
+      internalID: -564577674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_83
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 140
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3103ab615602017459dc545c709df0ad
+      internalID: -1767898892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_84
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2b5f99371f58be48a174d0e653da003
+      internalID: -868405914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_85
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cc513031baa5224d82321c3d283e75e
+      internalID: -1863504952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_86
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0702b8e73af9fe7408509c5fd1a5aa69
+      internalID: -705559786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_87
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7802521e19d71bd4099c473e05dd295f
+      internalID: 713256186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_88
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83e82bfda838fb643aa52e6a3974ff00
+      internalID: 1731054566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_89
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d092b6ccadc58334d846a6fba97d4f8a
+      internalID: 1344627464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_90
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40db0f3783f59b94392da486835c4160
+      internalID: -1169993093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_91
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7860501e06641b647802be5882e3bdaa
+      internalID: 1268055728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_92
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9796e7f4bdd9bba4790425b2b4c7a50d
+      internalID: 1152536054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_93
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e468a4785bf494b4ab5a0d9305c63d0c
+      internalID: -863446679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_94
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09cf9655b1d931b43b2e1e79407b261a
+      internalID: 23110088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_95
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 253703153beb26d4aab6ef8f61726a8d
+      internalID: 1868111797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_96
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49cb4db9a280eff47894e766cc9223c5
+      internalID: 585864529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_97
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 70
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65a36821a4043564babe2a0729382cdf
+      internalID: -1480220687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_98
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbef7fb4dd7850f468b856b27d9f924e
+      internalID: 2137491741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_99
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c7e2a7dab83041479e8daf87f8f66d5
+      internalID: 402884741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_100
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a251007c41ace54fa664bdc6732a31c
+      internalID: 866866902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_101
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11e8a609c59ee7f48884175573c787d4
+      internalID: 1032364534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_102
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7219f068ee791ca44bacb234b8a287ee
+      internalID: 434585706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_103
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71277f3c904f2bd4a80307ebcf695da9
+      internalID: 1428477452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_104
+      rect:
+        serializedVersion: 2
+        x: 420
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e9f5518682bc37428f561c0c2a3d5e8
+      internalID: 556829221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_105
+      rect:
+        serializedVersion: 2
+        x: 490
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bab6768e70a4154b984feda9ca2a2a3
+      internalID: 1962463679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_106
+      rect:
+        serializedVersion: 2
+        x: 560
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e0a6cc512e75c64a9983c11f957b54c
+      internalID: 1391206071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_107
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eba7fdb41b675bd4a8792b6af01cf4a8
+      internalID: -473331678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_108
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7df6bf5362c93cf4aa4f8b8fcf5c1880
+      internalID: -1650045797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_109
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ccbe0090abd15a429368c068562d5c4
+      internalID: 400999314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_110
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa6079d05c787d142aa5682af84891a0
+      internalID: 702084563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: platformerPack_industrial_tilesheet_111
+      rect:
+        serializedVersion: 2
+        x: 910
+        y: 0
+        width: 70
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5807811cdd281e240970b20f08818189
+      internalID: 374221516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5724b3c3991edff43bd19947d6852c27
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":70.0,"y":70.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      platformerPack_industrial_tilesheet_0: 8270366304322703428
+      platformerPack_industrial_tilesheet_1: 53314391
+      platformerPack_industrial_tilesheet_10: 1998902684
+      platformerPack_industrial_tilesheet_100: 866866902
+      platformerPack_industrial_tilesheet_101: 1032364534
+      platformerPack_industrial_tilesheet_102: 434585706
+      platformerPack_industrial_tilesheet_103: 1428477452
+      platformerPack_industrial_tilesheet_104: 556829221
+      platformerPack_industrial_tilesheet_105: 1962463679
+      platformerPack_industrial_tilesheet_106: 1391206071
+      platformerPack_industrial_tilesheet_107: -473331678
+      platformerPack_industrial_tilesheet_108: -1650045797
+      platformerPack_industrial_tilesheet_109: 400999314
+      platformerPack_industrial_tilesheet_11: -1624786141
+      platformerPack_industrial_tilesheet_110: 702084563
+      platformerPack_industrial_tilesheet_111: 374221516
+      platformerPack_industrial_tilesheet_12: -1464855856
+      platformerPack_industrial_tilesheet_13: 1991621289
+      platformerPack_industrial_tilesheet_14: 1073840654
+      platformerPack_industrial_tilesheet_15: 1879464115
+      platformerPack_industrial_tilesheet_16: 131637523
+      platformerPack_industrial_tilesheet_17: -1533838782
+      platformerPack_industrial_tilesheet_18: -256265539
+      platformerPack_industrial_tilesheet_19: 1838099077
+      platformerPack_industrial_tilesheet_2: 1988751746
+      platformerPack_industrial_tilesheet_20: -270417573
+      platformerPack_industrial_tilesheet_21: 1230940480
+      platformerPack_industrial_tilesheet_22: -276766291
+      platformerPack_industrial_tilesheet_23: 1609752103
+      platformerPack_industrial_tilesheet_24: -603313150
+      platformerPack_industrial_tilesheet_25: -870065850
+      platformerPack_industrial_tilesheet_26: 1835042809
+      platformerPack_industrial_tilesheet_27: 363196243
+      platformerPack_industrial_tilesheet_28: 1226137877
+      platformerPack_industrial_tilesheet_29: -1713917155
+      platformerPack_industrial_tilesheet_3: 1657543029
+      platformerPack_industrial_tilesheet_30: 1276684342
+      platformerPack_industrial_tilesheet_31: -8826936
+      platformerPack_industrial_tilesheet_32: -2041288079
+      platformerPack_industrial_tilesheet_33: -1661297522
+      platformerPack_industrial_tilesheet_34: 61468189
+      platformerPack_industrial_tilesheet_35: -1354575525
+      platformerPack_industrial_tilesheet_36: -1633482325
+      platformerPack_industrial_tilesheet_37: -532600956
+      platformerPack_industrial_tilesheet_38: -969699908
+      platformerPack_industrial_tilesheet_39: -2140683930
+      platformerPack_industrial_tilesheet_4: -632052223
+      platformerPack_industrial_tilesheet_40: 904687131
+      platformerPack_industrial_tilesheet_41: -243048418
+      platformerPack_industrial_tilesheet_42: -803406628
+      platformerPack_industrial_tilesheet_43: -1176510717
+      platformerPack_industrial_tilesheet_44: -1294837266
+      platformerPack_industrial_tilesheet_45: -2127091276
+      platformerPack_industrial_tilesheet_46: 114033892
+      platformerPack_industrial_tilesheet_47: -1720514801
+      platformerPack_industrial_tilesheet_48: 1987266547
+      platformerPack_industrial_tilesheet_49: -1359445957
+      platformerPack_industrial_tilesheet_5: -1369232367
+      platformerPack_industrial_tilesheet_50: 1972777056
+      platformerPack_industrial_tilesheet_51: -1818279411
+      platformerPack_industrial_tilesheet_52: 738061161
+      platformerPack_industrial_tilesheet_53: 1636659333
+      platformerPack_industrial_tilesheet_54: -256094221
+      platformerPack_industrial_tilesheet_55: -350441959
+      platformerPack_industrial_tilesheet_56: 1012363530
+      platformerPack_industrial_tilesheet_57: -602995896
+      platformerPack_industrial_tilesheet_58: -86906423
+      platformerPack_industrial_tilesheet_59: -718979029
+      platformerPack_industrial_tilesheet_6: -17725741
+      platformerPack_industrial_tilesheet_60: 710746038
+      platformerPack_industrial_tilesheet_61: -782026823
+      platformerPack_industrial_tilesheet_62: 1948683556
+      platformerPack_industrial_tilesheet_63: -536141967
+      platformerPack_industrial_tilesheet_64: -2128036020
+      platformerPack_industrial_tilesheet_65: -943955778
+      platformerPack_industrial_tilesheet_66: -703541573
+      platformerPack_industrial_tilesheet_67: -1496357825
+      platformerPack_industrial_tilesheet_68: 1433236722
+      platformerPack_industrial_tilesheet_69: 192683865
+      platformerPack_industrial_tilesheet_7: 444304181
+      platformerPack_industrial_tilesheet_70: 1857295450
+      platformerPack_industrial_tilesheet_71: 361544490
+      platformerPack_industrial_tilesheet_72: -1835088844
+      platformerPack_industrial_tilesheet_73: 796652661
+      platformerPack_industrial_tilesheet_74: 809297243
+      platformerPack_industrial_tilesheet_75: -1145615636
+      platformerPack_industrial_tilesheet_76: 121250198
+      platformerPack_industrial_tilesheet_77: -900160474
+      platformerPack_industrial_tilesheet_78: -1360799001
+      platformerPack_industrial_tilesheet_79: 2138808486
+      platformerPack_industrial_tilesheet_8: 375238161
+      platformerPack_industrial_tilesheet_80: -810492303
+      platformerPack_industrial_tilesheet_81: -544284228
+      platformerPack_industrial_tilesheet_82: -564577674
+      platformerPack_industrial_tilesheet_83: -1767898892
+      platformerPack_industrial_tilesheet_84: -868405914
+      platformerPack_industrial_tilesheet_85: -1863504952
+      platformerPack_industrial_tilesheet_86: -705559786
+      platformerPack_industrial_tilesheet_87: 713256186
+      platformerPack_industrial_tilesheet_88: 1731054566
+      platformerPack_industrial_tilesheet_89: 1344627464
+      platformerPack_industrial_tilesheet_9: -781483682
+      platformerPack_industrial_tilesheet_90: -1169993093
+      platformerPack_industrial_tilesheet_91: 1268055728
+      platformerPack_industrial_tilesheet_92: 1152536054
+      platformerPack_industrial_tilesheet_93: -863446679
+      platformerPack_industrial_tilesheet_94: 23110088
+      platformerPack_industrial_tilesheet_95: 1868111797
+      platformerPack_industrial_tilesheet_96: 585864529
+      platformerPack_industrial_tilesheet_97: -1480220687
+      platformerPack_industrial_tilesheet_98: 2137491741
+      platformerPack_industrial_tilesheet_99: 402884741
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

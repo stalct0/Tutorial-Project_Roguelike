@@ -144,7 +144,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   groundCheckLeft: {fileID: 5889226011738354875}
   groundCheckCenter: {fileID: 7009392066641577884}
   groundCheckRight: {fileID: 7252040978900932445}
@@ -166,9 +166,6 @@ MonoBehaviour:
   shortStunDuration: 0.3
   shortStunInvincibleDuration: 0.8
   longStunDuration: 2
-  dashSpeed: 12
-  dashDuration: 0.15
-  dashCooldown: 2
 --- !u!50 &6450627703100026735
 Rigidbody2D:
   serializedVersion: 5
@@ -286,6 +283,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statDisplay: {fileID: 0}
   maxHealth: 100
+  spriteRenderers: []
+  hitFlashDuration: 0.05
+  hitFlashColor: {r: 1, g: 0.6, b: 0.6, a: 1}
+  invincibleBlinkInterval: 0.1
   isInvincible: 0
   onDie:
     m_PersistentCalls:
@@ -346,6 +347,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 25600
+  projectileLayer:
+    serializedVersion: 2
+    m_Bits: 0
   drawGizmos: 1
 --- !u!95 &5621674066893875768
 Animator:
