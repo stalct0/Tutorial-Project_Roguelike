@@ -80,6 +80,7 @@ public class MapGenerator : MonoBehaviour
             config.Height * roomHeight, thickness);
         
         CreateOrUpdateWorldTriggerBounds(config.Width, config.Height, roomWidth, roomHeight, gridLayout.cellSize);
+        GameEvents.ResetStageFlags();
 
     }
 

@@ -241,12 +241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5ce5f3b8cdf00744a546f55028995a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  platforms:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  platforms: []
   throwPoint: {fileID: 7712419667843353923}
   bombPrefab: {fileID: 1908718313783962205, guid: ec3e2fa692f937746977ae98504009de, type: 3}
   platformContainerName: BossPlatforms
@@ -282,6 +277,7 @@ MonoBehaviour:
   canBeLaunched: 0
   deathLaunch: 0
   ignorePlayerKnockback: 0
+  isBoss: 1
 --- !u!95 &2770051622701843849
 Animator:
   serializedVersion: 7

@@ -47,10 +47,6 @@ public class BossBunny : MonoBehaviour
 
         // Set Dynamic initially so physics works when idle
         rb.bodyType = RigidbodyType2D.Dynamic;
-
-        player = GameObject.FindGameObjectWithTag("Player")?.transform;
-        if (player == null)
-            Debug.LogError("BossBunny: Player not found! Tag the player GameObject as 'Player'.");
         
         onPlatform = true;
         
@@ -207,6 +203,7 @@ public class BossBunny : MonoBehaviour
             Debug.Log("BossBunny hit during jump (no knockback).");
         }
     }
+    
     bool TryAutoFindPlatforms()
     {
         // 1) 컨테이너 우선
@@ -236,6 +233,7 @@ public class BossBunny : MonoBehaviour
                     list.Add(t);
             }
         }
+        player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
         // 결과 적용(일관성 위해 x좌표 기준 정렬)
         if (list.Count > 0)

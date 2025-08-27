@@ -52,6 +52,7 @@ public class EnemyCombat : MonoBehaviour, IHittable
     [SerializeField] private bool deathLaunch = true;       
     [SerializeField] private bool ignorePlayerKnockback = false; // 보스에서 true면 ‘플레이어 타격 넉백’만 무시
     private GameObject lastInstigator; // 최근 공격자 기억 (플레이어/캐리어 구분에 사용)
+    [SerializeField] private bool isBoss = false;
     
     // 캐시
     private Rigidbody2D rb;
@@ -235,6 +236,10 @@ public class EnemyCombat : MonoBehaviour, IHittable
 
     public void Die()
     {
+        if (isBoss)
+        {
+            GameEvents.RaiseBossDefeated();   // ★ 여기 한 줄
+        }
         // 캐리어 끄기
         if (carrier != null) carrier.SetActiveCarrier(false);
         
