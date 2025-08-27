@@ -29,7 +29,6 @@ public class EnemyCombat : MonoBehaviour, IHittable
     private bool isLaunched;
     private float launchTimer;
 
-    private bool deathLaunch = true;        // 죽을 때도 발사로 날아가게 할지
     private float deathKnockMultiplier = 1.0f; // 죽음 시 넉백 보정
     private float deathMaxAirTime = 0.8f;   // 최대 비행 대기시간(세이프티)
     
@@ -47,6 +46,12 @@ public class EnemyCombat : MonoBehaviour, IHittable
     [SerializeField] private SpriteRenderer spriteRenderer;   // 비워두면 자동 할당
     [SerializeField] private float hitFlashDuration = 0.05f;  // 상자와 동일 0.05s
     [SerializeField] private Color hitFlashColor = new Color(1f, 0.6f, 0.6f, 1f);
+    
+    // EnemyCombat.cs 상단 필드 주변
+    [SerializeField] private bool canBeLaunched = true;     
+    [SerializeField] private bool deathLaunch = true;       
+    [SerializeField] private bool ignorePlayerKnockback = false; // 보스에서 true면 ‘플레이어 타격 넉백’만 무시
+    private GameObject lastInstigator; // 최근 공격자 기억 (플레이어/캐리어 구분에 사용)
     
     // 캐시
     private Rigidbody2D rb;
@@ -112,6 +117,8 @@ public class EnemyCombat : MonoBehaviour, IHittable
         // 대미지
         currentHP -= Mathf.Max(0, e.damage);
         
+        lastInstigator = e.instigator; // 최근 공격자 캐시
+        
         if (spriteRenderer)
         {
             if (_hitFlashCo != null) StopCoroutine(_hitFlashCo);
@@ -152,6 +159,7 @@ public class EnemyCombat : MonoBehaviour, IHittable
 
     void DeathLaunch(DamageEvent e)
     {
+        if (!canBeLaunched) return;
         // 넉백 방향 계산(기존 KnockbackFrom 로직과 동일)
         Vector2 dir = ((Vector2)transform.position - e.sourcePos).normalized;
         dir.y += upwardKnockAdd;
@@ -161,9 +169,9 @@ public class EnemyCombat : MonoBehaviour, IHittable
         rb.AddForce(dir * (e.knockbackForce * deathKnockMultiplier), ForceMode2D.Impulse);
 
         // 충분히 빨라지면 발사 시작(캐리어 on)
-        if (rb.linearVelocity.magnitude >= launchMinSpeed)
+        if (rb.linearVelocity.magnitude >= launchMinSpeed && canBeLaunched)
             BeginLaunched();
-        else
+        else if(canBeLaunched)
             BeginLaunched(); // 느려도 캐리어를 잠깐 켜고 싶다면 강제 on (필요 없으면 삭제)
     }
     
@@ -178,6 +186,7 @@ public class EnemyCombat : MonoBehaviour, IHittable
 
     void KnockbackFrom(Vector2 sourcePos, float force)
     {
+        if (!canBeLaunched) return;
         // 공격자 반대 방향으로 날아가게 (다운스윙 느낌 위해 y 가산)
         Vector2 dir = ((Vector2)transform.position - sourcePos).normalized;
         dir.y += upwardKnockAdd;
@@ -187,12 +196,13 @@ public class EnemyCombat : MonoBehaviour, IHittable
         rb.AddForce(dir * force, ForceMode2D.Impulse);
 
         // 충분히 튕겨나가면 "발사" 상태로 간주 (캐리어 활성)
-        if (rb.linearVelocity.magnitude >= launchMinSpeed)
+        if (rb.linearVelocity.magnitude >= launchMinSpeed && canBeLaunched)
             BeginLaunched();
     }
 
     void BeginLaunched()
     {
+        if (!canBeLaunched) return;
         if (isLaunched) return;
         isLaunched = true;
         launchTimer = 0f;

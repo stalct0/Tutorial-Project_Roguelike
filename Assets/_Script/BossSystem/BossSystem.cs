@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using Unity.Cinemachine;
 
-public class BossSystem123 : MonoBehaviour
+public class BossSystem : MonoBehaviour
 {
     Transform spawnPos;
 

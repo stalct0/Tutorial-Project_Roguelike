@@ -106,8 +106,6 @@ public class Bomb : MonoBehaviour
         // Start short fuse
         CancelInvoke(nameof(Explode));
         Invoke(nameof(Explode), stickExplosionDelay);
-
-        Debug.Log("Bomb stuck to player! Exploding soon...");
     }
 
     void Explode()
@@ -117,8 +115,8 @@ public class Bomb : MonoBehaviour
 
         if (stuckToPlayer && playerTransform != null)
         {
-            Debug.Log("Player takes " + damage + " damage!");
-            // Apply damage to player here
+            GameManager.Instance.PStats.TakeDamage(damage);
+
         }
 
         Destroy(gameObject);

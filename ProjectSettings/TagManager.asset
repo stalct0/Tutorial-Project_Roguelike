@@ -8,6 +8,7 @@ TagManager:
   - Platform
   - Ground
   - Enemy
+  - BossPlatform
   layers:
   - Default
   - TransparentFX

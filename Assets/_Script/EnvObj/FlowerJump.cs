@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FlowerJump : MonoBehaviour
 {
-    private float jumpForce = 20f;
+    private float jumpForce = 15f;
     private float cooldown = 2f;
     private bool isOnCooldown = false;
 
