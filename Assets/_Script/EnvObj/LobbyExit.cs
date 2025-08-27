@@ -26,6 +26,7 @@ public class LobbyExit : MonoBehaviour
         if (playerInRange && Input.GetKeyDown(KeyCode.I)) // 
         {
             GameManager.Instance.DestroyPlayer();
+            GameManager.Instance.StartGame();
             if (GameManager.Instance.CurrentGameMode == GameManager.GameMode.Infinite)
             {
                 GameManager.Instance.LoadScene("Boss");

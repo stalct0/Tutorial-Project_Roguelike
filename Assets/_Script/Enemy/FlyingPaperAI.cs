@@ -1,12 +1,13 @@
+using System;
 using UnityEngine;
 
 public class FlyingPaperAI : MonoBehaviour
 {
      [Header("Target & Movement")]
     public Transform player;
-    [SerializeField] private float flySpeed   = 2.5f;   // 일정 비행 속도
-    [SerializeField] private float agroRange  = 6f;     // 추적 시작 거리
-    [SerializeField] private bool  chaseForever = true; // 한번 시작하면 끝까지 추적
+    [NonSerialized] private float flySpeed   = 1.5f;   // 일정 비행 속도
+    [NonSerialized] private float agroRange  = 6f;     // 추적 시작 거리
+    [NonSerialized] private bool  chaseForever = true; // 한번 시작하면 끝까지 추적
 
     [Header("Visuals/Animation (SojuThrower와 동일 파라미터)")]
     [SerializeField] private string speedParam    = "Speed";
@@ -15,8 +16,8 @@ public class FlyingPaperAI : MonoBehaviour
     public EnemyState currentState = EnemyState.Patrol; // Patrol=대기, MoveToRange=추적, Stun=멈춤
     
     [Header("Gravity")]
-    [SerializeField] float gravityWhileFlying = 0f;   // 평소 비행(중력 없음)
-    [SerializeField] float gravityWhenHit     = 2.0f; // 피격/발사 중 포물선 만들 중력
+    [NonSerialized] float gravityWhileFlying = 0f;   // 평소 비행(중력 없음)
+    [NonSerialized] float gravityWhenHit     = 0.8f; // 피격/발사 중 포물선 만들 중력
     // 캐시
     private Rigidbody2D   rb;
     private Animator      animator;

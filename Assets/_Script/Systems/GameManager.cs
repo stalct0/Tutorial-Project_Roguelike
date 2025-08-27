@@ -290,4 +290,9 @@ public class GameManager : MonoBehaviour
             playerInstance = null;
         }
 
+        public void StartGame()
+        {
+            LevelCoefficient = 1;
+        }
+        
     }

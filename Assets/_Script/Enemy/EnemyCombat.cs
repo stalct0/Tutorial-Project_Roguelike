@@ -24,7 +24,7 @@ public class EnemyCombat : MonoBehaviour, IHittable
 
     [NonSerialized] public float upwardKnockAdd = 0.35f;     // 수직 성분 가산(다운스윙 느낌용)
     [NonSerialized] public float launchMinSpeed = 2.0f;      // 이 속도 미만이면 발사 상태 종료 후보
-    [NonSerialized] public float launchMaxDuration = 0.8f;   // 발사 유지 최대 시간
+    [NonSerialized] public float launchMaxDuration = 1.5f;   // 발사 유지 최대 시간
     [NonSerialized] public float stopSpeedThreshold = 0.8f;  // 완전히 멈췄다고 볼 속도
     private bool isLaunched;
     private float launchTimer;

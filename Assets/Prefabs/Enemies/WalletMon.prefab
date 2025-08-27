@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -7966293021164362235}
   - component: {fileID: 7019572450545265163}
   m_Layer: 10
-  m_Name: DefaultEnemy
+  m_Name: WalletMon
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 1091218099
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: -6166077590416084364, guid: 9817b501209afc74e95029884c989773, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -157,7 +157,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.019, y: 0.987}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -177,17 +177,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6ee2550ca5a35419ce5ac6f05e3100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frontCheckOffset: 0.3
-  frontCheckDist: 0.1
-  sameLevelYTolerance: 0.6
+  moveSpeed: 1
+  patrolEdgeOffset: 0.3
+  edgeCheckDownDist: 0.5
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   enemyLayerMask:
     serializedVersion: 2
     m_Bits: 1024
-  patrolEdgeOffset: 0.3
-  currentState: 0
-  player: {fileID: 6498673081748981089, guid: a6f202cbcbe8f3748a7f1dd9e93440d0, type: 3}
-  moveSpeed: 1
-  currentDirection: 1
+  frontCheckOffset: 0.3
+  frontCheckDist: 0.1
+  sameLevelYTolerance: 0.6
 --- !u!114 &7019572450545265163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,6 +209,10 @@ MonoBehaviour:
   spriteRenderer: {fileID: 0}
   hitFlashDuration: 0.05
   hitFlashColor: {r: 1, g: 0.6, b: 0.6, a: 1}
+  canBeLaunched: 1
+  deathLaunch: 1
+  ignorePlayerKnockback: 0
+  isBoss: 0
 --- !u!1 &8942983721531768525
 GameObject:
   m_ObjectHideFlags: 0
