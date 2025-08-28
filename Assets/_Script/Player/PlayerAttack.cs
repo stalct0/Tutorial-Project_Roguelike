@@ -63,6 +63,9 @@ public class PlayerAttack : MonoBehaviour
         
         yield return new WaitForSeconds(attackDelay);
         
+        if (GameManager.Instance != null)
+            GameManager.Instance.SfxAttack();
+        
         // 액티브 구간을 sweepPoints 등분해서 순차 검사
         int steps = Mathf.Max(3, sweepPoints);              // 최소 3 보장
         float stepWait = activeTime / (steps - 1);          // 3포인트면 0, 0.5, 1.0 타이밍

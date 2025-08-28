@@ -81,6 +81,9 @@ public class PlayerItemInteractor : MonoBehaviour
         if (item != null && Input.GetKeyDown(pickupKey))
         {
             bool ok = item.TryPickup(inv);
+            
+            if (ok && GameManager.Instance)
+                GameManager.Instance.SfxPickup();
         }
     }
     

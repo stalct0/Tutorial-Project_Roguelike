@@ -278,6 +278,8 @@ public class PlayerController : MonoBehaviour
                 jumpTime = 0f;
 
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                
+                if (GameManager.Instance) GameManager.Instance.SfxJump();
             }
         }
 

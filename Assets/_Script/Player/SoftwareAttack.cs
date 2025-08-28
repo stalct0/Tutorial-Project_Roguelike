@@ -64,7 +64,10 @@ public class SoftwareAttack : MonoBehaviour
 
         // 바람잡이
         if (attackDelay > 0f) yield return new WaitForSeconds(attackDelay);
-
+        
+        if (GameManager.Instance != null)
+            GameManager.Instance.SfxAttack();
+        
         // 액티브 구간: 위 → 중 → 아래 순으로 3회 스윕
         float step = activeDuration / 3f;
 
