@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Reportcard
   m_EditorClassIdentifier: 
   displayName: "\uB9DD\uD55C \uC131\uC801\uD45C"
-  icon: {fileID: 21300000, guid: 8933ce463b47dc841a7dbb3dda73efb0, type: 3}
+  icon: {fileID: 21300000, guid: bb6b06754ccb18649ba02741a7e4a822, type: 3}
   description: 
   kind: 1
   deltas:
