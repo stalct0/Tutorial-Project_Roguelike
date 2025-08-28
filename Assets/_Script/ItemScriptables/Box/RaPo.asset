@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dccc131ea62c6724582615ff69c8377a, type: 3}
+  m_Name: RaPo
+  m_EditorClassIdentifier: 
+  displayName: "\uB77C\uD3EC \uBCF6\uC74C\uBC25"
+  icon: {fileID: 21300000, guid: df688d7e48b6bfc4a900fac6c821785e, type: 3}
+  description: "\uB9DB\uC788\uB294\uD3B8"
+  kind: 1
+  deltas:
+  - stat: 1
+    isMultiplier: 1
+  minRoll: 5
+  maxRoll: 10
+  uiEffectFormat: "\uCCB4\uB825 +{0}%"

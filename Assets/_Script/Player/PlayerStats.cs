@@ -218,20 +218,18 @@ public class PlayerStats : MonoBehaviour
         case StatType.MaxHealth:
             if (d.isMultiplier)
             {
-                // 퍼센트 표기: 120 => 1.20배
-                _maxMulPassive *= (d.amount / 100f);        // ★ CHG
+                _maxMulPassive *= (d.amount / 100f);
+                currentHealth = Mathf.RoundToInt(currentHealth * (d.amount / 100f)); 
             }
             else
             {
                 _maxAddPassive += d.amount;                 // ★ CHG
+                currentHealth = Mathf.RoundToInt(currentHealth + d.amount);
             }
             RecalcMaxHealth();                              // ★ CHG
             break;
 
         case StatType.CurrentHealth:
-            // ★ CHG 없음: 너가 만든 특수 규칙 유지
-            // multiplier면 (maxHealth * n%)만큼 현재 체력에 '추가'
-            // additive면 정수 가감
             {
                 int initial2 = currentHealth;
                 if (d.isMultiplier)

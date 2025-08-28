@@ -510,10 +510,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e55691b4ab4c34180c899b7a4132f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lootTable: {fileID: 11400000, guid: 86bf5033cf4371f47b24e73a17360621, type: 2}
+  lootTable: {fileID: 11400000, guid: bde8d43bc8a2a694c8a012cc4a84c708, type: 2}
   includeOnPickup: 1
   currentStageForFilter: 0
-  priceRange: {x: 10, y: 50}
+  priceRange: {x: 30, y: 50}
   slots:
   - icon: {fileID: 1458249662}
     nameText: {fileID: 1205960126}
