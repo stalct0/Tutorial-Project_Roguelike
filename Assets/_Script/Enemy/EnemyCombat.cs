@@ -187,6 +187,7 @@ public class EnemyCombat : MonoBehaviour, IHittable
 
     void KnockbackFrom(Vector2 sourcePos, float force)
     {
+        if (force <= 0f) return; 
         if (!canBeLaunched) return;
         // 공격자 반대 방향으로 날아가게 (다운스윙 느낌 위해 y 가산)
         Vector2 dir = ((Vector2)transform.position - sourcePos).normalized;

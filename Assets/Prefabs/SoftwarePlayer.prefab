@@ -31,6 +31,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 6498673081748981089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1823460681801816048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2347349275136423007}
+  m_Layer: 8
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2347349275136423007
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823460681801816048}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.396, y: 0.068, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6498673081748981089}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2332084759178468638
 GameObject:
   m_ObjectHideFlags: 0
@@ -48,10 +79,10 @@ GameObject:
   - component: {fileID: 1048726489362991629}
   - component: {fileID: 923347300335654926}
   - component: {fileID: 5356232195973676624}
-  - component: {fileID: -1635428983219495866}
   - component: {fileID: 5621674066893875768}
+  - component: {fileID: -3657980424075232779}
   m_Layer: 8
-  m_Name: Player
+  m_Name: SoftwarePlayer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,6 +104,7 @@ Transform:
   - {fileID: 7009392066641577884}
   - {fileID: 5889226011738354875}
   - {fileID: 7252040978900932445}
+  - {fileID: 2347349275136423007}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5497768805931048099
@@ -332,25 +364,6 @@ MonoBehaviour:
   promptUI: {fileID: 0}
   screenPrompt: {fileID: 0}
   worldOffset: {x: 0, y: 0.8, z: 0}
---- !u!114 &-1635428983219495866
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2332084759178468638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3027a3318442f2f499de1bda66de0307, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 25600
-  projectileLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  drawGizmos: 1
 --- !u!95 &5621674066893875768
 Animator:
   serializedVersion: 7
@@ -373,6 +386,27 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-3657980424075232779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2332084759178468638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da7e0b853db7d8a4e9e6dc26a613c73b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackKey: 106
+  hittableMask:
+    serializedVersion: 2
+    m_Bits: 25600
+  projectilePrefab: {fileID: -1010610489804568456, guid: 29b9af324939a7d448a785ee7c534bf8, type: 3}
+  projectileSpawnOffset: {x: 1, y: 0.25}
+  projectileDamageScale: 0
+  animator: {fileID: 0}
+  animTriggerAttack: attack
 --- !u!1 &7356647992810592606
 GameObject:
   m_ObjectHideFlags: 0

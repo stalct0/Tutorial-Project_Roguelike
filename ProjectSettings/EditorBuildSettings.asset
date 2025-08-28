@@ -32,6 +32,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/Main Flow/Boss.unity
     guid: 72b29f7d20a64e843a0401dd4c425f70
+  - enabled: 1
+    path: Assets/_Scenes/Main Flow/Ending.unity
+    guid: 13e6adaf09bd5d64fa455212ca907790
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

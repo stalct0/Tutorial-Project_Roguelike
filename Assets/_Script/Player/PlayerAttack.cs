@@ -2,12 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// 플레이어의 다운스윙(위→아래) 근접공격을 OverlapBox 3지점 스윕으로 판정
-/// - 공격키를 누르면 액티브 구간 동안 상/중/하 3점을 순차적으로 검사
-/// - 한 스윙 동안 같은 대상을 중복 히트하지 않음
-/// - 적에게는 IHittable.TakeHit(DamageEvent)로 통지
-/// </summary>
+
 [RequireComponent(typeof(PlayerStats))]
 public class PlayerAttack : MonoBehaviour
 {
@@ -18,7 +13,7 @@ public class PlayerAttack : MonoBehaviour
     public LayerMask projectileLayer;
     
     private int baseDamage = 1;
-    private float knockbackForce = 6f;
+    [SerializeField] private float knockbackForce = 6f;
     private float stunSeconds = 0.4f;
     private float cooldown = 0.7f;
     private float attackDelay = 0.2f;
@@ -51,10 +46,8 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        // 쿨타임/공격 중이면 무시
+        
         if (isAttacking || Time.time - lastAttackTime < cooldown) return;
-
-        // 간단 키 입력 (원하면 New Input System으로 대체)
         if (Input.GetKeyDown(attackKey))
         {
             StartCoroutine(AttackRoutine());

@@ -46,5 +46,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 0}
   gameOverUI: {fileID: 0}
-  playerPrefab: {fileID: 2332084759178468638, guid: a6f202cbcbe8f3748a7f1dd9e93440d0, type: 3}
-  playerInstance: {fileID: 0}
+  playerPrefab: {fileID: 2332084759178468638, guid: 65aed7f8cad46b64199153d8cfdaea2a, type: 3}
+  musicPlayerPrefab: {fileID: 2332084759178468638, guid: 65aed7f8cad46b64199153d8cfdaea2a, type: 3}
+  softwarePlayerPrefab: {fileID: 2332084759178468638, guid: a6f202cbcbe8f3748a7f1dd9e93440d0, type: 3}

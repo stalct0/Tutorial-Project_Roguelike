@@ -13,6 +13,7 @@ public class CharacterSelector : MonoBehaviour
 
     public void SelectRed()
     {
+        GameManager.Instance.SetPlayerClass(PlayerClass.Music);
         GameManager.Instance.LoadScene("Lobby");
         GameManager.Instance.GameLevel = 1;
         GameManager.Instance.GameStage = 1;
@@ -20,7 +21,10 @@ public class CharacterSelector : MonoBehaviour
 
     public void SelectBlue()
     {
-        //GameManager.Instance.LoadScene("Level");
+        GameManager.Instance.SetPlayerClass(PlayerClass.Software);
+        GameManager.Instance.LoadScene("Lobby");
+        GameManager.Instance.GameLevel = 1;
+        GameManager.Instance.GameStage = 1;
     }
 
     public void SelectGreen()

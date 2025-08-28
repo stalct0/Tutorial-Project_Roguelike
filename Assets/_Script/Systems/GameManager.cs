@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
+public enum PlayerClass { Music, Software }
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; } //Singleton
@@ -16,8 +18,23 @@ public class GameManager : MonoBehaviour
     [NonSerialized] public float LevelCoefficient = 1f;
     [NonSerialized] public float LevelCoRate = 0.3f;
         
+    
+    
     [Header("Player")]
     public GameObject playerPrefab;
+    
+    [Header("Player Prefabs (by Class)")]      // ★ ADD
+    [SerializeField] private GameObject musicPlayerPrefab;    // 기타 캐릭터 프리팹
+    [SerializeField] private GameObject softwarePlayerPrefab; // 소프트웨어 캐릭터 프리팹
+
+    public PlayerClass SelectedClass { get; private set; } = PlayerClass.Music; // ★ ADD
+    const string KEY_PLAYER_CLASS = "player_class";                              // ★ ADD
+    
+    
+    
+    
+    
+    
     public GameObject playerInstance {get; private set; }   // 생성 후 유지 
     // 캐싱할 레퍼런스들
     public PlayerController PC { get; private set; }
@@ -115,7 +132,13 @@ public class GameManager : MonoBehaviour
             HighScore.TrySet(GameStage, GameLevel);
         }
     }
-
+    
+    public void SetPlayerClass(PlayerClass cls)
+    {
+        SelectedClass = cls;
+        PlayerPrefs.SetInt(KEY_PLAYER_CLASS, (int)cls);
+        PlayerPrefs.Save();
+    }
     
     public void RegisterPlayer(PlayerStats stats)
     {
@@ -126,9 +149,14 @@ public class GameManager : MonoBehaviour
     {
         if (playerInstance == null)
         {
-            playerInstance = Instantiate(playerPrefab, spawnPos, Quaternion.identity);
+            GameObject prefab =
+                (SelectedClass == PlayerClass.Software && softwarePlayerPrefab != null) ? softwarePlayerPrefab :
+                (musicPlayerPrefab != null) ? musicPlayerPrefab :
+                playerPrefab; // 마지막 안전망
+
+            playerInstance = Instantiate(prefab, spawnPos, Quaternion.identity);
             DontDestroyOnLoad(playerInstance);
-            CachePlayerComponents(); 
+            CachePlayerComponents();
         }
         else
         {
