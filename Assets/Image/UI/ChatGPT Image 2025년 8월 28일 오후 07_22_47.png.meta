@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 34dc10a7ff2dd3a4fbae206a79a2c4bf
+guid: 2261a01eb0fcf6c49999b758054059ff
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7130341518818414324
-    second: "ChatGPT Image 2025\uB144 8\uC6D4 28\uC77C \uC624\uD6C4 12_11_40_0"
+      213: 797281987952576223
+    second: "ChatGPT Image 2025\uB144 8\uC6D4 28\uC77C \uC624\uD6C4 07_22_47_0"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,12 +46,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1000
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "ChatGPT Image 2025\uB144 8\uC6D4 28\uC77C \uC624\uD6C4 12_11_40_0"
+      name: "ChatGPT Image 2025\uB144 8\uC6D4 28\uC77C \uC624\uD6C4 07_22_47_0"
       rect:
         serializedVersion: 2
-        x: 128
-        y: 57
-        width: 758
-        height: 880
+        x: 24
+        y: 28
+        width: 387
+        height: 278
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c01fb93ba20fb0d90800000000000000
-      internalID: -7130341518818414324
+      spriteID: fd60bbd6eb3801b00800000000000000
+      internalID: 797281987952576223
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "ChatGPT Image 2025\uB144 8\uC6D4 28\uC77C \uC624\uD6C4 12_11_40_0": -7130341518818414324
+      "ChatGPT Image 2025\uB144 8\uC6D4 28\uC77C \uC624\uD6C4 07_22_47_0": 797281987952576223
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -6,10 +6,10 @@ using Unity.Cinemachine;
 public class MapGenerator : MonoBehaviour
 {
     [Header("World Trigger Bounds (tiles padding)")]
-    public int padLeft  = 3;
-    public int padRight = 3;
-    public int padDown  = 3;
-    public int padUp    = 3;
+    private int padLeft  = 2;
+    private int padRight = 2;
+    private int padDown  = 2;
+    private int padUp    = 2;
     
     [Header("World Trigger Bounds")]
     public string boundsObjectName = "MapTriggerBounds";
