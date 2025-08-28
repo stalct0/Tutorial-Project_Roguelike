@@ -172,6 +172,14 @@ public class PlayerController : MonoBehaviour
         if (isOnLadder)
         {
             HandleLadder();
+            UpdateAnimatorParams();
+            if (isShortStunned)
+            {
+                shortStunTimer -= Time.deltaTime;
+                if (shortStunTimer <= 0f) isShortStunned = false;
+                UpdateAnimatorParams();
+                return;
+            }
             // 사다리는 중력 0으로 유지 → ApplyBetterGravity 호출하지 않음
         }
         else

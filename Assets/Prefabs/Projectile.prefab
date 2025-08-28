@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 991385937
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3933904834184497128, guid: e2bfe4a8c2f56d7478e93e0e1a792cd7, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a7cf01f4d689ee84197eb6123e0e2ffd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -102,12 +102,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7454d6e6a147f7148accf593cbeedf89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
-  damage: 0
-  stunDuration: 0.5
   enemyMask:
     serializedVersion: 2
     m_Bits: 7168
+  stunMarkerPrefab: {fileID: 2585209994358357787, guid: 7eb4f15980c42454aae580d95239d5ea, type: 3}
+  markerAboveOffsetY: 0.15
+  fallbackLocalOffset: {x: 0, y: 0.6}
 --- !u!61 &8898506621628393753
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -142,17 +142,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.017740428, y: -0.005913347}
+  m_Offset: {x: -0.020295396, y: 0.017179817}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.317, y: 0.258}
+    oldSize: {x: 0.8192, y: 0.8192}
     newSize: {x: 3.17, y: 2.58}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.34337437, y: 0.4156794}
+  m_Size: {x: 0.28903738, y: 0.29342133}
   m_EdgeRadius: 0
 --- !u!50 &-1746058275631840273
 Rigidbody2D:

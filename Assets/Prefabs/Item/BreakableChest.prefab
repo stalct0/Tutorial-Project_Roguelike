@@ -151,7 +151,7 @@ MonoBehaviour:
   currentHP: 10
   invincibleSecOnHit: 0.05
   spriteRenderer: {fileID: 2975344244178186442}
-  brokenSprite: {fileID: -629932382, guid: 274dcc3187449f0488721a4d18cda7a0, type: 3}
+  brokenSprite: {fileID: 21300000, guid: 9a798fb17d4533c47bf125fae1fd61a3, type: 3}
   breakVFX: {fileID: 0}
   destroyAfter: 1
   lootTable: {fileID: 11400000, guid: 86bf5033cf4371f47b24e73a17360621, type: 2}

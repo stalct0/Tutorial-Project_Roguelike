@@ -58,7 +58,6 @@ public class SoftwareAttack : MonoBehaviour
     IEnumerator AttackRoutine()
     {
         isAttacking = true;
-        lastAttackTime = Time.time;
 
         if (animator && !string.IsNullOrEmpty(animTriggerAttack))
             animator.SetTrigger(animTriggerAttack);
@@ -78,7 +77,8 @@ public class SoftwareAttack : MonoBehaviour
         DoHitbox(bot);
         // 스윕이 끝난 "지금"이 공격 종료 타이밍 → 투사체 발사
         FireProjectile();
-
+        
+        lastAttackTime = Time.time;
         isAttacking = false;
     }
 

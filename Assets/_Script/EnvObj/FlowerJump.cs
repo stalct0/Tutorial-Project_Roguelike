@@ -7,7 +7,7 @@ public class FlowerJump : MonoBehaviour
     private float cooldown = 2f;
     private bool isOnCooldown = false;
 
-    private Vector2 checkSize = new Vector2(0.8f, 0.8f); // 점프대 크기에 맞춰 조정
+    private Vector2 checkSize = new Vector2(0.8f, 0.9f); // 점프대 크기에 맞춰 조정
     private Vector2 checkOffset = new Vector2(0, 0f); // 점프대 중심에서 위로 살짝 올려서
 
     void Update()

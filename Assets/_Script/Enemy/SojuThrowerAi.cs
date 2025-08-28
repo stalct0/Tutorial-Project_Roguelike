@@ -99,12 +99,13 @@ public class SojuThrowerAI : MonoBehaviour
     
     void Update()
     { 
-        bool hackedStun = (combat != null && combat.IsStunned && !combat.IsLaunched);
+        bool hackedStun = (combat != null && combat.IsStunned && GameManager.Instance.SelectedClass == PlayerClass.Software);
         bool launched   = (combat != null && combat.IsLaunched); 
         if (animator) animator.SetBool("isStunned", hackedStun || launched); // 연출상 둘 다 스턴 표시는 유지 가능
         
         if (hackedStun)
         {
+            Debug.Log("Hacked Stun");
             // ★ ADD: 해킹 스턴일 때만 이동 차단
             currentState = EnemyState.Stun;
             if (rb) rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
