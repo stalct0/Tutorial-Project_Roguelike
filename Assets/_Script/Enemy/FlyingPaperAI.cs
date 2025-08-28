@@ -49,20 +49,39 @@ public class FlyingPaperAI : MonoBehaviour
 
     void Update()
     {
-        // 스턴/발사 상태 체크(SojuThrower와 동일 컨벤션)
-        bool stunned = (combat != null) && (combat.IsStunned || combat.IsLaunched);
-        if (animator) animator.SetBool(stunnedParam, stunned);
+            // ★ CHG: 해킹 스턴 vs 발사 분리
+                bool hackedStun = (combat != null) && combat.IsStunned && !combat.IsLaunched;
+            bool launched   = (combat != null) && combat.IsLaunched;
+            if (animator) animator.SetBool(stunnedParam, hackedStun || launched);
+        
+                if (hackedStun)
+                {
+                    // ★ ADD: 해킹 스턴 → 제자리 정지(속도 0) + 중력 0
+                        currentState     = EnemyState.Stun;
+                    rb.gravityScale  = gravityWhileFlying;
+                    rb.linearVelocity= Vector2.zero;
+                    // 상태머신 아래 로직 타지 않도록
+                        if (animator) animator.SetFloat(speedParam, 0f);
+                    UpdateFacing();
+                    return;
+                }
+            else if (launched)
+                {
+                    // ★ ADD: 발사(넉백) → 중력만 켜서 포물선, 속도는 유지
+                        currentState    = EnemyState.Stun;
+                    rb.gravityScale = gravityWhenHit;
+                    if (animator) animator.SetFloat(speedParam, rb.linearVelocity.magnitude);
+                    UpdateFacing();
+                    return;
+                }
+            else if (currentState == EnemyState.Stun)
+                {
+                    // ★ CHG: 스턴 해제 → 이전 정책대로 복귀
+                        currentState = hasChased ? EnemyState.MoveToRange : EnemyState.Patrol;
+                }
 
-        if (stunned)
-        {
-            currentState = EnemyState.Stun;
-        }
-        else if (currentState == EnemyState.Stun)
-        {
-            // 스턴 해제 후: 한번 추적을 시작했다면 계속 추적 유지
-            currentState = hasChased ? EnemyState.MoveToRange : EnemyState.Patrol;
-        }
-
+        
+        
         if (animator) animator.SetFloat(speedParam, rb.linearVelocity.magnitude);
         UpdateFacing();
 

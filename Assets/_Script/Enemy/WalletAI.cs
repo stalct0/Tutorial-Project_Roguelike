@@ -38,13 +38,22 @@ public class WalletAI : MonoBehaviour
 
     void Update()
     {
-        // 맞아서 스턴/발사 중이면 중력/물리에 맡기고 이동 중지
-        bool stunnedOrLaunched = (combat != null) && (combat.IsStunned || combat.IsLaunched);
-        if (animator) animator.SetBool("isStunned", stunnedOrLaunched);
-        if (animator) animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
-
-        if (stunnedOrLaunched) return;
-
+        bool hackedStun = (combat != null) && combat.IsStunned && !combat.IsLaunched;
+        bool launched   = (combat != null) && combat.IsLaunched;
+            if (animator) animator.SetBool("isStunned", hackedStun || launched);
+            if (animator) animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
+        
+                if (hackedStun)
+                {
+                    // ★ ADD: 해킹 스턴일 때만 수평 정지 + 상태머신 차단
+                        if (rb) rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+                    return;
+                }
+            if (launched)
+                {
+                    // ★ ADD: 발사(넉백) 중엔 물리에 맡기고 로직만 차단(속도는 유지)
+                        return;
+                }
         PatrolMove();
         UpdateFacing();
     }

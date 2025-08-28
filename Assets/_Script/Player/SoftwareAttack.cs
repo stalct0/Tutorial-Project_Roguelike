@@ -15,12 +15,10 @@ public class SoftwareAttack : MonoBehaviour
      private float cooldown = 0.7f;       
 
     [SerializeField] private LayerMask hittableMask;
-    private Vector2 boxSize = new Vector2(1.4f, 0.9f);
-
-    // 로컬 오프셋 3개 (좌우 반전은 localScale.x 부호로 처리)
-     private Vector2 top = new Vector2(1.0f, 0.6f);
-    private Vector2 mid = new Vector2(1.1f, 0.2f);
-     private Vector2 bot = new Vector2(1.0f, -0.25f);
+    private Vector2 boxSize = new Vector2(0.6f, 0.5f);
+    private Vector2 top = new Vector2(0.25f, 0.2f);
+    private Vector2 mid = new Vector2(0.25f, 0f);
+    private Vector2 bot = new Vector2(0.25f, -0.2f);
      
      private int   damageBonus = 1;         
      private float meleeStunSeconds = 0.4f;

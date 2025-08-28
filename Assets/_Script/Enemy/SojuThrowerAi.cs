@@ -98,45 +98,33 @@ public class SojuThrowerAI : MonoBehaviour
     }
     
     void Update()
-    {
-        bool stunned = (combat != null && (combat.IsStunned || combat.IsLaunched));
+    { 
+        bool hackedStun = (combat != null && combat.IsStunned && !combat.IsLaunched);
+        bool launched   = (combat != null && combat.IsLaunched); 
+        if (animator) animator.SetBool("isStunned", hackedStun || launched); // 연출상 둘 다 스턴 표시는 유지 가능
         
-        if (animator) animator.SetBool("isStunned", stunned);
-
-        if (stunned)
+        if (hackedStun)
         {
+            // ★ ADD: 해킹 스턴일 때만 이동 차단
             currentState = EnemyState.Stun;
+            if (rb) rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            if (animator) animator.SetFloat("Speed", 0f);
+            return; // ★ ADD: 상태머신 나머지 로직 중단(걷기/추격 금지)
         }
-        
+           // launched(뮤직 넉백)는 여기서 멈추지 않는다 → 물리로 계속 날아가게 둠
+
         if (animator) animator.SetFloat("Speed", Mathf.Abs(rb.linearVelocity.x));
         UpdateFacing();
 
-        
-        
-        
         switch (currentState)
         {
-            case EnemyState.Patrol:
-                Patrol();
-                break;
-            case EnemyState.Agro:
-                Agro();
-                break;
-            case EnemyState.MoveToRange:
-                MoveToPlayer();
-                break;
-            case EnemyState.AttackPrepare:
-                AttackPrepare();
-                break;
-            case EnemyState.Attack:
-                Attack();
-                break;
-            case EnemyState.Reset:
-                ResetAfterAttack();
-                break;
-            case EnemyState.Stun:
-                Stun();
-                break;
+            case EnemyState.Patrol:       Patrol();        break;
+            case EnemyState.Agro:         Agro();          break;
+            case EnemyState.MoveToRange:  MoveToPlayer();  break;
+            case EnemyState.AttackPrepare:AttackPrepare(); break;
+            case EnemyState.Attack:       Attack();        break;
+            case EnemyState.Reset:        ResetAfterAttack(); break;
+            case EnemyState.Stun:         Stun();          break;
         }
     }
     void UpdateFacing()
@@ -219,8 +207,15 @@ public class SojuThrowerAI : MonoBehaviour
     {
         if (combat != null && !(combat.IsStunned || combat.IsLaunched))
         {
-            if (animator) animator.SetBool("isStunned", false);
-            currentState = EnemyState.Patrol;
+            if (combat != null && !(combat.IsStunned && !combat.IsLaunched))
+            {
+                if (animator) animator.SetBool("isStunned", false);
+                currentState = EnemyState.Patrol;
+                return;
+            }
+
+            // ★ ADD: 해킹 스턴 동안엔 수평 속도를 계속 0으로 유지
+            if (rb) rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
         } 
     }
 
