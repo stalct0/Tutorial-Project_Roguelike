@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/_Scenes/Main Flow/MainMenu.unity
     guid: 9f324dd81d8ccdb4792171329d65e374
   - enabled: 1
-    path: Assets/_Scenes/Main Flow/GameOver.unity
-    guid: c15491d697fc41f48baa5eba16c952c1
-  - enabled: 1
     path: Assets/_Scenes/Main Flow/Lobby.unity
     guid: f59499c1d8cdaab419ad1b31278b039c
   - enabled: 1
@@ -28,7 +25,7 @@ EditorBuildSettings:
     guid: ba802c7a35ab015459896c960a1228f2
   - enabled: 1
     path: Assets/_Scenes/Main Flow/CharSelect.unity
-    guid: a3f7349517b4b8b4ba88c9ca7be64868
+    guid: 821a10fec697d9948b72dc994a7f44f6
   - enabled: 1
     path: Assets/_Scenes/Main Flow/Boss.unity
     guid: 72b29f7d20a64e843a0401dd4c425f70
