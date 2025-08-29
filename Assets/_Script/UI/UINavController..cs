@@ -35,6 +35,12 @@ public class UINavController : MonoBehaviour
     [Header("Mouse Sync (optional)")]
     public bool selectOnPointerEnter = true;
 
+    [Header("Unity EventSystem Sync")]
+    [Tooltip("EventSystem.current.SelectedGameObject와 동기화")]
+    [SerializeField] bool syncEventSystem = true;          // ★ ADD
+    [Tooltip("Start 직후 1프레임 뒤에 선택 반영(캔버스 초기화 타이밍 보정)")]
+    [SerializeField] bool selectOnStartNextFrame = true;   // ★ ADD
+    
     bool MainMenu; // 용가리
     public event Action<RectTransform> OnSelectionChanged;
     
@@ -58,6 +64,10 @@ public class UINavController : MonoBehaviour
 
         ClampIndex();
         RefreshSelection();
+        if (selectOnStartNextFrame)      // ★ ADD
+            StartCoroutine(SelectOnNextFrame());
+        else
+            SetEventSystemSelection();   // ★ ADD
     }
 
     void Update()
@@ -88,7 +98,11 @@ public class UINavController : MonoBehaviour
             if (Input.GetKeyDown(downKey))  { MoveGrid(0, +1); moved = true; }
         }
 
-        if (moved) RefreshSelection();
+        if (moved)
+        {
+            RefreshSelection();
+            SetEventSystemSelection();   // ★ ADD   
+        }
 
         // Submit
         if (Input.GetKeyDown(submitKey))
@@ -203,7 +217,29 @@ public class UINavController : MonoBehaviour
             RefreshSelection();
         }
     }
+    void SetEventSystemSelection()
+    {
+        if (!syncEventSystem) return;
+        if (items.Count == 0) return;
 
+        var it = items[index];
+        if (!it) return;
+
+        var go = it.gameObject;
+        if (EventSystem.current != null)
+        {
+            // 아직 같은 오브젝트가 아니라면 갱신
+            if (EventSystem.current.currentSelectedGameObject != go)
+                EventSystem.current.SetSelectedGameObject(go);
+        }
+    }
+
+    // ★ ADD: 캔버스/레イ아웃 초기화 타이밍 보정용
+    System.Collections.IEnumerator SelectOnNextFrame()
+    {
+        yield return null;               // 1 프레임 기다림
+        SetEventSystemSelection();
+    }
     // 외부에서 초기 선택 인덱스 설정하고 싶을 때
     public void SetIndex(int i)
     {
