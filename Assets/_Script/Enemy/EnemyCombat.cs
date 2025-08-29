@@ -9,7 +9,7 @@ using UnityEngine.Events;
 public class EnemyCombat : MonoBehaviour, IHittable
 {
     
-    [NonSerialized] public int maxHP = 30;
+    public int maxHP = 30;
     [NonSerialized]public int currentHP;
 
 

@@ -266,6 +266,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc4cf7f023c619d468d1109c758cb1d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHP: 100
   carrier: {fileID: 0}
   projectileLayer: -1
   onDie:
